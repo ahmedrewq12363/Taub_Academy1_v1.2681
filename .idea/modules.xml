@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TaubAcademy.iml" filepath="$PROJECT_DIR$/TaubAcademy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Taub_Academy.iml" filepath="$PROJECT_DIR$/Taub_Academy.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
