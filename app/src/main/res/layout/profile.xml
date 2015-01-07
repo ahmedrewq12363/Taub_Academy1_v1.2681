@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/profile">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ahmed"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:background="@drawable/back_name_an"
+        android:textColor="#0099CC"
+        android:gravity="center"
+        android:typeface="serif"
+        android:textSize="25sp"
+
+        android:id="@+id/NameOnPRo"
+        android:layout_toStartOf="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/imageView" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/PhoneImage"
+        android:layout_below="@+id/NameOnPRo"
+        android:src="@drawable/phone_ggg"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/Phone"
+        android:background="@drawable/back_name_an"
+        android:textColor="#0099CC"
+        android:gravity="center"
+        android:layout_below="@+id/imageView"
+        android:layout_toEndOf="@+id/PhoneImage"
+        android:layout_alignBottom="@+id/PhoneImage" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/EmailImage"
+        android:src="@drawable/email_ggg"
+        android:layout_below="@+id/imageView"
+        android:layout_toEndOf="@+id/Phone" />
+
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/Email"
+        android:background="@drawable/back_name_an"
+        android:textColor="#0099CC"
+        android:gravity="center"
+        android:layout_toEndOf="@+id/EmailImage"
+        android:layout_alignBottom="@+id/EmailImage"
+        android:layout_below="@+id/imageView"
+        android:layout_alignEnd="@+id/imageView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/RateThis"
+        android:background="@drawable/back_rate"
+        android:gravity="center"
+        android:textColor="#0099CC"
+        android:layout_below="@+id/PhoneImage"
+        android:layout_alignEnd="@+id/EmailImage"
+        android:layout_alignBottom="@+id/ratingBar"
+        android:layout_alignParentStart="true" />
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:background="@drawable/back_rate"
+        android:stepSize="1.0"
+        android:rating="2.0"
+        android:layout_below="@+id/Email"
+        android:layout_toEndOf="@+id/RateThis" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Available On"
+        android:textStyle="bold"
+
+        android:id="@+id/textView2"
+        android:textColor="#0099CC"
+        android:background="@drawable/black_2"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:layout_toStartOf="@+id/EmailImage"
+        android:layout_alignEnd="@+id/EmailImage"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_below="@+id/RateThis" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:id="@+id/ListAvail"
+        android:background="@drawable/black_2"
+        android:dividerHeight="2px"
+        android:divider="#0099CC"
+        android:layout_below="@+id/textView2"
+        android:layout_toStartOf="@+id/textView3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Relevant Courses"
+        android:textStyle="bold"
+
+        android:gravity="center"
+        android:background="@drawable/black_1"
+        android:id="@+id/textView3"
+        android:textColor="#0099CC"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/ratingBar"
+        android:layout_toEndOf="@+id/RateThis" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:id="@+id/Courses"
+        android:dividerHeight="2px"
+        android:divider="#0099CC"
+
+        android:background="@drawable/black_1"
+        android:layout_toEndOf="@+id/ListAvail"
+        android:layout_below="@+id/textView2" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Feedback"
+        android:textColor="#0099CC"
+        android:textStyle="bold"
+        android:id="@+id/button"
+        android:layout_toEndOf="@+id/NameOnPRo"
+        android:layout_below="@+id/Courses"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/Transparent"
+        android:background="@drawable/back_rate"
+        android:layout_below="@+id/Email"
+        android:layout_toEndOf="@+id/ratingBar"
+        android:layout_alignEnd="@+id/textView3"
+        android:layout_above="@+id/textView3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Feedbacks"
+        android:background="@drawable/back_feedss"
+        android:id="@+id/Feeds"
+        android:textColor="#0099CC"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_below="@+id/ListAvail"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/button"
+        android:layout_toStartOf="@+id/button" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:dividerHeight="2px"
+        android:divider="#0099CC"
+        android:id="@+id/Feedbacks"
+        android:background="@drawable/back_feedss"
+        android:layout_below="@+id/Feeds"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

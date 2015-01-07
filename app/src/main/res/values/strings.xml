@@ -2,8 +2,22 @@
 <resources>
 
     <string name="app_name">TaubAcademy</string>
-    <string name="title_activity_my">MyActivity</string>
+    <string name="title_activity_my">TaubAcademy</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="hello_blank_fragment">Courses </string>
+
+    <string-array name="Titles">
+        <item>taha</item>
+        <item>sami</item>
+        <item>ameer</item>
+        <item>talaal</item>
+        <item>ahmed</item>
+        <item>ziad</item>
+        <item>abo elsabry</item>
+        <item>shadi</item>
+        <item>shaker</item>
+        <item>hassan</item>
+    </string-array>
 
 </resources>
