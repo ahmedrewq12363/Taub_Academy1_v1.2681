@@ -21,9 +21,4 @@ android {
 
 dependencies {
     compile 'com.android.support:support-v4:21.0.2'
-    provided project(':jersey-client-1.7')
-    provided project(':neo4j-desktop-2.1.6')
-    provided project(':neo4j-rest-graphdb-2.0.1')
-    provided project(':neo4j-rest-graphdb-2.0.1-javadoc')
-    provided project(':neo4j-rest-graphdb-2.0.1-sources')
 }

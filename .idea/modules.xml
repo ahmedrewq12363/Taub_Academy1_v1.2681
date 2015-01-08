@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Taub_Academy1.iml" filepath="$PROJECT_DIR$/Taub_Academy1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TaubAcademy.iml" filepath="$PROJECT_DIR$/TaubAcademy.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jersey-client-1.7/jersey-client-1.7.iml" filepath="$PROJECT_DIR$/jersey-client-1.7/jersey-client-1.7.iml" />
-      <module fileurl="file://$PROJECT_DIR$/neo4j-desktop-2.1.6/neo4j-desktop-2.1.6.iml" filepath="$PROJECT_DIR$/neo4j-desktop-2.1.6/neo4j-desktop-2.1.6.iml" />
-      <module fileurl="file://$PROJECT_DIR$/neo4j-rest-graphdb-2.0.1/neo4j-rest-graphdb-2.0.1.iml" filepath="$PROJECT_DIR$/neo4j-rest-graphdb-2.0.1/neo4j-rest-graphdb-2.0.1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/neo4j-rest-graphdb-2.0.1-javadoc/neo4j-rest-graphdb-2.0.1-javadoc.iml" filepath="$PROJECT_DIR$/neo4j-rest-graphdb-2.0.1-javadoc/neo4j-rest-graphdb-2.0.1-javadoc.iml" />
-      <module fileurl="file://$PROJECT_DIR$/neo4j-rest-graphdb-2.0.1-sources/neo4j-rest-graphdb-2.0.1-sources.iml" filepath="$PROJECT_DIR$/neo4j-rest-graphdb-2.0.1-sources/neo4j-rest-graphdb-2.0.1-sources.iml" />
     </modules>
   </component>
 </project>

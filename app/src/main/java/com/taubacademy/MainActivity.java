@@ -5,14 +5,10 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
-
 import java.util.ArrayList;
 
-import server.Course;
-import server.Tutor;
 
-
-public class MainActivity extends Activity implements communicator {
+public class MyActivity extends Activity implements communicator {
 
 
     @Override
@@ -27,8 +23,8 @@ public class MainActivity extends Activity implements communicator {
     public void respond(String course) {
         FragmentManager f = getFragmentManager();
         Describtion dFragment = (Describtion) f.findFragmentById(R.id.fragment2);
-        ArrayList<Tutor> tutors = Course.getTutorOfCourse(course);
-        dFragment.changeData(tutors);
+        //ArrayList<Tutor> tutors = Course.getTutorsOnThisCourse(Integer.parseInt(course));
+        dFragment.changeData(course);
     }
 
 

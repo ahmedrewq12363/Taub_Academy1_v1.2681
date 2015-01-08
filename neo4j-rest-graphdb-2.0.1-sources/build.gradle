@@ -1,2 +1,0 @@
-configurations.create("default")
-artifacts.add("default", file('neo4j-rest-graphdb-2.0.1-sources.jar'))

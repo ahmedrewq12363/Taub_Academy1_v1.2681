@@ -1,2 +1,0 @@
-configurations.create("default")
-artifacts.add("default", file('jersey-client-1.7.jar'))

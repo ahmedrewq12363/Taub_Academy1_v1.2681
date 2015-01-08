@@ -1,2 +1,0 @@
-configurations.create("default")
-artifacts.add("default", file('neo4j-desktop-2.1.6.jar'))
