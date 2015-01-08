@@ -17,6 +17,8 @@ import android.widget.TextView;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+import server.Tutor;
+
 /**
  * Created by ziad on 12/26/2014.
  */
@@ -103,7 +105,20 @@ public class Describtion extends Fragment implements AdapterView.OnItemClickList
         listView.setOnItemClickListener(this);
         c = (communicator) getActivity();
     }
-
+    public void changeData(ArrayList<Tutor> tutors)
+    {
+        if (Teachers_orig.length == 0) {
+            text1.setText("No Teachers Available For This Course");
+            text1.setTextColor(Color.parseColor("#0099CC"));
+            return;
+        }
+        text1.setText("Available Teachers For : " + "234114");
+        text1.setTextColor(Color.parseColor("#0099CC"));
+        String names [] = {tutors.get(0).name};
+        String Ranks [] = {tutors.get(0).Rating.toString()};
+        String salaries [] = {tutors.get(0).SalaryPerHour.toString()};
+        listView.setAdapter(new mylistAdapter(getActivity().getBaseContext(), names, Ranks, salaries, Images_orig));
+    }
     public void changeData(String Course) {
         if (Teachers_orig.length == 0) {
             text1.setText("No Teachers Available For This Course");

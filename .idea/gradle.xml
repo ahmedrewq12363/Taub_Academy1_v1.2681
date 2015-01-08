@@ -9,6 +9,11 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/jersey-client-1.7" />
+            <option value="$PROJECT_DIR$/neo4j-desktop-2.1.6" />
+            <option value="$PROJECT_DIR$/neo4j-rest-graphdb-2.0.1" />
+            <option value="$PROJECT_DIR$/neo4j-rest-graphdb-2.0.1-javadoc" />
+            <option value="$PROJECT_DIR$/neo4j-rest-graphdb-2.0.1-sources" />
           </set>
         </option>
       </GradleProjectSettings>

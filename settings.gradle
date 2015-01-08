@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':jersey-client-1.7', ':neo4j-desktop-2.1.6', ':neo4j-rest-graphdb-2.0.1-javadoc', ':neo4j-rest-graphdb-2.0.1-sources', ':neo4j-rest-graphdb-2.0.1'
