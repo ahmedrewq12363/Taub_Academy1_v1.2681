@@ -6,21 +6,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 
+import com.parse.ParseException;
+
 
 public class MainActivity extends Activity implements communicator {
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
+        try {
+            Course.getTutorsOfCourse(234114);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
-
     @Override
     public void respond(String course) {
         FragmentManager f = getFragmentManager();
         Describtion dFragment = (Describtion) f.findFragmentById(R.id.fragment2);
-        dFragment.changeData(course);
+        try {
+            dFragment.changeData(course);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -17,12 +17,6 @@ import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-
-import static com.taubacademy.R.drawable.technion1;
-
-/**
- * Created by ziad on 12/25/2014.
- */
 public class CoursesList  extends Fragment implements AdapterView.OnItemClickListener {
     ListView coursesList;
     communicator c;
@@ -127,7 +121,6 @@ public class CoursesList  extends Fragment implements AdapterView.OnItemClickLis
         public View getView(int i, View view, ViewGroup viewGroup) {
             ViewHolder viewH = null;
             if(view == null){
-//                view is null
                 LayoutInflater inflater = (LayoutInflater) contextWeakReference.get().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = inflater.inflate(R.layout.course_item,viewGroup,false);
                 viewH = new ViewHolder();
@@ -135,16 +128,12 @@ public class CoursesList  extends Fragment implements AdapterView.OnItemClickLis
                 viewH.secondLine=(TextView)view.findViewById(R.id.secondLine);
                 viewH.firstLine.setTextColor(Color.parseColor("#0099CC"));
                 viewH.secondLine.setTextColor(Color.parseColor("#0099CC"));
-//                viewH.icon = (ImageView) view.findViewById(R.id.icon11);
                 view.setTag(viewH);
             }else {
-                //view != null
                 viewH = (ViewHolder) view.getTag();
             }
-            //set curr view (the suitable indexes in the arrays).
             viewH.firstLine.setText(Names[i%Names.length]);
             viewH.secondLine.setText(Courses[i%(Courses.length)]);
-//            viewH.icon.setImageResource(technion1);
             return view;
         }
 

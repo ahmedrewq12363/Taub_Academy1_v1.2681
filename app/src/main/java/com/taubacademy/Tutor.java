@@ -4,6 +4,9 @@ import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+
+import java.util.List;
+
 @ParseClassName("Tutor")
 public class Tutor extends ParseObject{
 
@@ -12,7 +15,7 @@ public class Tutor extends ParseObject{
     }
 
     public String getName() {
-        return getString("name");
+        return getString("title");
     }
 
     public void setName(String name) {
@@ -63,5 +66,29 @@ public class Tutor extends ParseObject{
     {
         Integer tmp = getRankCount();
         put("count",tmp+1);
+    }
+    public void addCourse(Course c)
+    {
+        addUnique("Courses",c);
+    }
+    public List<Course> getAllCourses()
+    {
+        return getList("Courses");
+    }
+    public Integer getSalary()
+    {
+        return getInt("Salary");
+    }
+    public void setSalary(Integer Salary)
+    {
+        put("Salary",Salary);
+    }
+    public String getPhone()
+    {
+        return getString("Phone");
+    }
+    public void setPhone(String Salary)
+    {
+        put("Phone",Salary);
     }
 }
