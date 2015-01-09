@@ -135,7 +135,7 @@ public class CoursesList  extends Fragment implements AdapterView.OnItemClickLis
                 viewH.secondLine=(TextView)view.findViewById(R.id.secondLine);
                 viewH.firstLine.setTextColor(Color.parseColor("#0099CC"));
                 viewH.secondLine.setTextColor(Color.parseColor("#0099CC"));
-                viewH.icon = (ImageView) view.findViewById(R.id.icon11);
+//                viewH.icon = (ImageView) view.findViewById(R.id.icon11);
                 view.setTag(viewH);
             }else {
                 //view != null
@@ -144,7 +144,7 @@ public class CoursesList  extends Fragment implements AdapterView.OnItemClickLis
             //set curr view (the suitable indexes in the arrays).
             viewH.firstLine.setText(Names[i%Names.length]);
             viewH.secondLine.setText(Courses[i%(Courses.length)]);
-            viewH.icon.setImageResource(technion1);
+//            viewH.icon.setImageResource(technion1);
             return view;
         }
 
