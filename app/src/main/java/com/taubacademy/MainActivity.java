@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.RadioButton;
 
 import com.parse.Parse;
-import com.parse.ParseObject;
+import com.parse.ParseInstallation;
 
 
 public class MainActivity extends Activity implements communicator {
@@ -18,10 +18,7 @@ public class MainActivity extends Activity implements communicator {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
         Parse.initialize(this, "QsQezpRGVsuUMjw3zaj57cHlrSGUlKkHKzfnVIxv", "gqqgjaBFS19B2Y0uvpNQ0A8RSY13xhk1u5ObE9tb");
-        Parse.enableLocalDatastore(this);
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
+        ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 
     @Override
