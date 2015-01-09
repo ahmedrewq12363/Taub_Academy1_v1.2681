@@ -5,26 +5,31 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
-import java.util.ArrayList;
+
+import com.parse.Parse;
+import com.parse.ParseObject;
 
 
-public class MyActivity extends Activity implements communicator {
+public class MainActivity extends Activity implements communicator {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
-        // Check whether the activity is using the layout version with
-        // the fragment_container FrameLayout. If so, we must add the first fragment
+        Parse.initialize(this, "QsQezpRGVsuUMjw3zaj57cHlrSGUlKkHKzfnVIxv", "gqqgjaBFS19B2Y0uvpNQ0A8RSY13xhk1u5ObE9tb");
+        Parse.enableLocalDatastore(this);
+        ParseObject testObject = new ParseObject("TestObject");
+        testObject.put("foo", "bar");
+        testObject.saveInBackground();
     }
 
     @Override
     public void respond(String course) {
         FragmentManager f = getFragmentManager();
         Describtion dFragment = (Describtion) f.findFragmentById(R.id.fragment2);
-        //ArrayList<Tutor> tutors = Course.getTutorsOnThisCourse(Integer.parseInt(course));
         dFragment.changeData(course);
+
     }
 
 

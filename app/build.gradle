@@ -17,8 +17,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dexOptions {
+        preDexLibraries = false
+    }
 }
 
 dependencies {
+    compile('com.google.http-client:google-http-client-android:1.18.0-rc') {
+        exclude(group: 'com.google.android', module: 'android')
+        exclude(group: 'org.apache.httpcomponents', module: 'httpclient')
+    }
     compile 'com.android.support:support-v4:21.0.2'
+    compile files('src/libs/Parse-1.8.0.jar')
+    compile 'com.parse.bolts:bolts-android:1.+'
 }
