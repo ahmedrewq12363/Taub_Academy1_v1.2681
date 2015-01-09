@@ -26,4 +26,12 @@ public class Course extends ParseObject{
     public void setCourseId(Integer courseId) {
         put("CourseId", courseId);
     }
+    public java.util.List<Tutor> getAllTutorsOfThisCourse()
+    {
+        return getList("tutors");
+    }
+    public void addTutorToList(Tutor tutor)
+    {
+        addUnique("tutors",tutor);
+    }
 }

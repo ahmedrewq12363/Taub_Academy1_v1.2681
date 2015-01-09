@@ -16,5 +16,6 @@ public class MainApplication  extends Application{
         ParseObject.registerSubclass(Tutor.class);
         ParseObject.registerSubclass(Course.class);
         Parse.initialize(this, "QsQezpRGVsuUMjw3zaj57cHlrSGUlKkHKzfnVIxv", "gqqgjaBFS19B2Y0uvpNQ0A8RSY13xhk1u5ObE9tb");
+
     }
 }

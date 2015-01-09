@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 
-import com.parse.ParseInstallation;
-
 
 public class MainActivity extends Activity implements communicator {
 
@@ -16,7 +14,6 @@ public class MainActivity extends Activity implements communicator {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
-        ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 
     @Override
@@ -24,7 +21,6 @@ public class MainActivity extends Activity implements communicator {
         FragmentManager f = getFragmentManager();
         Describtion dFragment = (Describtion) f.findFragmentById(R.id.fragment2);
         dFragment.changeData(course);
-
     }
 
 

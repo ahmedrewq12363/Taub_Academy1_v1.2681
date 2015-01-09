@@ -8,7 +8,7 @@ import com.parse.ParseUser;
 public class Tutor extends ParseObject{
 
     public Tutor() {
-        // A default constructor is required.
+        super("Tutor");
     }
 
     public String getName() {
@@ -26,7 +26,20 @@ public class Tutor extends ParseObject{
     public void setAuthor(ParseUser user) {
         put("author", user);
     }
+    public String getEmail() {
+        return getString("email");
+    }
 
+    public void setEmail(String email) {
+        put("email", email);
+    }
+    public String getPhoneNumber() {
+        return getString("Phone");
+    }
+    public void SetPhoneNumber(String Phone)
+    {
+        put("Phone",Phone);
+    }
     public Integer getRating() {
         return getInt("rating");
     }
@@ -51,5 +64,4 @@ public class Tutor extends ParseObject{
         Integer tmp = getRankCount();
         put("count",tmp+1);
     }
-
 }

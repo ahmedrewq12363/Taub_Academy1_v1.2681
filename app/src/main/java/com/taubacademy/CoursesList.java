@@ -2,6 +2,7 @@ package com.taubacademy;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,14 +12,13 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import android.widget.SearchView;
-
-import static com.taubacademy.R.drawable.*;
+import static com.taubacademy.R.drawable.technion1;
 
 /**
  * Created by ziad on 12/25/2014.
@@ -27,8 +27,8 @@ public class CoursesList  extends Fragment implements AdapterView.OnItemClickLis
     ListView coursesList;
     communicator c;
 
-   String[] orig_courses_nums = {"234114","234123","234112","234122","236360","236363","234118"};
-   String[] orig_courses_names = {"Introduction To Computers Science","Operating Systems","Introduction To Computer C Language","Introduction to Systems Programming","Theory Of Compilation","Database Systems","Computer Organization And Programming"};
+   String[] orig_courses_nums;
+   String[] orig_courses_names;
    int global_items;
     public void search(String query)
     {
@@ -76,12 +76,14 @@ public class CoursesList  extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
     {
+        Resources res = getResources();
+        orig_courses_nums = res.getStringArray(R.array.CoursesNumber);
+        orig_courses_names = res.getStringArray(R.array.CoursesNames);
         super.onActivityCreated(savedInstanceState);
         coursesList = (ListView)getActivity().findViewById(R.id.listView);
         coursesList.setAdapter(new mylistAdapter(getActivity().getBaseContext(),orig_courses_names,orig_courses_nums));
         coursesList.setOnItemClickListener(this);
         c= (communicator) getActivity();
-
         SearchBar SearchStrings = new SearchBar(getActivity().getBaseContext());
         SearchView searchItem = (SearchView) getActivity().findViewById(R.id.searchView);
         searchItem.setSubmitButtonEnabled(true);

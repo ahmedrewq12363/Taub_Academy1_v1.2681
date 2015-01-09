@@ -19,5 +19,247 @@
         <item>shaker</item>
         <item>hassan</item>
     </string-array>
+    <string-array name="CoursesNumber">
+        <item>234112</item>
+        <item>234114</item>
+        <item>234117</item>
+        <item>234118</item>
+        <item>234122</item>
+        <item>234123</item>
+        <item>234127</item>
+        <item>234141</item>
+        <item>234145</item>
+        <item>234218</item>
+        <item>234247</item>
+        <item>234267</item>
+        <item>234270</item>
+        <item>234293</item>
+        <item>234301</item>
+        <item>234311</item>
+        <item>234312</item>
+        <item>234313</item>
+        <item>234319</item>
+        <item>234322</item>
+        <item>234325</item>
+        <item>234326</item>
+        <item>234329</item>
+        <item>234900</item>
+        <item>236299</item>
+        <item>236303</item>
+        <item>236309</item>
+        <item>236310</item>
+        <item>236311</item>
+        <item>236313</item>
+        <item>236315</item>
+        <item>236320</item>
+        <item>236321</item>
+        <item>236327</item>
+        <item>236329</item>
+        <item>236330</item>
+        <item>236334</item>
+        <item>236339</item>
+        <item>236340</item>
+        <item>236341</item>
+        <item>236342</item>
+        <item>236343</item>
+        <item>236345</item>
+        <item>236347</item>
+        <item>236348</item>
+        <item>236349</item>
+        <item>236350</item>
+        <item>236351</item>
+        <item>236353</item>
+        <item>236357</item>
+        <item>236358</item>
+        <item>236359</item>
+        <item>236360</item>
+        <item>236363</item>
+        <item>236366</item>
+        <item>236368</item>
+        <item>236369</item>
+        <item>236370</item>
+        <item>236371</item>
+        <item>236376</item>
+        <item>236381</item>
+        <item>236501</item>
+        <item>236502</item>
+        <item>236503</item>
+        <item>236504</item>
+        <item>236506</item>
+        <item>236508</item>
+        <item>236512</item>
+        <item>236518</item>
+        <item>236520</item>
+        <item>236521</item>
+        <item>236522</item>
+        <item>236524</item>
+        <item>236601</item>
+        <item>236602</item>
+        <item>236603</item>
+        <item>236604</item>
+        <item>236605</item>
+        <item>236610</item>
+        <item>236620</item>
+        <item>236629</item>
+        <item>236634</item>
+        <item>236646</item>
+        <item>236652</item>
+        <item>236653</item>
+        <item>236698</item>
+        <item>236700</item>
+        <item>236703</item>
+        <item>236714</item>
+        <item>236716</item>
+        <item>236719</item>
+        <item>236754</item>
+        <item>236755</item>
+        <item>236756</item>
+        <item>236757</item>
+        <item>236780</item>
+        <item>236800</item>
+        <item>236801</item>
+        <item>236802</item>
+        <item>236803</item>
+        <item>236804</item>
+        <item>236805</item>
+        <item>236813</item>
+        <item>236814</item>
+        <item>236815</item>
+        <item>236818</item>
+        <item>236819</item>
+        <item>236823</item>
+        <item>236827</item>
+        <item>236828</item>
+        <item>236860</item>
+        <item>236861</item>
+        <item>236862</item>
+        <item>236873</item>
+        <item>236874</item>
+        <item>236927</item>
+        <item>236941</item>
+        <item>236951</item>
+        <item>236990</item>
+    </string-array>
+    <string-array name="CoursesNames">
+        <item>Introduction to Computer - C </item>
+        <item>Introduction to Computer Science </item>
+        <item>Introduction to computer science H </item>
+        <item>Computer Organization and Programming </item>
+        <item>Introduction to Systems Programming </item>
+        <item>Operating Systems </item>
+        <item>Introduction to computing with MATLAB </item>
+        <item>Combinatorics for CS </item>
+        <item>Digital Systems </item>
+        <item>Data Structures 1 </item>
+        <item>Algorithms 1 </item>
+        <item>Digital Computers Structure (MAMAS) </item>
+        <item>Software Project Management </item>
+        <item>Logic and set theory for CS </item>
+        <item>Project in Data Processing H </item>
+        <item>Yearly Project in Software Engineering-Stage A </item>
+        <item>Yearly Project in Software Engineering-Stage B </item>
+        <item>Industrial Project </item>
+        <item>Programming Languages </item>
+        <item>File Systems </item>
+        <item>Computer Graphics </item>
+        <item>Project in Computer Graphics H </item>
+        <item>Project in Image Processing and Analysis </item>
+        <item>Workshop in Competitive Programming </item>
+        <item>Intro. to Natural Language Processing </item>
+        <item>Project in natural language processing </item>
+        <item>Introduction to Coding Theory </item>
+        <item>Formal language theory </item>
+        <item>Complexity of algebraic computations </item>
+        <item>Complexity Theory </item>
+        <item>Algebraic Methods in Computer Science </item>
+        <item>Numerical Linear Algebra </item>
+        <item>Software Engineering Methods </item>
+        <item>Signal and Image Processing by Computer </item>
+        <item>Digital Geometry Processing </item>
+        <item>Introduction to optimization </item>
+        <item>Introduction to Computer Networks </item>
+        <item>Acceleration of convergence of iterative </item>
+        <item>Computer Communications Project </item>
+        <item>Internet Networking </item>
+        <item>Introduction to Software Verification </item>
+        <item>Computability Theory </item>
+        <item>Automatic Verification of Programs </item>
+        <item>Program analysis and synthesis </item>
+        <item>Introduction to Human-Computer Interaction </item>
+        <item>Project in Computer Security </item>
+        <item>Computer Security </item>
+        <item>Advanced Topics in Distributed Systems </item>
+        <item>Automata and Formal Languages </item>
+        <item>Distributed Algorithms A </item>
+        <item>Advanced Topics in Distributed Algorithms </item>
+        <item>Algorithms 2 </item>
+        <item>Theory of Compilation </item>
+        <item>Database Management Systems </item>
+        <item>Project in operating systems </item>
+        <item>Formal Specifications For Complex Systems </item>
+        <item>Managing Data on the World-wide Web </item>
+        <item>Concurrent and Distributed Programming </item>
+        <item>Project in Parallel and Distributed Computation </item>
+        <item>Operating systems engineering </item>
+        <item>Project in VLSI B </item>
+        <item>Introduction to Artificial Intelligence </item>
+        <item>Project in Artificial Intelligence </item>
+        <item>Project in Advanced Programming </item>
+        <item>Project in software </item>
+        <item>Cryptology </item>
+        <item>Cryptography and complexity </item>
+        <item>Project in advanced programming B </item>
+        <item>Communication Complexity </item>
+        <item>Coding for Storage Systems </item>
+        <item>Approximation algorithms </item>
+        <item>Algorithms in Computational Biology </item>
+        <item>Projects in Bioinformatics </item>
+        <item>Advanced Topics in Computer Science 1 </item>
+        <item>Advanced Topics in Computer Science 2 </item>
+        <item>Advanced Topics in Computer Science 3 </item>
+        <item>Advanced Topics in Computer Science 4 </item>
+        <item>Advanced Topics in Computer Science 5 </item>
+        <item>Advanced Topics in Computer Science 10 </item>
+        <item>Advanced Topics in Algorithms L </item>
+        <item>Advanced Topics in Computer Graphics L+T </item>
+        <item>Advanced Topics in Computer Communication Networks L </item>
+        <item>Advanced Topics in Theoretical Computer Science L </item>
+        <item>Advanced Topics in Information Security L </item>
+        <item>Advanced Topics in Information Security L+T </item>
+        <item>Secure Quality Programs </item>
+        <item>Software design </item>
+        <item>Object Oriented Programming </item>
+        <item>Select. topics in automat. theorem proving </item>
+        <item>Geometric Modeling </item>
+        <item>Computational Geometry </item>
+        <item>Project in Intelligent Systems </item>
+        <item>Distributed Algorithms B </item>
+        <item>Introduction to machine learning </item>
+        <item>Project in machine learning </item>
+        <item>Algorithms for Dynamic Memory Management </item>
+        <item>Seminar in software engineering </item>
+        <item>Seminar in Computer Science 1 </item>
+        <item>Seminar in Computer Science 2 </item>
+        <item>Seminar in Computer Science 3 </item>
+        <item>Seminar in Computer Science 4 </item>
+        <item>Seminar in Computer Science 5 </item>
+        <item>Seminar in Algorithms </item>
+        <item>Seminar in Formal Verification Methods </item>
+        <item>Seminar in Computer Vision </item>
+        <item>Seminar in Bioinformatics</item>
+        <item>Seminar in Computer Communication Networks</item>
+        <item>Seminar in Quantum Information processing</item>
+        <item>Seminar in Computer Systems</item>
+        <item>Project in Computer Systems</item>
+        <item>Digital Image Processing</item>
+        <item>Geometric computer vision</item>
+        <item>Sparse Representations and Applications in Signal and Image Processing</item>
+        <item>Computer Vision</item>
+        <item>Project in computer vision</item>
+        <item>Introduction to Robotics</item>
+        <item>Introduction to Neural Networks</item>
+        <item>Seminar in neural networks</item>
+        <item>Inroduction to Quantum Information Processing</item>
+    </string-array>
 
 </resources>
