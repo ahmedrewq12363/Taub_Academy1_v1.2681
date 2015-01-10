@@ -8,7 +8,7 @@ import com.parse.ParseObject;
 /**
  * Created by Ahmed on 1/9/2015.
  */
-public class MainApplication  extends Application{
+public class MainApplication extends Application {
     @Override
     public void onCreate() {
         // Enable Local Datastore.

@@ -17,10 +17,12 @@ import java.util.List;
 public class TaughtByAdapter extends BaseAdapter {
     List<Course> courses;
     WeakReference<Context> contextWeakReference;
-    TaughtByAdapter(Context c, List<Course> courses){
+
+    TaughtByAdapter(Context c, List<Course> courses) {
         contextWeakReference = new WeakReference<Context>(c);
         this.courses = courses;
     }
+
     @Override
     public int getCount() {
         return courses.size();
@@ -39,16 +41,16 @@ public class TaughtByAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewH = null;
-        if(view == null){
+        if (view == null) {
             LayoutInflater inflater = (LayoutInflater) contextWeakReference.get().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.taught_by,viewGroup,false);
+            view = inflater.inflate(R.layout.taught_by, viewGroup, false);
             viewH = new ViewHolder();
-            viewH.firstLine = (TextView)view.findViewById(R.id.CourseName);
-            viewH.secondLine=(TextView)view.findViewById(R.id.CourseNum);
+            viewH.firstLine = (TextView) view.findViewById(R.id.CourseName);
+            viewH.secondLine = (TextView) view.findViewById(R.id.CourseNum);
             viewH.firstLine.setTextColor(Color.parseColor("#0099CC"));
             viewH.secondLine.setTextColor(Color.parseColor("#0099CC"));
             view.setTag(viewH);
-        }else {
+        } else {
 
             viewH = (ViewHolder) view.getTag();
         }

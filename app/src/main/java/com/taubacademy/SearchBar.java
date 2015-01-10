@@ -9,21 +9,23 @@ import android.widget.TextView;
 /**
  * Created by ziad on 1/2/2015.
  */
-public class SearchBar extends android.widget.SearchView implements SearchView.OnQueryTextListener ,SearchView.OnCloseListener {
+public class SearchBar extends android.widget.SearchView implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
     CoursesList getActivity;
+
     public SearchBar(Context context) {
         super(context);
         this.setOnCloseListener(this);
         setIconifiedByDefault(true);
     }
 
-    public void setActivity(CoursesList activity)
-    {
+    public void setActivity(CoursesList activity) {
         getActivity = activity;
     }
+
     public SearchBar(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
     @Override
     public boolean onQueryTextSubmit(String query) {
         getActivity.search(query);

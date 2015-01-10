@@ -20,7 +20,8 @@ import java.util.ArrayList;
 public class tutorsAdapter extends BaseAdapter {
     WeakReference<Context> contextWeakReference;
     ArrayList<Tutor> tutors;
-    tutorsAdapter(Context c,ArrayList<Tutor> tutors) {
+
+    tutorsAdapter(Context c, ArrayList<Tutor> tutors) {
 
         contextWeakReference = new WeakReference<Context>(c);
         this.tutors = tutors;

@@ -18,9 +18,10 @@ public class AvailableAdapter extends BaseAdapter {
     String[] Avail;
     int global_items;
     WeakReference<Context> contextWeakReference;
+
     public AvailableAdapter(Context baseContext, String[] available) {
         contextWeakReference = new WeakReference<Context>(baseContext);
-        Avail=available;
+        Avail = available;
         global_items = Avail.length;
     }
 
@@ -42,23 +43,24 @@ public class AvailableAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewH = null;
-        if(view == null){
+        if (view == null) {
 //                view is null
             LayoutInflater inflater = (LayoutInflater) contextWeakReference.get().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.avail,viewGroup,false);
+            view = inflater.inflate(R.layout.avail, viewGroup, false);
             viewH = new ViewHolder();
-            viewH.firstLine = (TextView)view.findViewById(R.id.AvailId);
+            viewH.firstLine = (TextView) view.findViewById(R.id.AvailId);
             viewH.firstLine.setTextColor(Color.parseColor("#0099CC"));
 //                viewH.icon = (ImageView) view.findViewById(R.id.icon11);
             view.setTag(viewH);
-        }else {
+        } else {
             //view != null
             viewH = (ViewHolder) view.getTag();
         }
         //set curr view (the suitable indexes in the arrays).
-        viewH.firstLine.setText(Avail[i%Avail.length]);
+        viewH.firstLine.setText(Avail[i % Avail.length]);
         return view;
     }
+
     class ViewHolder {
         TextView firstLine;
         int position;

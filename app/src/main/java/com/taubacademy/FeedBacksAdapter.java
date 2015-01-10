@@ -9,24 +9,26 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
+import java.util.Map;
 
 /**
  * Created by Ahmed on 1/9/2015.
  */
 class FeedBacksAdapter extends BaseAdapter {
-    String[] Feed;
-    String[] By;
-    int global_items;
+    String[] names;
+    String[] feedbacks;
     WeakReference<Context> contextWeakReference;
-    FeedBacksAdapter(Context c, String[] Feeds, String[] Bys){
+
+    FeedBacksAdapter(Context c, Map<String, String> feddbacks) {
+        super();
         contextWeakReference = new WeakReference<Context>(c);
-        Feed=Feeds;
-        By=Bys;
-        global_items = Feeds.length;
+        this.names = (String[]) feddbacks.keySet().toArray();
+        this.feedbacks = (String[]) feddbacks.values().toArray();
     }
+
     @Override
     public int getCount() {
-        return global_items;
+        return feedbacks.length;
     }
 
     @Override
@@ -42,20 +44,20 @@ class FeedBacksAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewH = null;
-        if(view == null){
+        if (view == null) {
             LayoutInflater inflater = (LayoutInflater) contextWeakReference.get().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.feed,viewGroup,false);
+            view = inflater.inflate(R.layout.feed, viewGroup, false);
             viewH = new ViewHolder();
-            viewH.firstLine = (TextView)view.findViewById(R.id.Feedback);
-            viewH.secondLine=(TextView)view.findViewById(R.id.By);
+            viewH.firstLine = (TextView) view.findViewById(R.id.Feedback);
+            viewH.secondLine = (TextView) view.findViewById(R.id.By);
             viewH.firstLine.setTextColor(Color.parseColor("#0099CC"));
             viewH.secondLine.setTextColor(Color.parseColor("#0099CC"));
             view.setTag(viewH);
-        }else {
+        } else {
             viewH = (ViewHolder) view.getTag();
         }
-        viewH.firstLine.setText(Feed[i%Feed.length]);
-        viewH.secondLine.setText("By " +By[i%(By.length)]);
+        viewH.firstLine.setText(feedbacks[i]);
+        viewH.secondLine.setText("By " + names[i]);
         return view;
     }
 

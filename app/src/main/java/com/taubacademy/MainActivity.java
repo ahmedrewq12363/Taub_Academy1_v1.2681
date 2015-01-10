@@ -19,10 +19,9 @@ import java.util.List;
 
 
 public class MainActivity extends FragmentActivity implements communicator {
-    Describtion DescFragment  = new Describtion();
+    Describtion DescFragment = new Describtion();
     CoursesList CourFragment = new CoursesList();
     FragmentManager manager = getFragmentManager();
-
 
 
     @Override
@@ -31,6 +30,7 @@ public class MainActivity extends FragmentActivity implements communicator {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -45,8 +45,7 @@ public class MainActivity extends FragmentActivity implements communicator {
     @Override
     public void onBackPressed() {
         int counter = manager.getBackStackEntryCount();
-        if(counter == 1)
-        {
+        if (counter == 1) {
             this.finish();
         }
         manager.popBackStack();
@@ -72,30 +71,27 @@ public class MainActivity extends FragmentActivity implements communicator {
 
     @Override
     public void ChangeFrag(String Name, String Email, String Rate, String Phone, ImageView image, String[] Feeds, String[] Byf, List<Course> Courses, String[] Avail) {
-        Profile profile = new Profile(Name,Email,Phone,Rate,image,Avail,Feeds,Byf,Courses);
+        Profile profile = new Profile(Name, Email, Phone, Rate, image, Avail, Feeds, Byf, Courses);
         FragmentTransaction Transaction = manager.beginTransaction();
 //        Transaction.remove(DescFragment);
 //        Transaction.remove(CourFragment);
-        Transaction.add(R.id.ProfileFrag,profile,"profile");
+        Transaction.add(R.id.ProfileFrag, profile, "profile");
         Transaction.addToBackStack("Profile");
         Transaction.commit();
     }
 
 
-    public void SortByRank(View view)
-    {
+    public void SortByRank(View view) {
         RadioButton Salary = (RadioButton) findViewById(R.id.radioButton2);
-        if(Salary.isChecked())
-        {
+        if (Salary.isChecked()) {
             Salary.setChecked(false);
         }
         DescFragment.SortBy("Rank");
     }
-    public void SortBySalary(View view)
-    {
+
+    public void SortBySalary(View view) {
         RadioButton Rank = (RadioButton) findViewById(R.id.radioButton);
-        if(Rank.isChecked())
-        {
+        if (Rank.isChecked()) {
             Rank.setChecked(false);
         }
         DescFragment.SortBy("Salary");
