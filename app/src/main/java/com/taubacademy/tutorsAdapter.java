@@ -68,7 +68,14 @@ public class tutorsAdapter extends BaseAdapter {
         holder.thirdLine.setTextColor(Color.parseColor("#0099CC"));
         return view;
     }
-
+    public ArrayList<Tutor> getTutors()
+    {
+        return tutors;
+    }
+    public Tutor getTutorAtIndex(int Index)
+    {
+        return tutors.get(Index);
+    }
     class ViewHolder {
         TextView firstLine;
         TextView secondLine;

@@ -1,11 +1,7 @@
 package com.taubacademy;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.media.Image;
-import android.net.Uri;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,9 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Profile extends Fragment {
     Tutor tutor;
@@ -45,7 +38,6 @@ public class Profile extends Fragment {
         TextView Phone = (TextView) profile.findViewById(R.id.Phone);
         TextView Rate = (TextView) profile.findViewById(R.id.RateThis);
         ImageView imagePro = (ImageView) profile.findViewById(R.id.imageView);
-        ImageView imageEmail = (ImageView) profile.findViewById(R.id.EmailImage);
         Name.setText(tutor.getName());
         Email.setText(tutor.getEmail());
         Phone.setText(tutor.getPhone());
@@ -53,7 +45,7 @@ public class Profile extends Fragment {
 //        imagePro.setImageDrawable(image_t.getDrawable());
         //Avail.setAdapter(new AvailableAdapter(getActivity().getBaseContext(),Available));
         Taught.setAdapter(new TaughtByAdapter(getActivity().getBaseContext(), tutor.getAllCourses()));
-        Feeds.setAdapter(new FeedBacksAdapter(getActivity().getBaseContext(), tutor.get));
+        Feeds.setAdapter(new FeedBacksAdapter(getActivity().getBaseContext(), tutor.getFeedbacks()));
         Taught.setOnTouchListener(new ListView.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

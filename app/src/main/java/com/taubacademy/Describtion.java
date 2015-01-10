@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.parse.ParseException;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by ziad on 12/26/2014.
@@ -45,57 +47,23 @@ public class Describtion extends Fragment implements AdapterView.OnItemClickList
     }
 
     public void SortBy(String sortParam) {
-
-        int k = 0;
-        int i = 0;
+        ArrayList<Tutor> tutors = ((tutorsAdapter)listView.getAdapter()).getTutors();
         if (sortParam == "Salary") {
-            int max = 0;
-            for (k = Salary_orig.length; k > 0; k--) {
-                for (i = 0; i < k; ++i) {
-                    double q = Double.parseDouble(Salary_orig[i]);
-                    if (q > Double.parseDouble(Salary_orig[max])) {
-                        max = i;
-                    }
+            Collections.sort(tutors, new Comparator<Tutor>() {
+                @Override
+                public int compare(Tutor tutor, Tutor tutor2) {
+                    return tutor.getSalary().compareTo(tutor2.getSalary());
                 }
-                String tmpTeacher = Teachers_orig[k - 1];
-                String tmpRank = Ranks_orig[k - 1];
-                String tmpSalary = Salary_orig[k - 1];
-                Integer tmpImage = Images_orig[k - 1];
-                Teachers_orig[k - 1] = Teachers_orig[max];
-                Ranks_orig[k - 1] = Ranks_orig[max];
-                Salary_orig[k - 1] = Salary_orig[max];
-                Images_orig[k - 1] = Images_orig[max];
-                Teachers_orig[max] = tmpTeacher;
-                Ranks_orig[max] = tmpRank;
-                Salary_orig[max] = tmpSalary;
-                Images_orig[max] = tmpImage;
-                max = 0;
-            }
+            });
         } else {
-            int max = 0;
-            for (k = Ranks_orig.length; k > 0; k--) {
-                for (i = 0; i < k; ++i) {
-                    double q = Double.parseDouble(Ranks_orig[i]);
-                    if (q > Double.parseDouble(Ranks_orig[max])) {
-                        max = i;
-                    }
+            Collections.sort(tutors, new Comparator<Tutor>() {
+                @Override
+                public int compare(Tutor tutor, Tutor tutor2) {
+                    return tutor2.getRating().compareTo(tutor.getRating());
                 }
-                String tmpTeacher = Teachers_orig[k - 1];
-                String tmpRank = Ranks_orig[k - 1];
-                String tmpSalary = Salary_orig[k - 1];
-                Integer tmpImage = Images_orig[k - 1];
-                Teachers_orig[k - 1] = Teachers_orig[max];
-                Ranks_orig[k - 1] = Ranks_orig[max];
-                Salary_orig[k - 1] = Salary_orig[max];
-                Images_orig[k - 1] = Images_orig[max];
-                Teachers_orig[max] = tmpTeacher;
-                Ranks_orig[max] = tmpRank;
-                Salary_orig[max] = tmpSalary;
-                Images_orig[max] = tmpImage;
-                max = 0;
-            }
+            });
         }
-        //listView.setAdapter(new mylistAdapter(getActivity().getBaseContext(), Teachers_orig, Ranks_orig, Salary_orig, Images_orig));
+        listView.setAdapter(new tutorsAdapter(getActivity().getBaseContext(),tutors));
     }
 
     @Override
@@ -123,19 +91,8 @@ public class Describtion extends Fragment implements AdapterView.OnItemClickList
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-        String Name_t = (String) ((TextView) view.findViewById(R.id.firstLine1)).getText();
-        String Email_t = "  " + Name_t + "@gmail.com";
-        String Phone_t = "  050-245-4921";
-        String Rate_t = "Rate " + Name_t;
-        ImageView image_t = (ImageView) view.findViewById(R.id.icon11);
-        ArrayList<Course> courses = new ArrayList<Course>();
-        for (int index = 0; index < Courses_name.length; index++) {
-            Course c = new Course();
-            c.setName(Courses_name[i]);
-            c.setCourseId(Integer.parseInt(Courses_num[i]));
-            courses.add(c);
-        }
-        c.ChangeFrag(Name_t, Email_t, Phone_t, Rate_t, image_t, Feedbackss, ByF, courses, Available);
+        c.ChangeFrag(
+                ((tutorsAdapter)listView.getAdapter()).getTutorAtIndex(i));
 
     }
 
