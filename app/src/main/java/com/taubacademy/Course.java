@@ -8,9 +8,6 @@ import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Ahmed on 1/9/2015.
- */
 @ParseClassName("Course")
 public class Course extends ParseObject {
     public static ArrayList<Tutor> getTutorsOfCourse(Integer CourseId) throws ParseException {

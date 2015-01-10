@@ -48,12 +48,13 @@ public class Pair extends ParseObject{
     }
 
     public Tutor getFirst() {
+        Tutor t  = (Tutor)get("first");
         try {
-            fetchIfNeeded();
+            t.fetchIfNeeded();
         } catch (ParseException e) {
             e.printStackTrace();
-        }        return (Tutor)get("first");
-
+        }
+        return t;
     }
 
     public void setFirst(Tutor first) {

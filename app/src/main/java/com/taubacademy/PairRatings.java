@@ -4,9 +4,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 
-/**
- * Created by Ahmed on 1/10/2015.
- */
+
 @ParseClassName("PairRatings")
 public class PairRatings extends ParseObject{
     private Tutor first;
@@ -48,12 +46,13 @@ public class PairRatings extends ParseObject{
     }
 
     public Tutor getFirst() {
+        Tutor t  = (Tutor)get("first");
         try {
-            fetchIfNeeded();
+            t.fetchIfNeeded();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return (Tutor)get("first");
+        return t;
     }
 
     public void setFirst(Tutor first) {

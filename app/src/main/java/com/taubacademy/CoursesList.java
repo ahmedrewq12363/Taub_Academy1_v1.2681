@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -143,8 +142,6 @@ public class CoursesList extends Fragment implements AdapterView.OnItemClickList
         class ViewHolder {
             TextView firstLine;
             TextView secondLine;
-            ImageView icon;
-            int position;
         }
     }
 }

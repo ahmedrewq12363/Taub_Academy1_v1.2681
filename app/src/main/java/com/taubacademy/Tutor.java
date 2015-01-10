@@ -167,6 +167,14 @@ public class Tutor extends ParseObject {
         saveInBackground();
         return true;
     }
+    public void addAvilableTimes(String AvailableTimes)
+    {
+        addUnique("AvailableTime",AvailableTimes);
+    }
+    public List<String> getAvailableTime()
+    {
+        return getList("AvailableTime");
+    }
     public static void updateAlTutorials()
     {
         ParseQuery query = ParseQuery.getQuery("Tutor");
