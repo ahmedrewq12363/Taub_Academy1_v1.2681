@@ -30,4 +30,5 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.2'
     compile files('src/libs/Parse-1.8.0.jar')
     compile 'com.parse.bolts:bolts-android:1.+'
+    compile project(':facebook')
 }
