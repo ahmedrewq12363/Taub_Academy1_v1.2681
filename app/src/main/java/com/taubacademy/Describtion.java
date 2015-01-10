@@ -61,7 +61,6 @@ public class Describtion extends Fragment implements AdapterView.OnItemClickList
         super.onActivityCreated(savedInstanceState);
         text1 = (TextView) getActivity().findViewById(R.id.textView21);
         listView = (ListView) getActivity().findViewById(R.id.listView2);
-        //listView.setAdapter(new mylistAdapter(getActivity().getBaseContext(), Teachers_orig, Ranks_orig, Salary_orig, Images_orig));
         listView.setOnItemClickListener(this);
         c = (communicator) getActivity();
     }

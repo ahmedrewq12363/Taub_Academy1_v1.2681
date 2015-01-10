@@ -9,25 +9,24 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 /**
  * Created by Ahmed on 1/9/2015.
  */
 
 public class AvailableAdapter extends BaseAdapter {
-    String[] Avail;
-    int global_items;
+    List<String> Avail;
     WeakReference<Context> contextWeakReference;
 
-    public AvailableAdapter(Context baseContext, String[] available) {
+    public AvailableAdapter(Context baseContext, List<String> available) {
         contextWeakReference = new WeakReference<Context>(baseContext);
         Avail = available;
-        global_items = Avail.length;
     }
 
     @Override
     public int getCount() {
-        return global_items;
+        return Avail == null ? 0 :Avail.size();
     }
 
     @Override
@@ -50,19 +49,15 @@ public class AvailableAdapter extends BaseAdapter {
             viewH = new ViewHolder();
             viewH.firstLine = (TextView) view.findViewById(R.id.AvailId);
             viewH.firstLine.setTextColor(Color.parseColor("#0099CC"));
-//                viewH.icon = (ImageView) view.findViewById(R.id.icon11);
             view.setTag(viewH);
         } else {
-            //view != null
             viewH = (ViewHolder) view.getTag();
         }
-        //set curr view (the suitable indexes in the arrays).
-        viewH.firstLine.setText(Avail[i % Avail.length]);
+        viewH.firstLine.setText(Avail.get(i));
         return view;
     }
 
     class ViewHolder {
         TextView firstLine;
-        int position;
     }
 }

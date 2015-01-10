@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.parse.ParseFile;
+import com.parse.ParseImageView;
 
 public class Profile extends Fragment {
     Tutor tutor;
@@ -37,13 +39,17 @@ public class Profile extends Fragment {
         ListView Feeds = (ListView) profile.findViewById(R.id.Feedbacks);
         TextView Phone = (TextView) profile.findViewById(R.id.Phone);
         TextView Rate = (TextView) profile.findViewById(R.id.RateThis);
-        ImageView imagePro = (ImageView) profile.findViewById(R.id.imageView);
+        ParseImageView imagePro = (ParseImageView) profile.findViewById(R.id.imageView);
+        ParseFile imageFile = tutor.getPhotoFile();
+        if (imageFile != null) {
+            imagePro.setParseFile(imageFile);
+            imagePro.loadInBackground();
+        }
         Name.setText(tutor.getName());
         Email.setText(tutor.getEmail());
         Phone.setText(tutor.getPhone());
-        Rate.setText(tutor.getRating().toString());
-//        imagePro.setImageDrawable(image_t.getDrawable());
-        //Avail.setAdapter(new AvailableAdapter(getActivity().getBaseContext(),Available));
+        Rate.setText("Rate " + tutor.getName() + " :");
+        Avail.setAdapter(new AvailableAdapter(getActivity().getBaseContext(),tutor.getAvailableTime()));
         Taught.setAdapter(new TaughtByAdapter(getActivity().getBaseContext(), tutor.getAllCourses()));
         Feeds.setAdapter(new FeedBacksAdapter(getActivity().getBaseContext(), tutor.getFeedbacks()));
         Taught.setOnTouchListener(new ListView.OnTouchListener() {
