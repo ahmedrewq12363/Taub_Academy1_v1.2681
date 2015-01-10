@@ -16,6 +16,13 @@
             android:layout_marginTop="30dp"
             />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Login"
+            android:id="@+id/textView4" />
+
     </LinearLayout>
 
 </FrameLayout>

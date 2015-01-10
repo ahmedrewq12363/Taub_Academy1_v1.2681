@@ -22,7 +22,7 @@ public class MainActivity extends FragmentActivity implements communicator {
     Describtion DescFragment = new Describtion();
     CoursesList CourFragment = new CoursesList();
     FragmentManager manager = getFragmentManager();
-
+    private MainFragment mainFragment;
 
 
     @Override
@@ -43,6 +43,16 @@ public class MainActivity extends FragmentActivity implements communicator {
                 return true;
             case R.id.Login_button:
                 LogIn loginpage = new LogIn();
+
+                    mainFragment = new MainFragment();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(android.R.id.content,mainFragment)
+                            .commit();
+
+                    mainFragment = (MainFragment) getSupportFragmentManager()
+                            .findFragmentById(android.R.id.content);
+
                 FragmentTransaction Transaction = manager.beginTransaction();
                 Transaction.add(R.id.ProfileFrag, loginpage, "login");
                 Transaction.addToBackStack("login");
@@ -70,6 +80,7 @@ public class MainActivity extends FragmentActivity implements communicator {
         Transaction.add(R.id.DescFrag, DescFragment, "Describtions");
         Transaction.addToBackStack("Describtions And Courses");
         Transaction.commit();
+
 //        Tutor.updateAlTutorials();
     }
 
