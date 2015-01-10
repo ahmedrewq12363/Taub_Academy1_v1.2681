@@ -1,11 +1,13 @@
 package com.taubacademy;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,15 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Profile extends Fragment {
-static    String Name_t;
-static    String Email_t;
-static    String Phone_t;
-static    String Rate_t;
-static    ImageView image_t;
-static    String[] Available;
-static    String[] Feedbackss;
-static    String[] ByF;
-static    List<Course> courses_t;
+    String Name_t;
+    String Email_t;
+    String Phone_t;
+    String Rate_t;
+    ImageView image_t;
+    String[] Available;
+    String[] Feedbackss;
+    String[] ByF;
+    List<Course> courses_t;
 
     public Profile()
     {
@@ -60,14 +62,79 @@ static    List<Course> courses_t;
         TextView Phone= (TextView) profile.findViewById(R.id.Phone);
         TextView Rate = (TextView) profile.findViewById(R.id.RateThis);
         ImageView imagePro = (ImageView) profile.findViewById(R.id.imageView);
+        ImageView imageEmail = (ImageView) profile.findViewById(R.id.EmailImage);
         Name.setText(Name_t);
         Email.setText(Email_t);
         Phone.setText(Phone_t);
         Rate.setText(Rate_t);
-        imagePro.setImageDrawable(image_t.getDrawable());
+//        imagePro.setImageDrawable(image_t.getDrawable());
         Avail.setAdapter(new AvailableAdapter(getActivity().getBaseContext(),Available));
         Taught.setAdapter(new TaughtByAdapter(getActivity().getBaseContext(),courses_t));
         Feeds.setAdapter(new FeedBacksAdapter(getActivity().getBaseContext(), Feedbackss,ByF));
+        Taught.setOnTouchListener(new ListView.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
+        Avail.setOnTouchListener(new ListView.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
+        Feeds.setOnTouchListener(new ListView.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
+
         return profile;
     }
 

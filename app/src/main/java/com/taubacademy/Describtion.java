@@ -19,8 +19,8 @@ import java.util.ArrayList;
  * Created by ziad on 12/26/2014.
  */
 public class Describtion extends Fragment implements AdapterView.OnItemClickListener {
-    static ListView listView;
-    static TextView text1;
+     ListView listView;
+     TextView text1;
     String[] Teachers_orig = {"Ahmed Eissa", "Taha Mahajna", "Abo Elsalamy", "Talal", "Ziad", "Abo Elrazik", "Ward", "Hosam Eissa", "Ghassan"};
     String[] Ranks_orig = {"5", "3", "0", "2", "4", "5", "2", "3", "4"};
     String[] Salary_orig = {"20", "14", "0", "4", "22", "12", "34", "55", "12"};
@@ -31,6 +31,12 @@ public class Describtion extends Fragment implements AdapterView.OnItemClickList
     String[] Courses_name = {"Introduction To Computers Science","Theory Of Compilation","Software Project","Introduction To System Programming"};
     String[] Courses_num= {"234114","236360","236554","234122"};
     communicator c;
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -132,5 +138,6 @@ public class Describtion extends Fragment implements AdapterView.OnItemClickList
         c.ChangeFrag(Name_t,Email_t,Phone_t,Rate_t,image_t,Feedbackss,ByF,courses,Available);
 
     }
+
 }
 
