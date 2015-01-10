@@ -1,6 +1,5 @@
 package com.taubacademy;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -9,13 +8,9 @@ import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 
 import com.parse.ParseException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends FragmentActivity implements communicator {
@@ -60,7 +55,7 @@ public class MainActivity extends FragmentActivity implements communicator {
         Transaction.add(R.id.DescFrag, DescFragment, "Describtions");
         Transaction.addToBackStack("Describtions And Courses");
         Transaction.commit();
-
+//        Tutor.updateAlTutorials();
     }
 
 

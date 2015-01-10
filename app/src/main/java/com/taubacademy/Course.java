@@ -37,7 +37,7 @@ public class Course extends ParseObject {
     }
 
     public String getName() {
-        return getString("name");
+        return getString("title");
     }
 
     public void setName(String name) {

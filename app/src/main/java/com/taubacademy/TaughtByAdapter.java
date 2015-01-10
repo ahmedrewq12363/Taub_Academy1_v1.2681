@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.parse.ParseException;
+
 import java.lang.ref.WeakReference;
 import java.util.List;
 
@@ -53,6 +55,11 @@ public class TaughtByAdapter extends BaseAdapter {
         } else {
 
             viewH = (ViewHolder) view.getTag();
+        }
+        try {
+            courses.get(i).fetchIfNeeded();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         viewH.firstLine.setText(courses.get(i).getName());
         viewH.secondLine.setText(courses.get(i).getCourseId().toString());

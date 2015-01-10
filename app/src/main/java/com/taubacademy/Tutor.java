@@ -1,13 +1,14 @@
 package com.taubacademy;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @ParseClassName("Tutor")
 public class Tutor extends ParseObject {
@@ -96,10 +97,14 @@ public class Tutor extends ParseObject {
     public void setPhone(String Salary) {
         put("Phone", Salary);
     }
-    public Map<String,String> getFeedbacks()
+    public List<Pair> getFeedbacks()
     {
-        Map<String,String> feedBacks = getMap("FeedBacks");
-        return feedBacks != null ? feedBacks : new HashMap<String, String>();
+        List<Pair> feedBacks = getList("FeedBacks");
+        if(feedBacks == null)
+        {
+            return new ArrayList<Pair>();
+        }
+        return feedBacks;
     }
     public Boolean setFeedback(Tutor t ,String Feedback)
     {
@@ -107,35 +112,78 @@ public class Tutor extends ParseObject {
         {
             return  false;
         }
-        Map<String,String> feedBack = new HashMap<String, String>();
-        feedBack.put(t.getName(),Feedback);
-        addUnique("FeedBacks", feedBack);
+        Pair pair = null;
+        ParseQuery q = ParseQuery.getQuery("Pair");
+        try {
+            pair = (Pair) q.whereEqualTo("first",t).find().get(0);
+        } catch (Exception e) {
+            pair = new Pair(t,Feedback);
+            pair.update();
+        }
+
+        addUnique("FeedBacks", pair);
         saveInBackground();
         return true;
     }
-    public Boolean setRating(Tutor t ,Integer Rating)
-    {
+    public Boolean setRating(Tutor t ,Integer Rating) {
         if(t.equals(this))
         {
             return  false;
         }
         Integer OverallRating = getRating();
-        Map<String,String> getAllRatings = getMap("Ratings");
+        List<PairRatings> getAllRatings = getList("Ratings");
         if(getAllRatings == null)
         {
-            getAllRatings = new HashMap<String, String>();
+            getAllRatings = new ArrayList<PairRatings>();
         }
         OverallRating *= getAllRatings.size() == 0 ? 1 : getAllRatings.size();
+        PairRatings pair = null;
+        ParseQuery q = ParseQuery.getQuery("PairRatings");
         try {
-            OverallRating -= Integer.parseInt(getAllRatings.get(t.getName()));
-        }catch(Exception c)
-        {
+            pair = (PairRatings) q.whereEqualTo("first",t).find().get(0);
+        } catch (Exception e) {
+            pair = new PairRatings(t,Rating.toString());
+            pair.update();
+        }
 
+        Boolean flag =false;
+        for(PairRatings p : getAllRatings)
+            {
+                if(p.equals(pair))
+                {
+                    OverallRating -= Integer.parseInt(p.getSecond());
+                    flag = true;
+                    break;
+                }
+            }
+        if(flag == false)
+        {
+            getAllRatings.add(pair);
         }
         OverallRating += Rating;
-        getAllRatings.put(t.getName(),Rating.toString());
-        put("Ratings",getAllRatings);
+        OverallRating /= getAllRatings.size();
+        setRating(OverallRating);
+        put("Ratings", getAllRatings);
         saveInBackground();
         return true;
+    }
+    public static void updateAlTutorials()
+    {
+        ParseQuery query = ParseQuery.getQuery("Tutor");
+        List<Tutor> tutors = null;
+        try {
+            tutors = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        for(int i=0;i<tutors.size()-1;i++)
+        {
+            tutors.get(i).setFeedback(tutors.get(i+1),"Ziad is Fragment and LogIn Monster");
+            tutors.get(i).setRating(tutors.get(i+1),4);
+        }
+        for(Tutor t : tutors)
+        {
+            t.saveInBackground();
+        }
     }
 }

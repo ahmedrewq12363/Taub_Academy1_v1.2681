@@ -9,26 +9,24 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by Ahmed on 1/9/2015.
  */
 class FeedBacksAdapter extends BaseAdapter {
-    String[] names;
-    String[] feedbacks;
+   List<Pair> feedbacks;
     WeakReference<Context> contextWeakReference;
 
-    FeedBacksAdapter(Context c, Map<String, String> feddbacks) {
+    FeedBacksAdapter(Context c, List<Pair> feddbacks) {
         super();
         contextWeakReference = new WeakReference<Context>(c);
-        this.names = (String[]) feddbacks.keySet().toArray();
-        this.feedbacks = (String[]) feddbacks.values().toArray();
+        this.feedbacks = feddbacks;
     }
 
     @Override
     public int getCount() {
-        return feedbacks.length;
+        return feedbacks.size();
     }
 
     @Override
@@ -56,8 +54,8 @@ class FeedBacksAdapter extends BaseAdapter {
         } else {
             viewH = (ViewHolder) view.getTag();
         }
-        viewH.firstLine.setText(feedbacks[i]);
-        viewH.secondLine.setText("By " + names[i]);
+        viewH.firstLine.setText(feedbacks.get(i).getSecond());
+        viewH.secondLine.setText("By " + feedbacks.get(i).getFirst().getName());
         return view;
     }
 

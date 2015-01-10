@@ -15,6 +15,8 @@ public class MainApplication extends Application {
         Parse.enableLocalDatastore(this);
         ParseObject.registerSubclass(Tutor.class);
         ParseObject.registerSubclass(Course.class);
+        ParseObject.registerSubclass(Pair.class);
+        ParseObject.registerSubclass(PairRatings.class);
         Parse.initialize(this, "QsQezpRGVsuUMjw3zaj57cHlrSGUlKkHKzfnVIxv", "gqqgjaBFS19B2Y0uvpNQ0A8RSY13xhk1u5ObE9tb");
 
     }
