@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.parse.ParseException;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 public class CoursesList  extends Fragment implements AdapterView.OnItemClickListener {
@@ -90,7 +92,11 @@ public class CoursesList  extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         TextView text = (TextView) view.findViewById(R.id.secondLine);
-        c.respond(text.getText().toString());
+        try {
+            c.respond(text.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
      class mylistAdapter extends BaseAdapter  {

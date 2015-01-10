@@ -115,26 +115,12 @@ public class Describtion extends Fragment implements AdapterView.OnItemClickList
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        getActivity().setContentView(R.layout.profile);
-        TextView Name = (TextView) getActivity().findViewById(R.id.NameOnPRo);
-        TextView Email = (TextView) getActivity().findViewById(R.id.Email);
-        ListView Avail = (ListView) getActivity().findViewById(R.id.ListAvail);
-        ListView Taught = (ListView) getActivity().findViewById(R.id.Courses);
-        ListView Feeds = (ListView) getActivity().findViewById(R.id.Feedbacks);
-        TextView Phone= (TextView) getActivity().findViewById(R.id.Phone);
-        TextView Rate = (TextView) getActivity().findViewById(R.id.RateThis);
-        ImageView imagePro = (ImageView) getActivity().findViewById(R.id.imageView);
+
         String Name_t = (String) ((TextView)view.findViewById(R.id.firstLine1)).getText();
         String Email_t = "  " +Name_t+"@gmail.com";
         String Phone_t = "  050-245-4921";
         String Rate_t = "Rate "+ Name_t;
         ImageView image_t = (ImageView) view.findViewById(R.id.icon11);
-        Name.setText(Name_t);
-        Email.setText(Email_t);
-        Phone.setText(Phone_t);
-        Rate.setText(Rate_t);
-        imagePro.setImageDrawable(image_t.getDrawable());
-        Avail.setAdapter(new AvailableAdapter(getActivity().getBaseContext(),Available));
         ArrayList<Course> courses = new ArrayList<Course>();
         for(int index=0;index<Courses_name.length;index++)
         {
@@ -143,8 +129,8 @@ public class Describtion extends Fragment implements AdapterView.OnItemClickList
             c.setCourseId(Integer.parseInt(Courses_num[i]));
             courses.add(c);
         }
-        Taught.setAdapter(new TaughtByAdapter(getActivity().getBaseContext(),courses));
-        Feeds.setAdapter(new FeedBacksAdapter(getActivity().getBaseContext(), Feedbackss,ByF));
+        c.ChangeFrag(Name_t,Email_t,Phone_t,Rate_t,image_t,Feedbackss,ByF,courses,Available);
+
     }
 }
 
