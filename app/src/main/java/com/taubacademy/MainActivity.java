@@ -2,12 +2,17 @@ package com.taubacademy;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ClipData;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.RadioButton;
 
 import com.parse.ParseException;
@@ -19,11 +24,14 @@ public class MainActivity extends FragmentActivity implements communicator {
     FragmentManager manager = getFragmentManager();
 
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+
+            // Inflate the menu items for use in the action bar
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.action_bar, menu);
+            return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -32,6 +40,13 @@ public class MainActivity extends FragmentActivity implements communicator {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.Login_button:
+                LogIn loginpage = new LogIn();
+                FragmentTransaction Transaction = manager.beginTransaction();
+                Transaction.add(R.id.ProfileFrag, loginpage, "login");
+                Transaction.addToBackStack("login");
+                Transaction.commit();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -59,6 +74,12 @@ public class MainActivity extends FragmentActivity implements communicator {
     }
 
 
+     AdapterView.OnItemClickListener onLoginClick = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+        }
+    };
     @Override
     public void respond(String course) throws ParseException {
         DescFragment.changeData(course);
