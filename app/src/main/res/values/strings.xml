@@ -264,5 +264,7 @@
     </string-array>
 
     <string name="title_activity_log_in">LogInActivity</string>
+    <string name="AvailableOn">Available On</string>
+    <string name="RelevantCourses">Relevant Courses</string>
 
 </resources>
