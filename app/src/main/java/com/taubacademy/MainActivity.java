@@ -1,7 +1,7 @@
 package com.taubacademy;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -26,7 +26,7 @@ import java.util.List;
 public class MainActivity extends FragmentActivity implements communicator {
     Describtion DescFragment = new Describtion();
     CoursesList CourFragment = new CoursesList();
-    FragmentManager manager = getFragmentManager();
+    FragmentManager manager = getSupportFragmentManager();
     private MainFragment mainFragment;
 
     @Override
@@ -34,13 +34,14 @@ public class MainActivity extends FragmentActivity implements communicator {
         super.onActivityResult(requestCode, resultCode, data);
         ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-            // Inflate the menu items for use in the action bar
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.action_bar, menu);
-            return super.onCreateOptionsMenu(menu);
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_bar, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -52,35 +53,24 @@ public class MainActivity extends FragmentActivity implements communicator {
                 return true;
             case R.id.Login_button:
                 LogIn logIn = new LogIn();
-                List<String> permissions = Arrays.asList("public_profile", "user_friends", "user_about_me",
-                        "user_relationships", "user_birthday", "user_location");
+                List<String> permissions = Arrays.asList("public_profile", "email","user_mobile_phone");
                 ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
                     @Override
                     public void done(ParseUser user, ParseException err) {
                         if (user == null) {
+                            ParseUser user1 = ParseUser.getCurrentUser();
                             Log.d("Ahmed",
                                     "Uh oh. The user cancelled the Facebook login.");
                         } else if (user.isNew()) {
+                            String s = user.getEmail();
 
                             try {
-                                user.signUp();
+                                //user.signUp();
                                 user.save();
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            Log.d("Ahmed",
-                                    "User signed up and logged in through Facebook!");
-                            //showUserDetailsActivity();
                         } else {
-                            try {
-                                user.signUp();
-                                user.save();
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            Log.d("Ahmed",
-                                    "User logged in through Facebook!");
-                            //showUserDetailsActivity();
                         }
                     }
                 });
@@ -106,17 +96,25 @@ public class MainActivity extends FragmentActivity implements communicator {
         Transaction.add(R.id.DescFrag, DescFragment, "Describtions");
         Transaction.addToBackStack("Describtions And Courses");
         Transaction.commit();
-
+//        ParseUser user = ParseUser.getCurrentUser();
+//        user.toString();
+//        Request.executeMeRequestAsync(ParseFacebookUtils.getSession(), new Request.GraphUserCallback() {
+//            @Override
+//            public void onCompleted(GraphUser graphUser, Response response) {
+//                ParseUser.getCurrentUser().setUsername(graphUser.getFirstName() + " " + graphUser.getLastName());
+//            }
+//        });
 //        Tutor.updateAlTutorials();
     }
 
 
-     AdapterView.OnItemClickListener onLoginClick = new AdapterView.OnItemClickListener() {
+    AdapterView.OnItemClickListener onLoginClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
         }
     };
+
     @Override
     public void respond(String course) throws ParseException {
         DescFragment.changeData(course);

@@ -8,6 +8,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @ParseClassName("Tutor")
@@ -97,7 +98,7 @@ public class Tutor extends ParseObject {
         }
         return feedBacks;
     }
-    public void setAvailableTime(ArrayList<String> AvailableTimes)
+    public void setAvailableTime(List<String> AvailableTimes)
     {
         addAll("AvailableTime",AvailableTimes);
     }
@@ -179,9 +180,11 @@ public class Tutor extends ParseObject {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        for(int i=0;i<tutors.size()-1;i++)
+        for(int i=0;i<tutors.size()-2;i++)
         {
             tutors.get(i).setFeedback(tutors.get(i+1),"Ziad is Fragment and LogIn Monster");
+            tutors.get(i).setFeedback(tutors.get(i+2),"very recommended");
+            tutors.get(i).setAvailableTime(Arrays.asList("Tuesday 9:00-11:00","Sunday 19:00-20:00","Friday 7:00-8:00"));
             tutors.get(i).setRating(tutors.get(i+1),4);
         }
         for(Tutor t : tutors)
