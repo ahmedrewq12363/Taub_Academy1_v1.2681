@@ -1,7 +1,9 @@
 package com.taubacademy;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -9,12 +11,19 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.melnykov.fab.FloatingActionButton;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
+import com.parse.ParseUser;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class Profile extends Fragment {
     Tutor tutor;
-
     public Profile() {
 
     }
@@ -49,9 +58,11 @@ public class Profile extends Fragment {
         Email.setText(tutor.getEmail());
         Phone.setText(tutor.getPhone());
         Rate.setText("Rate " + tutor.getName() + " :");
-        Avail.setAdapter(new AvailableAdapter(getActivity().getBaseContext(),tutor.getAvailableTime()));
+        Avail.setAdapter(new AvailableAdapter(getActivity().getBaseContext(), tutor.getAvailableTime()));
         Taught.setAdapter(new TaughtByAdapter(getActivity().getBaseContext(), tutor.getAllCourses()));
         Feeds.setAdapter(new FeedBacksAdapter(getActivity().getBaseContext(), tutor.getFeedbacks()));
+        FloatingActionButton fab = (FloatingActionButton) profile.findViewById(R.id.fab);
+        fab.attachToListView(Feeds);
         Taught.setOnTouchListener(new ListView.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

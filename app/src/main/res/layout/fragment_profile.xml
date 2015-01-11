@@ -153,17 +153,6 @@
         android:layout_toEndOf="@+id/ListAvail"
         android:layout_below="@+id/textView2" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Feedback"
-        android:textColor="#0099CC"
-        android:textStyle="bold"
-        android:id="@+id/button"
-        android:layout_toEndOf="@+id/NameOnPRo"
-        android:layout_below="@+id/Courses"
-        android:layout_alignParentEnd="true" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -187,8 +176,8 @@
         android:gravity="center"
         android:layout_below="@+id/ListAvail"
         android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/button"
-        android:layout_toStartOf="@+id/button" />
+        android:layout_alignBottom="@+id/fab"
+        android:layout_toStartOf="@+id/fab" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -201,5 +190,13 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true" />
 
+    <com.melnykov.fab.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:id="@+id/fab"
+        android:src="@drawable/ic_action_new"
+        android:layout_below="@+id/Courses"
+        android:layout_alignParentEnd="true"  />
 </RelativeLayout>
     </ScrollView>

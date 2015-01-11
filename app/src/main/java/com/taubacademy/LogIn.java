@@ -1,9 +1,9 @@
 package com.taubacademy;
 
-import android.app.Activity;
+import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +26,7 @@ public class LogIn extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    ProgressDialog progressDialog;
 
     private OnFragmentInteractionListener mListener;
 
@@ -48,12 +49,14 @@ public class LogIn extends Fragment {
     }
 
     public LogIn() {
-        // Required empty public constructor
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*progressDialog = ProgressDialog.show(
+                getActivity().getBaseContext(), "", "Logging in...", true);*/
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);

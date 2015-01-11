@@ -6,7 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Courses </string>
-    <string name="facebook_app_id">415712595271865</string>
+    <string name="facebook_app_id">863971140321113</string>
 
     <string-array name="Titles">
         <item>taha</item>
@@ -262,5 +262,7 @@
         <item>Seminar in neural networks</item>
         <item>Inroduction to Quantum Information Processing</item>
     </string-array>
+
+    <string name="title_activity_log_in">LogInActivity</string>
 
 </resources>

@@ -65,15 +65,6 @@ public class Tutor extends ParseObject {
         put("photo", file);
     }
 
-    public Integer getRankCount() {
-        return getInt("count");
-    }
-
-    public void addOneToRatingCount() {
-        Integer tmp = getRankCount();
-        put("count", tmp + 1);
-    }
-
     public void addCourse(Course c) {
         addUnique("Courses", c);
     }
@@ -105,6 +96,10 @@ public class Tutor extends ParseObject {
             return new ArrayList<Pair>();
         }
         return feedBacks;
+    }
+    public void setAvailableTime(ArrayList<String> AvailableTimes)
+    {
+        addAll("AvailableTime",AvailableTimes);
     }
     public Boolean setFeedback(Tutor t ,String Feedback)
     {
