@@ -19,7 +19,8 @@ import java.util.Comparator;
 /**
  * Created by ziad on 12/26/2014.
  */
-public class Describtion extends Fragment implements AdapterView.OnItemClickListener {
+public class
+        Describtion extends Fragment implements AdapterView.OnItemClickListener {
     ListView listView;
     TextView text1;
     communicator c;
@@ -37,6 +38,10 @@ public class Describtion extends Fragment implements AdapterView.OnItemClickList
     }
 
     public void SortBy(String sortParam) {
+        if(listView.getAdapter() == null)
+        {
+            return;
+        }
         ArrayList<Tutor> tutors = ((tutorsAdapter)listView.getAdapter()).getTutors();
         if (sortParam == "Salary") {
             Collections.sort(tutors, new Comparator<Tutor>() {
@@ -68,6 +73,7 @@ public class Describtion extends Fragment implements AdapterView.OnItemClickList
     public void changeData(String course) throws ParseException {
         ArrayList<Tutor> tutors =  Course.getTutorsOfCourse(Integer.parseInt(course));
         if (tutors.size() == 0) {
+            listView.setAdapter(new tutorsAdapter(getActivity().getBaseContext(),new ArrayList<Tutor>()));
             text1.setText("No Teachers Available For This Course");
             text1.setTextColor(Color.parseColor("#0099CC"));
             return;

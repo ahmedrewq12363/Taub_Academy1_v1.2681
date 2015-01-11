@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <!-- Search, should appear as action button -->
     <item android:id="@+id/Login_button"
-        android:icon="@drawable/login"
+        android:icon="@drawable/user_501"
         android:title="button_login"
         android:showAsAction="ifRoom"
         />

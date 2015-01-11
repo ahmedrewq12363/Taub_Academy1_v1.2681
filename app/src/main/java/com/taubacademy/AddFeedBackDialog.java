@@ -18,7 +18,7 @@ public class AddFeedBackDialog extends DialogFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_add_feed_back_dialog, container,
                 false);
-        getDialog().setTitle("DialogFragment Tutorial");
+        getDialog().setTitle("Add Feedback to "+ tutor.getName());
         // Do something else
         return rootView;
     }
