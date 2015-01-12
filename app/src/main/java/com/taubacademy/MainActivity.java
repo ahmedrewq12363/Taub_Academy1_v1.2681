@@ -53,7 +53,7 @@ public class MainActivity extends FragmentActivity implements communicator {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.Login_button:
-                if(ParseUser.getCurrentUser() != null)
+                if(ParseUser.getCurrentUser() != null && ParseFacebookUtils.isLinked(ParseUser.getCurrentUser()))
                 {
                     FragmentTransaction Transaction = manager.beginTransaction();
                     Transaction.replace(R.id.ProfileFrag, new MyProfileFragment(),null);
@@ -93,6 +93,7 @@ public class MainActivity extends FragmentActivity implements communicator {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ParseUser.getCurrentUser().fetchInBackground();
         FragmentTransaction Transaction = manager.beginTransaction();
         setContentView(R.layout.activity_my);
         Transaction.add(R.id.CoursesFrag, CourFragment, "Courses");
