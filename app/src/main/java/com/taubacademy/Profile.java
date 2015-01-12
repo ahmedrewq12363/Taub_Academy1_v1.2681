@@ -1,9 +1,6 @@
 package com.taubacademy;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,8 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.melnykov.fab.FloatingActionButton;
-import com.parse.ParseFile;
-import com.parse.ParseImageView;
+import com.parse.ParseException;
 
 public class Profile extends android.support.v4.app.Fragment{
     Tutor tutor;
@@ -24,6 +20,11 @@ public class Profile extends android.support.v4.app.Fragment{
 
     public Profile(Tutor tutor) {
         this.tutor = tutor;
+        try {
+            this.tutor.fetch();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -79,12 +80,12 @@ public class Profile extends android.support.v4.app.Fragment{
                 }
             }
         });
-        ParseImageView imagePro = (ParseImageView) profile.findViewById(R.id.imageView);
+        /*ParseImageView imagePro = (ParseImageView) profile.findViewById(R.id.imageView);
         ParseFile imageFile = tutor.getPhotoFile();
         if (imageFile != null) {
             imagePro.setParseFile(imageFile);
             imagePro.loadInBackground();
-        }
+        }*/
         Name.setText(tutor.getName());
         Email.setText(tutor.getEmail());
         Phone.setText(tutor.getPhone());

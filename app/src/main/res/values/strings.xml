@@ -7,7 +7,14 @@
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Courses </string>
     <string name="facebook_app_id">863971140321113</string>
-
+    <string name="title_activity_card_view">CardViewActivity</string>
+    <string name="cardview_contents">
+        <font fgcolor="#FFFFFFFF">android:elevation</font>
+       <font
+            fgcolor="#FFFFFFFF">card_view:cardCornerRadius</font>
+    </string>
+    <string name="cardview_radius_seekbar_text">Radius</string>
+    <string name="cardview_elevation_seekbar_text">Elevation</string>
     <string-array name="Titles">
         <item>taha</item>
         <item>sami</item>

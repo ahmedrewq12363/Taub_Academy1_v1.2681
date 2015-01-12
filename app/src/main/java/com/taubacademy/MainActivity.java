@@ -55,8 +55,9 @@ public class MainActivity extends FragmentActivity implements communicator {
             case R.id.Login_button:
                 if(ParseUser.getCurrentUser() != null && ParseFacebookUtils.isLinked(ParseUser.getCurrentUser()))
                 {
+                    profile = new Profile((Tutor)ParseUser.getCurrentUser().get("Tutor"));
                     FragmentTransaction Transaction = manager.beginTransaction();
-                    Transaction.replace(R.id.ProfileFrag, new MyProfileFragment(),null);
+                    Transaction.replace(R.id.ProfileFrag, profile,null);
                     Transaction.addToBackStack(null);
                     Transaction.commit();
                     return true;
@@ -73,6 +74,7 @@ public class MainActivity extends FragmentActivity implements communicator {
                             Transaction.addToBackStack(null);
                             Transaction.commit();
                         } else {
+
                         }
                     }
                 });
