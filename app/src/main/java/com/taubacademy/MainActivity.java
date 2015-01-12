@@ -1,7 +1,5 @@
 package com.taubacademy;
 
-import android.content.Context;
-import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
@@ -15,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -148,32 +145,5 @@ public class MainActivity extends FragmentActivity implements communicator {
         }
         DescFragment.SortBy("Salary");
     }
-    public void onSendMailClick(View v){
-        final Context context = getApplicationContext();
-        sendEmail(context, new String[]{"abc@xyz.com"}, "Sending Email",
-                "Test Email", "I am body");
-    }
-    public static void sendEmail(Context context, String[] recipientList,
-                                 String title, String subject, String body) {
-        Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-        emailIntent.setType("plain/text");
-        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, recipientList);
-        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
-        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, body);
 
-        emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Intent.createChooser(emailIntent, title);
-        context.startActivity(emailIntent);
-    }
-    public void onPhoneClick(View v){
-        TextView view = (TextView) findViewById(R.id.Phone);
-        String phone = view.getText().toString();
-        call(phone);
-
-    }
-    public void call(String phone) {
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:" + phone));
-        startActivity(callIntent);
-    }
 }

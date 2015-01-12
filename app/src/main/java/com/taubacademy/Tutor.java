@@ -1,7 +1,13 @@
 package com.taubacademy;
 
+import android.util.Log;
+
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.model.GraphUser;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -191,5 +197,41 @@ public class Tutor extends ParseObject {
         {
             t.saveInBackground();
         }
+    }
+    static public void createNewTutor()
+    {
+        final Tutor t = new Tutor();
+        t.setAuthor(ParseUser.getCurrentUser());
+        try {
+            t.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        ParseUser.getCurrentUser().put("Tutor",t);
+        Request request = Request.newMeRequest(ParseFacebookUtils.getSession(),new Request.GraphUserCallback() {
+            @Override
+            public void onCompleted(GraphUser user, Response response) {
+                if (user != null) {
+                    try {
+                        // Populate the JSON object
+                        try {
+                            t.setName(user.getFirstName() +" " + user.getLastName());
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+                        if (user.getProperty("email") != null) {
+                            t.setEmail((String) user.getProperty("email"));
+                        }
+                        t.saveInBackground();
+
+                    } catch (Exception e) {
+                        Log.e("Facebook parsing data", "Error parsing returned user data.");
+                    }
+
+                } else if (response.getError() != null) {
+                }
+            }
+        });
+        request.executeAsync();
     }
 }
