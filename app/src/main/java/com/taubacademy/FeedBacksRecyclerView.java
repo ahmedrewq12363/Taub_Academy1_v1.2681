@@ -1,7 +1,7 @@
 package com.taubacademy;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.melnykov.fab.FloatingActionButton;
+import com.parse.ParseException;
 
 import java.util.List;
 
@@ -29,21 +30,30 @@ public class FeedBacksRecyclerView extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RecyclerView recList = (RecyclerView) getView().findViewById(R.id.card_viewFeedback);
-        FloatingActionButton fap = (FloatingActionButton) getView().findViewById(R.id.fab);
-        fap.attachToRecyclerView(recList);
-        recList.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity().getBaseContext());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recList.setLayoutManager(llm);
-        recList.setAdapter(new FeedBackAdapter(tutor.getFeedbacks()));
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_feed_backs_recycler_view, container, false);
+        View v =  inflater.inflate(R.layout.fragment_feed_backs_recycler_view, container, false);
+        RecyclerView recList = (RecyclerView) v.findViewById(R.id.cardList);
+        FloatingActionButton fap = (FloatingActionButton) v.findViewById(R.id.fab);
+        fap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddFeedBackDialog dialog = new AddFeedBackDialog(tutor);
+                dialog.show(getFragmentManager(),"Feedback");
+            }
+        });
+        fap.attachToRecyclerView(recList);
+        recList.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity().getBaseContext());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recList.setLayoutManager(llm);
+        recList.setAdapter(new FeedBackAdapter(tutor.getFeedbacks()));
+        return v;
     }
     public class FeedBackAdapter extends RecyclerView.Adapter<FeedBackAdapter.AvailableOnFragmentHolder> {
         private List<Pair> availble;
@@ -60,6 +70,11 @@ public class FeedBacksRecyclerView extends Fragment {
         @Override
         public void onBindViewHolder(AvailableOnFragmentHolder contactViewHolder, int i) {
             Pair ci = availble.get(i);
+            try {
+                ci.fetchIfNeeded();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             contactViewHolder.By.setText(ci.getFirst().getName());
             contactViewHolder.Feedback.setText(ci.getSecond());
         }

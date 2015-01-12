@@ -27,19 +27,20 @@ public class AvailableOnFagment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RecyclerView recList = (RecyclerView) getView().findViewById(R.id.cardListAvail);
-        recList.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity().getBaseContext());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recList.setLayoutManager(llm);
-        recList.setAdapter(new AvailableOnAdapter(tutor.getAvailableTime()));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_available_on_fagment, container, false);
+        View v =  inflater.inflate(R.layout.fragment_available_on_fagment, container, false);
+        RecyclerView recList = (RecyclerView) v.findViewById(R.id.cardListAvail);
+        recList.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity().getBaseContext());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recList.setLayoutManager(llm);
+        recList.setAdapter(new AvailableOnAdapter(tutor.getAvailableTime()));
+        return v;
     }
     public class AvailableOnAdapter extends RecyclerView.Adapter<AvailableOnAdapter.AvailableOnFragmentHolder> {
         private List<String> availble;
