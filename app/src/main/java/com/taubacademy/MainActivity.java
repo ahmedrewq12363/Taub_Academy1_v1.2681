@@ -1,18 +1,20 @@
 package com.taubacademy;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -27,8 +29,7 @@ public class MainActivity extends FragmentActivity implements communicator {
     Describtion DescFragment = new Describtion();
     CoursesList CourFragment = new CoursesList();
     FragmentManager manager = getSupportFragmentManager();
-    private MainFragment mainFragment;
-
+    Profile profile;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -52,29 +53,31 @@ public class MainActivity extends FragmentActivity implements communicator {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.Login_button:
-                LogIn logIn = new LogIn();
-                List<String> permissions = Arrays.asList("public_profile", "email","user_mobile_phone");
+                if(ParseUser.getCurrentUser() != null)
+                {
+                    FragmentTransaction Transaction = manager.beginTransaction();
+                    Transaction.replace(R.id.ProfileFrag, new MyProfileFragment(),null);
+                    Transaction.addToBackStack(null);
+                    Transaction.commit();
+                    return true;
+                }
+                List<String> permissions = Arrays.asList("public_profile", "email", "user_mobile_phone");
                 ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
                     @Override
                     public void done(ParseUser user, ParseException err) {
                         if (user == null) {
-                            ParseUser user1 = ParseUser.getCurrentUser();
-                            Log.d("Ahmed",
-                                    "Uh oh. The user cancelled the Facebook login.");
                         } else if (user.isNew()) {
-                            String s = user.getEmail();
-
-                            try {
-                                //user.signUp();
-                                user.save();
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
+                            Tutor.createNewTutor();
+                            FragmentTransaction Transaction = manager.beginTransaction();
+                            Transaction.replace(R.id.ProfileFrag, new MyProfileFragment(),null);
+                            Transaction.addToBackStack(null);
+                            Transaction.commit();
                         } else {
                         }
                     }
                 });
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -96,14 +99,6 @@ public class MainActivity extends FragmentActivity implements communicator {
         Transaction.add(R.id.DescFrag, DescFragment, "Describtions");
         Transaction.addToBackStack("Describtions And Courses");
         Transaction.commit();
-//        ParseUser user = ParseUser.getCurrentUser();
-//        user.toString();
-//        Request.executeMeRequestAsync(ParseFacebookUtils.getSession(), new Request.GraphUserCallback() {
-//            @Override
-//            public void onCompleted(GraphUser graphUser, Response response) {
-//                ParseUser.getCurrentUser().setUsername(graphUser.getFirstName() + " " + graphUser.getLastName());
-//            }
-//        });
 //        Tutor.updateAlTutorials();
     }
 
@@ -122,7 +117,7 @@ public class MainActivity extends FragmentActivity implements communicator {
 
     @Override
     public void ChangeFrag(Tutor tutor) {
-        Profile profile = new Profile(tutor);
+        profile = new Profile(tutor);
         FragmentTransaction Transaction = manager.beginTransaction();
         Transaction.add(R.id.ProfileFrag, profile, "profile");
         Transaction.addToBackStack("Profile");
@@ -145,5 +140,32 @@ public class MainActivity extends FragmentActivity implements communicator {
         }
         DescFragment.SortBy("Salary");
     }
+    public void onSendMailClick(View v){
+        final Context context = getApplicationContext();
+        sendEmail(context, new String[]{profile.tutor.getEmail()}, "Sending Email",
+                "Test Email", "I am body");
+    }
+    public static void sendEmail(Context context, String[] recipientList,
+                                 String title, String subject, String body) {
+        Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+        emailIntent.setType("plain/text");
+        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, recipientList);
+        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, body);
 
+        emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent.createChooser(emailIntent, title);
+        context.startActivity(emailIntent);
+    }
+    public void onPhoneClick(View v){
+        TextView view = (TextView) findViewById(R.id.Phone);
+        String phone = view.getText().toString();
+        call(phone);
+
+    }
+    public void call(String phone) {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + phone));
+        startActivity(callIntent);
+    }
 }
