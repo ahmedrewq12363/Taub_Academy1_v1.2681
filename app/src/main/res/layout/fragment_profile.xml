@@ -46,13 +46,14 @@
         android:background="@null"
         android:layout_below="@+id/NameOnPRo"
         android:src="@drawable/phone_100"
+        android:onClick="onPhoneClick"
         android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
+        android:text="0522824228"
         android:id="@+id/Phone"
         android:background="@android:color/white"
         android:textColor="#0099CC"
@@ -68,7 +69,9 @@
         android:id="@+id/EmailImage"
         android:src="@drawable/message_outline_100"
         android:layout_above="@+id/RateThis"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="onSendMailClick"
+        />
 
     <TextView
         android:layout_width="250dp"
