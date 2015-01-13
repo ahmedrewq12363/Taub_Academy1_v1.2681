@@ -34,4 +34,5 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:3.21.1'
     compile 'com.android.support:cardview-v7:+'
     compile 'com.android.support:recyclerview-v7:21.0.0-rc1'
+    compile 'com.jpardogo.materialtabstrip:library:1.0.6'
 }

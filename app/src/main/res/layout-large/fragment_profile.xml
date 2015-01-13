@@ -11,15 +11,6 @@
         android:layout_width="match_parent"
         android:id="@+id/profileHeader"
         android:layout_height="180dp">
-        <com.parse.ParseImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/ahmed"
-            android:scaleType="centerCrop"
-            android:id="@+id/imageView"
-            android:layout_margin="8dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,7 +26,18 @@
             android:layout_toStartOf="@+id/imageView"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:textIsSelectable="false" />
+            android:textIsSelectable="false"
+            android:layout_alignParentEnd="true" />
+
+        <com.parse.ParseImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ahmed"
+            android:scaleType="centerCrop"
+            android:id="@+id/imageView"
+            android:layout_margin="8dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
 
         <ImageView
             android:layout_width="32dp"
@@ -46,7 +48,7 @@
             android:onClick="onPhoneClick"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
-            android:layout_alignParentBottom="true"
+            android:layout_alignTop="@+id/EmailImage"
             android:layout_alignParentStart="true" />
 
         <ImageView
@@ -56,8 +58,8 @@
             android:src="@drawable/message_outline_100"
             android:scaleType="centerCrop"
             android:onClick="onSendMailClick"
-            android:layout_marginStart="38dp"
-            android:layout_alignParentBottom="true"
+            android:layout_marginStart="40dp"
+            android:layout_alignTop="@+id/textView21"
             android:layout_toEndOf="@+id/PhoneImage" />
 
         <RatingBar
@@ -68,8 +70,8 @@
             android:background="@android:color/white"
             android:stepSize="1.0"
             android:rating="2.0"
-            android:layout_below="@+id/NameOnPRo"
-            android:layout_toStartOf="@+id/textView2" />
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,24 +84,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Salary: "
             android:textColor="#0099CC"
             android:id="@+id/textView21"
-            android:layout_alignTop="@+id/EmailImage"
+            android:layout_below="@+id/imageView"
             android:layout_toStartOf="@+id/imageView" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Small Text"
             android:textColor="#0099CC"
             android:id="@+id/textView2"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/imageView"
-            android:layout_alignTop="@+id/textView21" />
+            android:layout_below="@+id/imageView"
+            android:layout_alignStart="@+id/imageView" />
     </RelativeLayout>
     <com.astuetz.PagerSlidingTabStrip
         android:layout_width="match_parent"
@@ -111,15 +111,15 @@
         app:pstsShouldExpand="true"
         android:layout_alignParentStart="true">
 
-        </com.astuetz.PagerSlidingTabStrip>
-    <android.support.v4.view.ViewPager
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/Tabs" />
+    </com.astuetz.PagerSlidingTabStrip>
+        <android.support.v4.view.ViewPager
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/Tabs" />
 
 
         <!---->

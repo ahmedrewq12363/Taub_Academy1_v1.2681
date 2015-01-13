@@ -17,7 +17,9 @@
         android:layout_height="65dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
+        android:textColor="#0099CC"
         android:id="@+id/CourseName"
+        android:padding="5dp"
         android:layout_weight="0.04"
         android:layout_alignParentTop="true" />
 
@@ -26,6 +28,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
+        android:textColor="#0099CC"
+        android:padding="5dp"
         android:id="@+id/CourseNum"
         android:layout_below="@+id/CourseName"
         android:layout_alignParentStart="true" />

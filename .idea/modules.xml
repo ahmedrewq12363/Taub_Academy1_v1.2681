@@ -10,7 +10,6 @@
       <module fileurl="file://$PROJECT_DIR$/SwitchUserSample/SwitchUserSample.iml" filepath="$PROJECT_DIR$/SwitchUserSample/SwitchUserSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebook/facebook.iml" filepath="$PROJECT_DIR$/facebook/facebook.iml" />
-      <module fileurl="file://$PROJECT_DIR$/taub_academy_project.iml" filepath="$PROJECT_DIR$/taub_academy_project.iml" />
     </modules>
   </component>
 </project>

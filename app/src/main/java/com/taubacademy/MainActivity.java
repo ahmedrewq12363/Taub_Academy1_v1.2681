@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -155,15 +154,12 @@ public class MainActivity extends FragmentActivity implements communicator {
         emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, recipientList);
         emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
         emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, body);
-
         emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Intent.createChooser(emailIntent, title);
         context.startActivity(emailIntent);
     }
     public void onPhoneClick(View v){
-        TextView view = (TextView) findViewById(R.id.Phone);
-        String phone = view.getText().toString();
-        call(phone);
+        call(profile.tutor.getPhone());
 
     }
     public void call(String phone) {

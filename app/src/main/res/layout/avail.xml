@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
+        android:textColor="#0099CC"
         android:layout_gravity="center"
         android:id="@+id/AvailId" />
 </LinearLayout>
