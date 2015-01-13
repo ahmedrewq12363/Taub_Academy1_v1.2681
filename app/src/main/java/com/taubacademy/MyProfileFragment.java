@@ -57,8 +57,6 @@ public class MyProfileFragment extends Fragment {
     }
     private Tutor t;
     public MyProfileFragment() {
-        this.t = (Tutor)ParseUser.getCurrentUser().get("Tutor");
-        t.fetchInBackground();
     }
 
     @Override

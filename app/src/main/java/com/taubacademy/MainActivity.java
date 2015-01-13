@@ -1,25 +1,35 @@
 package com.taubacademy;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
+import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,31 +62,35 @@ public class MainActivity extends FragmentActivity implements communicator {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.Login_button:
-                if(ParseUser.getCurrentUser() != null && ParseFacebookUtils.isLinked(ParseUser.getCurrentUser()))
-                {
-                    profile = new Profile((Tutor)ParseUser.getCurrentUser().get("Tutor"));
-                    FragmentTransaction Transaction = manager.beginTransaction();
-                    Transaction.replace(R.id.ProfileFrag, profile,null);
-                    Transaction.addToBackStack(null);
-                    Transaction.commit();
-                    return true;
-                }
-                List<String> permissions = Arrays.asList("public_profile", "email", "user_mobile_phone");
-                ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
-                    @Override
-                    public void done(ParseUser user, ParseException err) {
-                        if (user == null) {
-                        } else if (user.isNew()) {
-                            Tutor.createNewTutor();
-                            FragmentTransaction Transaction = manager.beginTransaction();
-                            Transaction.replace(R.id.ProfileFrag, new MyProfileFragment(),null);
-                            Transaction.addToBackStack(null);
-                            Transaction.commit();
-                        } else {
-
-                        }
-                    }
-                });
+//                if(ParseUser.getCurrentUser() != null && ParseFacebookUtils.isLinked(ParseUser.getCurrentUser()))
+//                {
+//                    profile = new Profile((Tutor)ParseUser.getCurrentUser().get("Tutor"));
+//                    FragmentTransaction Transaction = manager.beginTransaction();
+//                    Transaction.replace(R.id.ProfileFrag, profile,null);
+//                    Transaction.addToBackStack(null);
+//                    Transaction.commit();
+//                    return true;
+//                }
+//                List<String> permissions = Arrays.asList("public_profile", "email", "user_mobile_phone");
+//                ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
+//                    @Override
+//                    public void done(ParseUser user, ParseException err) {
+//                        if (user == null) {
+//                        } else if (user.isNew()) {
+//                            Tutor.createNewTutor();
+//                            FragmentTransaction Transaction = manager.beginTransaction();
+//                            Transaction.replace(R.id.ProfileFrag, new MyProfileFragment(),null);
+//                            Transaction.addToBackStack(null);
+//                            Transaction.commit();
+//                        } else {
+//
+//                        }
+//                    }
+//                });
+                FragmentTransaction Transaction = manager.beginTransaction();
+                Transaction.add(R.id.ProfileFrag, new MyProfileFragment(), null);
+                Transaction.addToBackStack(null);
+                Transaction.commit();
         }
 
         return super.onOptionsItemSelected(item);
@@ -166,5 +180,77 @@ public class MainActivity extends FragmentActivity implements communicator {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:" + phone));
         startActivity(callIntent);
+    }
+    public void onCoursesButtonClick(View v){
+        Log.w("alaa", "clicked");
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View convertView = (View) inflater.inflate(R.layout.custom, null);
+        alertDialog.setView(convertView);
+        alertDialog.setTitle("List");
+        ListView lv = (ListView) convertView.findViewById(R.id.listView1);
+        String[] names ;
+        String[] numbers ;
+        Resources res = getResources();
+        numbers = res.getStringArray(R.array.CoursesNumber);
+        names= res.getStringArray(R.array.CoursesNames);
+        lv.setAdapter(new StableArrayAdapter(getBaseContext(), names, numbers));
+        alertDialog.show();
+    }
+
+    private class StableArrayAdapter extends BaseAdapter {
+        String[] Courses;
+        String[] Names;
+        WeakReference<Context> contextWeakReference;
+
+        StableArrayAdapter(Context c, String[] courses_names, String[] courses_nums) {
+            contextWeakReference = new WeakReference<Context>(c);
+            Courses = courses_nums;
+            Names = courses_names;
+        }
+
+        @Override
+        public int getCount() {
+            return Courses.length;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            ViewHolder viewH = null;
+            if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) contextWeakReference.get().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.pick_course_item, viewGroup, false);
+                viewH = new ViewHolder();
+                viewH.firstLine = (TextView) view.findViewById(R.id.course_name_pick);
+                viewH.secondLine = (TextView) view.findViewById(R.id.course_number_pick);
+                viewH.firstLine.setTextColor(Color.parseColor("#0099CC"));
+                viewH.secondLine.setTextColor(Color.parseColor("#0099CC"));
+                view.setTag(viewH);
+            } else {
+                viewH = (ViewHolder) view.getTag();
+            }
+            viewH.firstLine.setText(Names[i % Names.length]);
+            viewH.secondLine.setText(Courses[i % (Courses.length)]);
+            return view;
+        }
+
+
+        class ViewHolder {
+            TextView firstLine;
+            TextView secondLine;
+        }
+
+
+
     }
 }
