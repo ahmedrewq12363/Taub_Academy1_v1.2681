@@ -53,7 +53,7 @@ public class TaughtByCourses extends Fragment {
 
         @Override
         public int getItemCount() {
-            return availble.size();
+            return availble == null ? 0 : availble.size();
         }
 
         @Override
