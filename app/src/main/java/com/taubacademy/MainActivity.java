@@ -1,16 +1,20 @@
 package com.taubacademy;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +27,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -31,6 +36,7 @@ import com.parse.ParseUser;
 
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -249,8 +255,36 @@ public class MainActivity extends FragmentActivity implements communicator {
             TextView firstLine;
             TextView secondLine;
         }
+    }
+    public void showTimePickerDialog(View v) {
+        DialogFragment newFragment = new TimePickerFragment((TextView) v);
+        newFragment.show(getSupportFragmentManager(), "timePicker");
+    }
+    public static class TimePickerFragment extends DialogFragment
+            implements TimePickerDialog.OnTimeSetListener {
+        TextView v;
+        public TimePickerFragment()
+        {
 
+        }
+        public TimePickerFragment(TextView view){
+            v=view;
+        }
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current time as the default values for the picker
+            final Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
 
+            // Create a new instance of TimePickerDialog and return it
+            return new TimePickerDialog(getActivity(), this, hour, minute,
+                    DateFormat.is24HourFormat(getActivity()));
+        }
 
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            // Do something with the time chosen by the user
+            v.setText(hourOfDay+":"+minute);
+        }
     }
 }
