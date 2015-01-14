@@ -99,6 +99,7 @@ public class MainActivity extends FragmentActivity implements communicator {
                             Transaction.addToBackStack(null);
                             Transaction.commit();
                         } else {
+
                             FragmentTransaction Transaction = manager.beginTransaction();
                             setContentView(R.layout.activity_my);
                             Transaction.add(R.id.CoursesFrag, new CoursesList(), "Courses");
