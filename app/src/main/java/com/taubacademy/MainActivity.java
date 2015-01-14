@@ -1,6 +1,5 @@
 package com.taubacademy;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -16,7 +15,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateFormat;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +31,7 @@ import android.widget.RadioButton;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -78,35 +77,38 @@ public class MainActivity extends FragmentActivity implements communicator {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.Login_button:
-//                if(ParseUser.getCurrentUser() != null && ParseFacebookUtils.isLinked(ParseUser.getCurrentUser()))
-//                {
-//                    profile = new Profile((Tutor)ParseUser.getCurrentUser().get("Tutor"));
-//                    FragmentTransaction Transaction = manager.beginTransaction();
-//                    Transaction.replace(R.id.ProfileFrag, profile,null);
-//                    Transaction.addToBackStack(null);
-//                    Transaction.commit();
-//                    return true;
-//                }
-//                List<String> permissions = Arrays.asList("public_profile", "email", "user_mobile_phone");
-//                ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
-//                    @Override
-//                    public void done(ParseUser user, ParseException err) {
-//                        if (user == null) {
-//                        } else if (user.isNew()) {
-//                            Tutor.createNewTutor();
-//                            FragmentTransaction Transaction = manager.beginTransaction();
-//                            Transaction.replace(R.id.ProfileFrag, new MyProfileFragment(),null);
-//                            Transaction.addToBackStack(null);
-//                            Transaction.commit();
-//                        } else {
-//
-//                        }
-//                    }
-//                });
-                FragmentTransaction Transaction = manager.beginTransaction();
-                Transaction.add(R.id.ProfileFrag, new MyProfileFragment(), null);
-                Transaction.addToBackStack(null);
-                Transaction.commit();
+                if(ParseUser.getCurrentUser() != null && ParseFacebookUtils.isLinked(ParseUser.getCurrentUser()))
+                {
+                    profile = new Profile((Tutor)ParseUser.getCurrentUser().get("Tutor"));
+                    FragmentTransaction Transaction = manager.beginTransaction();
+                    Transaction.replace(R.id.ProfileFrag, profile,null);
+                    Transaction.addToBackStack(null);
+                    Transaction.commit();
+                    return true;
+                }
+                List<String> permissions = Arrays.asList("public_profile", "email", "user_mobile_phone");
+                ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
+                    @Override
+                    public void done(ParseUser user, ParseException err) {
+                        if (user == null) {
+                            Toast.makeText(getBaseContext(),"There is Error in The LogIn",Toast.LENGTH_LONG);
+                        } else if (user.isNew()) {
+                            Tutor.createNewTutor();
+                            FragmentTransaction Transaction = manager.beginTransaction();
+                            Transaction.replace(R.id.ProfileFrag, new MyProfileFragment(),null);
+                            Transaction.addToBackStack(null);
+                            Transaction.commit();
+                        } else {
+                            FragmentTransaction Transaction = manager.beginTransaction();
+                            setContentView(R.layout.activity_my);
+                            Transaction.add(R.id.CoursesFrag, new CoursesList(), "Courses");
+                            Transaction.add(R.id.DescFrag, new Describtion(), "Describtions");
+                            Transaction.addToBackStack(null);
+                            Transaction.commit();
+                        }
+                    }
+                });
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -132,9 +134,6 @@ public class MainActivity extends FragmentActivity implements communicator {
         Transaction.addToBackStack("Describtions And Courses");
         Transaction.commit();
         CoursesSelected = new HashSet<String>();
-
-//        SearchStrings.setActivity(MainActivity.this);
-//        Tutor.updateAlTutorials();
     }
 
 

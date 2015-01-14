@@ -21,7 +21,6 @@ import java.util.List;
 public class Tutor extends ParseObject {
 
     public Tutor() {
-        super("Tutor");
     }
 
     public String getName() {
@@ -198,8 +197,7 @@ public class Tutor extends ParseObject {
             t.saveInBackground();
         }
     }
-    static public void createNewTutor()
-    {
+    static public void createNewTutor() {
         final Tutor t = new Tutor();
         t.setAuthor(ParseUser.getCurrentUser());
         try {
@@ -207,15 +205,15 @@ public class Tutor extends ParseObject {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        ParseUser.getCurrentUser().put("Tutor",t);
-        Request request = Request.newMeRequest(ParseFacebookUtils.getSession(),new Request.GraphUserCallback() {
+        ParseUser.getCurrentUser().put("Tutor", t);
+        Request request = Request.newMeRequest(ParseFacebookUtils.getSession(), new Request.GraphUserCallback() {
             @Override
             public void onCompleted(GraphUser user, Response response) {
                 if (user != null) {
                     try {
                         // Populate the JSON object
                         try {
-                            t.setName(user.getFirstName() +" " + user.getLastName());
+                            t.setName(user.getFirstName() + " " + user.getLastName());
                         } catch (Exception e) {
                             // TODO: handle exception
                         }
@@ -233,5 +231,27 @@ public class Tutor extends ParseObject {
             }
         });
         request.executeAsync();
+        /*JSONObject userProfile;
+        if (null != (userProfile = ParseUser.getCurrentUser().getJSONObject("profile"))) {
+
+            try {
+                try {
+                    if (userProfile.getString("facebookId") != null) {
+                        String facebookId = userProfile.get("facebookId")
+                                .toString();
+                        t.setPhotoFile((facebookId));
+                    } else {
+                        // Show the default, blank user profile picture
+                        userProfilePictureView.setProfileId(null);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                // Set additional UI elements
+                // ...
+            } catch (JSONException e) {
+                // handle error
+            }
+        }*/
     }
 }
