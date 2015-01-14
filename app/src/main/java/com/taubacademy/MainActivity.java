@@ -41,10 +41,13 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class MainActivity extends FragmentActivity implements communicator {
+    public Set<String> CoursesSelected;
     Describtion DescFragment = new Describtion();
     CoursesList CourFragment = new CoursesList();
     FragmentManager manager = getSupportFragmentManager();
@@ -125,6 +128,7 @@ public class MainActivity extends FragmentActivity implements communicator {
         Transaction.add(R.id.DescFrag, DescFragment, "Describtions");
         Transaction.addToBackStack("Describtions And Courses");
         Transaction.commit();
+        CoursesSelected = new HashSet<String>();
 //        Tutor.updateAlTutorials();
     }
 
@@ -243,6 +247,7 @@ public class MainActivity extends FragmentActivity implements communicator {
                 LayoutInflater inflater = (LayoutInflater) contextWeakReference.get().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = inflater.inflate(R.layout.pick_course_item, viewGroup, false);
                 final ViewHolder viewH = new ViewHolder();
+                final int position = i;
                 viewH.firstLine = (TextView) view.findViewById(R.id.course_name_pick);
                 viewH.secondLine = (TextView) view.findViewById(R.id.course_number_pick);
                 viewH.box = (CheckBox) view.findViewById(R.id.checkBox);
@@ -252,6 +257,11 @@ public class MainActivity extends FragmentActivity implements communicator {
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                         Model element = (Model) viewH.box.getTag();
                         element.setSelected(compoundButton.isChecked());
+                        if(b){
+                            CoursesSelected.add(Courses[position % (Courses.length)]);
+                        }else{
+                            CoursesSelected.remove(Courses[position % (Courses.length)]);
+                        }
                     }
                 });
                 viewH.firstLine.setTextColor(Color.parseColor("#0099CC"));
