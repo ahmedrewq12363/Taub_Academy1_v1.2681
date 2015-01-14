@@ -25,7 +25,7 @@
             android:id="@+id/personal_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            card_view:cardCornerRadius="10dp"
             android:background="#D1C4E9"
 
             android:layout_alignParentTop="true"
@@ -48,7 +48,7 @@
                     android:id="@+id/personal_details"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
-                    android:textColor="#311B92"
+                    android:textColor="#0099CC"
                     android:layout_margin="3dp"
                     />
                 <LinearLayout
@@ -64,13 +64,14 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Name : "
                         android:id="@+id/name"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         android:layout_margin="3dp"
                         android:layout_below="@+id/personal_details"/>
                     <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Name"
+                        android:hint="Name"
+                        android:inputType="textPersonName"
                         android:id="@+id/name_edit"
                         />
                 </LinearLayout>
@@ -88,13 +89,14 @@
                         android:text="Phone-Number : "
                         android:id="@+id/phonenumber"
 
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         android:layout_margin="3dp"
                         android:layout_below="@+id/name"/>
                     <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Phone"
+                        android:hint="Phone"
+                        android:inputType="phone"
                         android:id="@+id/phone_edit"
                         />
                 </LinearLayout>
@@ -112,7 +114,7 @@
                         android:text="Email : "
                         android:id="@+id/email"
 
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         android:layout_margin="3dp"
                         android:layout_below="@+id/phonenumber"/>
 
@@ -120,7 +122,9 @@
                     <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Email"
+                        android:hint="Email"
+                        android:inputType="textEmailSubject"
+
                         android:id="@+id/email_edit"
                         />
                 </LinearLayout>
@@ -152,7 +156,7 @@
                     android:layout_weight="1"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Be a Tutor  "
-                    android:textColor="#311B92"
+                    android:textColor="#0099CC"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
                     android:id="@+id/be_tutor"/>
@@ -169,16 +173,18 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Choose a course for tutoring :     "
                         android:id="@+id/choose_course"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         android:layout_margin="3dp"
                         android:layout_below="@+id/be_tutor"/>
 
-                    <Button
+                    <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Courses"
                         android:id="@+id/courses_button"
                         android:layout_centerVertical="true"
+                        android:textColor="#0099CC"
+                        android:background="@null"
+                        android:src="@drawable/plus_100"
                         android:onClick="onCoursesButtonClick"
                         />
                 </LinearLayout>
@@ -189,7 +195,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Choose prefered time for tutoring :     "
                     android:id="@+id/choose_time"
-                    android:textColor="#311B92"
+                    android:textColor="#0099CC"
                     android:layout_margin="3dp"
                     android:layout_below="@+id/choose_course"/>
                 <LinearLayout
@@ -207,7 +213,7 @@
                         android:text="Sunday"
                         android:id="@+id/Sunday_checkbox"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -215,7 +221,7 @@
                         android:text=" Between "
 
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -230,7 +236,7 @@
                         android:layout_height="wrap_content"
                         android:text=" And "
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -254,7 +260,7 @@
                         android:text="Monday"
                         android:id="@+id/Monday_checkbox"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -262,7 +268,7 @@
                         android:text=" Between "
 
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -277,7 +283,7 @@
                         android:layout_height="wrap_content"
                         android:text=" And "
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -302,7 +308,7 @@
                         android:text="Tuesday"
                         android:id="@+id/Tuesday_checkbox"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -310,7 +316,7 @@
                         android:text=" Between "
 
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -325,7 +331,7 @@
                         android:layout_height="wrap_content"
                         android:text=" And "
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -350,7 +356,7 @@
                         android:text="Wednesday"
                         android:id="@+id/Wednesday_checkbox"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -358,7 +364,7 @@
                         android:text=" Between "
 
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -373,7 +379,7 @@
                         android:layout_height="wrap_content"
                         android:text=" And "
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -398,7 +404,7 @@
                         android:text="Thursday"
                         android:id="@+id/Thursday_checkbox"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -406,7 +412,7 @@
                         android:text=" Between "
 
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -421,7 +427,7 @@
                         android:layout_height="wrap_content"
                         android:text=" And "
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -446,7 +452,7 @@
                         android:text="Friday"
                         android:id="@+id/Friday_checkbox"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -454,7 +460,7 @@
                         android:text=" Between "
 
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -469,7 +475,7 @@
                         android:layout_height="wrap_content"
                         android:text=" And "
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -494,7 +500,7 @@
                         android:text="Saturday"
                         android:id="@+id/Saturday_checkbox"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -502,7 +508,7 @@
                         android:text=" Between "
 
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -517,7 +523,7 @@
                         android:layout_height="wrap_content"
                         android:text=" And "
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#311B92"
+                        android:textColor="#0099CC"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -533,17 +539,15 @@
 
     </RelativeLayout>
 
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit"
         android:id="@+id/submit"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:src="@drawable/right_100"
+        android:background="#fff"
         android:layout_gravity="right"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:background="#B39DDB"
-        android:textColor="#311B92"
         android:layout_margin="16dp" />
 
 </LinearLayout>

@@ -110,10 +110,8 @@ public class Profile extends android.support.v4.app.Fragment {
             public void onClick(View view) {
                 ParseUser.logOut();
                 FragmentTransaction Transaction = getFragmentManager().beginTransaction();
-                getActivity().setContentView(R.layout.activity_my);
-                Transaction.add(R.id.CoursesFrag, ((MainActivity)getActivity()).CourFragment, "Courses");
-                Transaction.add(R.id.DescFrag, ((MainActivity)getActivity()).DescFragment, "Describtions");
-                Transaction.addToBackStack(null);
+                Transaction.replace(R.id.CoursesFrag, ((MainActivity)getActivity()).CourFragment, "Courses");
+                Transaction.replace(R.id.DescFrag, ((MainActivity)getActivity()).DescFragment, "Describtions");
                 Transaction.commit();
             }
         });

@@ -101,9 +101,9 @@ public class MainActivity extends FragmentActivity implements communicator {
                         } else {
 
                             FragmentTransaction Transaction = manager.beginTransaction();
-                            setContentView(R.layout.activity_my);
-                            Transaction.add(R.id.CoursesFrag, new CoursesList(), "Courses");
-                            Transaction.add(R.id.DescFrag, new Describtion(), "Describtions");
+                            Transaction.replace(R.id.CoursesFrag, CourFragment, "Courses");
+                            Transaction.replace(R.id.DescFrag, DescFragment
+                                    , "Describtions");
                             Transaction.addToBackStack(null);
                             Transaction.commit();
                         }
@@ -178,7 +178,13 @@ public class MainActivity extends FragmentActivity implements communicator {
     public void onSendMailClick(View v){
         final Context context = getApplicationContext();
         sendEmail(context, new String[]{profile.tutor.getEmail()}, "Sending Email",
-                "Test Email", "I am body");
+                "Taub Academy Application Mail", "Hi "+profile.tutor.getName()+","+
+                        "\n I need your help on: " +
+                        "\n CoureNumber: " +
+                        "\n Day: " +
+                        "\n Time: " +
+
+                        "\n Thanks. ");
     }
     public static void sendEmail(Context context, String[] recipientList,
                                  String title, String subject, String body) {
