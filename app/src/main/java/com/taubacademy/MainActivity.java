@@ -49,8 +49,8 @@ import java.util.Set;
 
 public class MainActivity extends FragmentActivity implements communicator {
     public Set<String> CoursesSelected;
-    Describtion DescFragment = new Describtion();
-    CoursesList CourFragment = new CoursesList();
+    public Describtion DescFragment = new Describtion();
+    public CoursesList CourFragment = new CoursesList();
     FragmentManager manager = getSupportFragmentManager();
     Profile profile;
     public ListView lv;

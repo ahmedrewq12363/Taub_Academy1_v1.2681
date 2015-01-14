@@ -2,57 +2,53 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="100dp"
     >
     <com.parse.ParseImageView
         android:id="@+id/icon11"
         android:layout_width="120dp"
-        android:layout_height="120dp"
-
+        android:layout_height="100dp"
+android:layout_margin="8dp"
         android:contentDescription="TODO"
-        android:scaleType="fitCenter"
-        android:layout_alignParentStart="true" />
+        android:scaleType="centerCrop"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/aboelrazik" />
 
-    <TextView
-        android:layout_marginRight="2dp"
-        android:adjustViewBounds="true"
-        android:id="@+id/secondLine1"
-        android:layout_width="fill_parent"
-        android:layout_height="45dip"
 
-        android:singleLine="true"
-        android:text="Description"
-        android:textSize="16sp"
-        android:layout_alignBottom="@+id/icon11"
-        android:layout_toRightOf="@+id/icon11"
-        android:layout_toEndOf="@+id/icon11" />
 
     <TextView
 
-        android:layout_marginRight="2dp"
-        android:adjustViewBounds="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:gravity="center_vertical"
         android:text="Example application"
         android:id="@+id/firstLine1"
-        android:textSize="22sp"
+       android:gravity="center_horizontal"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/secondLine1"
-        android:layout_alignStart="@+id/secondLine1"
-        android:layout_above="@+id/secondLine1"
-        android:textStyle="italic" />
-
+        android:layout_toEndOf="@+id/icon11" />
     <TextView
-        android:adjustViewBounds="true"
-        android:id="@+id/thirdLine"
+        android:id="@+id/secondLine1"
         android:layout_width="fill_parent"
-        android:layout_height="45dip"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textSize="16sp"
+        android:gravity="center_horizontal"
+        android:text="Description"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/icon11" />
+    <TextView
+        android:id="@+id/thirdLine"
+
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:singleLine="true"
         android:text="Description"
         android:textSize="16sp"
-        android:layout_toEndOf="@+id/icon11"
-        android:layout_below="@+id/icon11" />
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/icon11" />
 
 </RelativeLayout>

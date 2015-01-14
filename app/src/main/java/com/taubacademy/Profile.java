@@ -111,13 +111,13 @@ public class Profile extends android.support.v4.app.Fragment {
                 ParseUser.logOut();
                 FragmentTransaction Transaction = getFragmentManager().beginTransaction();
                 getActivity().setContentView(R.layout.activity_my);
-                Transaction.add(R.id.CoursesFrag, new CoursesList(), "Courses");
-                Transaction.add(R.id.DescFrag, new Describtion(), "Describtions");
+                Transaction.add(R.id.CoursesFrag, ((MainActivity)getActivity()).CourFragment, "Courses");
+                Transaction.add(R.id.DescFrag, ((MainActivity)getActivity()).DescFragment, "Describtions");
                 Transaction.addToBackStack(null);
                 Transaction.commit();
             }
         });
-        if(ParseUser.getCurrentUser().get("Tutor").equals(tutor))
+        if((ParseUser.getCurrentUser().get("Tutor") != null) && ParseUser.getCurrentUser().get("Tutor").equals(tutor))
         {
            logOut.setVisibility(View.VISIBLE);
             edit.setVisibility(View.VISIBLE);
