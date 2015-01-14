@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateFormat;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,6 +30,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -52,6 +54,7 @@ public class MainActivity extends FragmentActivity implements communicator {
     CoursesList CourFragment = new CoursesList();
     FragmentManager manager = getSupportFragmentManager();
     Profile profile;
+    public ListView lv;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -129,6 +132,8 @@ public class MainActivity extends FragmentActivity implements communicator {
         Transaction.addToBackStack("Describtions And Courses");
         Transaction.commit();
         CoursesSelected = new HashSet<String>();
+
+//        SearchStrings.setActivity(MainActivity.this);
 //        Tutor.updateAlTutorials();
     }
 
@@ -200,9 +205,13 @@ public class MainActivity extends FragmentActivity implements communicator {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = getLayoutInflater();
         View convertView = (View) inflater.inflate(R.layout.custom, null);
+        SearchView search= (SearchView) convertView.findViewById(R.id.searchView2);
+        SearchCourses SearchStrings = new SearchCourses(MainActivity.this.getBaseContext());
+        search.setSubmitButtonEnabled(true);
+        search.setOnQueryTextListener(SearchStrings);
         alertDialog.setView(convertView);
         alertDialog.setTitle("List");
-        ListView lv = (ListView) convertView.findViewById(R.id.listView1);
+         lv = (ListView) convertView.findViewById(R.id.listView1);
         String[] names ;
         String[] numbers ;
         Resources res = getResources();
@@ -351,4 +360,73 @@ public class MainActivity extends FragmentActivity implements communicator {
             v.setText(hourOfDay+":"+minute);
         }
     }
+
+    class SearchCourses extends android.widget.SearchView implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+
+        public SearchCourses(Context context) {
+            super(context);
+            this.setOnCloseListener(this);
+            setIconifiedByDefault(true);
+        }
+
+
+
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            search(query);
+            return false;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String query) {
+            search(query);
+            return false;
+        }
+
+        @Override
+        public boolean onClose() {
+            restoreListView();
+            return false;
+        }
+        public void search(String query) {
+            String[] names ;
+            String[] numbers ;
+            Resources res = getResources();
+            numbers = res.getStringArray(R.array.CoursesNumber);
+            names= res.getStringArray(R.array.CoursesNames);
+            if (query == "" || query == null) {
+                lv.setAdapter(new StableArrayAdapter(getBaseContext(), names, numbers,getModel(numbers)));
+                return;
+            }
+            ArrayList<String> query_result_names = new ArrayList<String>();
+            ArrayList<String> query_result_numbers = new ArrayList<String>();
+            int k = 0;
+            for (int i = 0; i < numbers.length; ++i) {
+                if (numbers[i].toLowerCase().contains(query.toLowerCase()) || numbers[i].toLowerCase().contains(query.toLowerCase())) {
+                    query_result_names.add(k, names[i]);
+                    query_result_numbers.add(k, numbers[i]);
+                    k++;
+                }
+            }
+
+            String[] searched_names = new String[k];
+            String[] searched_numbers = new String[k];
+            for (int i = 0; i < k; ++i) {
+                searched_names[i] = query_result_names.get(i);
+                searched_numbers[i] = query_result_numbers.get(i);
+            }
+            lv.setAdapter(new StableArrayAdapter(getBaseContext(), searched_names, searched_numbers,getModel(searched_names)));
+
+        }
+        public void restoreListView() {
+            String[] names ;
+            String[] numbers ;
+            Resources res = getResources();
+            numbers = res.getStringArray(R.array.CoursesNumber);
+            names= res.getStringArray(R.array.CoursesNames);
+            lv.setAdapter(new StableArrayAdapter(getBaseContext(), names, numbers,getModel(numbers)));
+        }
+    }
+
 }
+
