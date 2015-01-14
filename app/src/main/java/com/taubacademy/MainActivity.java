@@ -1,5 +1,6 @@
 package com.taubacademy;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -24,6 +25,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -35,6 +38,7 @@ import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -200,7 +204,7 @@ public class MainActivity extends FragmentActivity implements communicator {
         Resources res = getResources();
         numbers = res.getStringArray(R.array.CoursesNumber);
         names= res.getStringArray(R.array.CoursesNames);
-        lv.setAdapter(new StableArrayAdapter(getBaseContext(), names, numbers));
+        lv.setAdapter(new StableArrayAdapter(getBaseContext(), names, numbers,getModel(numbers)));
         alertDialog.show();
     }
 
@@ -208,11 +212,13 @@ public class MainActivity extends FragmentActivity implements communicator {
         String[] Courses;
         String[] Names;
         WeakReference<Context> contextWeakReference;
+        private final List<Model> list;
 
-        StableArrayAdapter(Context c, String[] courses_names, String[] courses_nums) {
+        StableArrayAdapter(Context c, String[] courses_names, String[] courses_nums,List<Model> list) {
             contextWeakReference = new WeakReference<Context>(c);
             Courses = courses_nums;
             Names = courses_names;
+            this.list = list;
         }
 
         @Override
@@ -232,21 +238,34 @@ public class MainActivity extends FragmentActivity implements communicator {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            ViewHolder viewH = null;
+
             if (view == null) {
                 LayoutInflater inflater = (LayoutInflater) contextWeakReference.get().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = inflater.inflate(R.layout.pick_course_item, viewGroup, false);
-                viewH = new ViewHolder();
+                final ViewHolder viewH = new ViewHolder();
                 viewH.firstLine = (TextView) view.findViewById(R.id.course_name_pick);
                 viewH.secondLine = (TextView) view.findViewById(R.id.course_number_pick);
+                viewH.box = (CheckBox) view.findViewById(R.id.checkBox);
+                viewH.box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        Model element = (Model) viewH.box.getTag();
+                        element.setSelected(compoundButton.isChecked());
+                    }
+                });
                 viewH.firstLine.setTextColor(Color.parseColor("#0099CC"));
                 viewH.secondLine.setTextColor(Color.parseColor("#0099CC"));
                 view.setTag(viewH);
+                viewH.box.setTag(list.get(i));
             } else {
-                viewH = (ViewHolder) view.getTag();
+                ((ViewHolder) view.getTag()).box.setTag(list.get(i));
             }
+
+            ViewHolder viewH = (ViewHolder) view.getTag();
             viewH.firstLine.setText(Names[i % Names.length]);
             viewH.secondLine.setText(Courses[i % (Courses.length)]);
+            viewH.box.setChecked(list.get(i).isSelected());
             return view;
         }
 
@@ -254,7 +273,42 @@ public class MainActivity extends FragmentActivity implements communicator {
         class ViewHolder {
             TextView firstLine;
             TextView secondLine;
+            CheckBox box;
         }
+    }
+    public class Model {
+
+        private String name;
+        private boolean selected;
+
+        public Model(String name) {
+            this.name = name;
+            selected = false;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public boolean isSelected() {
+            return selected;
+        }
+
+        public void setSelected(boolean selected) {
+            this.selected = selected;
+        }
+
+    }
+    private List<Model> getModel(String[] Courses) {
+        List<Model> list = new ArrayList<Model>();
+        for(String course : Courses){
+            list.add(new Model(course));
+        }
+        return list;
     }
     public void showTimePickerDialog(View v) {
         DialogFragment newFragment = new TimePickerFragment((TextView) v);
