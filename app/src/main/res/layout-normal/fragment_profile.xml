@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -66,7 +68,7 @@
             android:stepSize="1.0"
             android:rating="2.0"
             android:layout_centerVertical="true"
-            android:layout_alignStart="@+id/PhoneImage" />
+            android:layout_alignStart="@+id/EmailImage" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -115,16 +117,16 @@
             android:src="@drawable/logout_100"
             android:background="@null"
             android:layout_alignParentTop="true"
-            android:layout_toStartOf="@+id/NameOnPRo" />
+            android:layout_toEndOf="@+id/imageButtonEdit" />
 
         <ImageButton
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/imageButtonEdit"
             android:src="@drawable/edit_user_100"
-            android:layout_alignParentTop="true"
             android:background="@null"
-            android:layout_alignStart="@+id/ratingBar" />
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/PhoneImage" />
 
     </RelativeLayout>
     <com.astuetz.PagerSlidingTabStrip
@@ -153,3 +155,4 @@
 
     <!---->
     </RelativeLayout>
+</FrameLayout>

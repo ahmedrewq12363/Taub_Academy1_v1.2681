@@ -49,6 +49,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentStart="true"
                         android:textColor="#0099CC"
+                        android:textSize="16sp"
                         android:layout_margin="3dp"
                         />
 
@@ -64,6 +65,8 @@
                             android:layout_marginTop="20dp"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Name : "
+                            android:textSize="13sp"
+
                             android:id="@+id/name"
                             android:textColor="#0099CC"
                             android:layout_margin="3dp"
@@ -72,6 +75,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="Name"
+                            android:textSize="13sp"
+
                             android:inputType="textPersonName"
                             android:id="@+id/name_edit"
                             />
@@ -89,7 +94,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Phone-Number : "
                             android:id="@+id/phonenumber"
-
+                            android:textSize="13sp"
                             android:textColor="#0099CC"
                             android:layout_margin="3dp"
                             android:layout_below="@+id/name"/>
@@ -97,6 +102,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="Phone"
+                            android:textSize="13sp"
                             android:inputType="phone"
                             android:id="@+id/phone_edit"
                             />
@@ -114,7 +120,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Email : "
                             android:id="@+id/email"
-
+                            android:textSize="13sp"
                             android:textColor="#0099CC"
                             android:layout_margin="3dp"
                             android:layout_below="@+id/phonenumber"/>
@@ -125,7 +131,7 @@
                             android:layout_height="wrap_content"
                             android:hint="Email"
                             android:inputType="textEmailSubject"
-
+                            android:textSize="13sp"
                             android:id="@+id/email_edit"
                             />
 
@@ -142,7 +148,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Salary : "
                             android:id="@+id/salaryId"
-
+                            android:textSize="13sp"
                             android:textColor="#0099CC"
                             android:layout_margin="3dp"
                             android:layout_below="@+id/phonenumber"/>
@@ -153,7 +159,7 @@
                             android:layout_height="wrap_content"
                             android:hint="Salary"
                             android:inputType="number"
-
+                            android:textSize="13sp"
                             android:id="@+id/salaryEditText"
                             />
 
@@ -186,10 +192,12 @@
                         android:layout_weight="1"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="Be a Tutor  "
+                        android:textSize="16sp"
                         android:textColor="#0099CC"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentStart="true"
                         android:id="@+id/be_tutor"/>
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
@@ -202,21 +210,24 @@
                             android:layout_marginTop="10dp"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Choose a course for tutoring :     "
+                            android:textSize="13sp"
                             android:id="@+id/choose_course"
                             android:textColor="#0099CC"
                             android:layout_margin="3dp"
                             android:layout_below="@+id/be_tutor"/>
 
                         <ImageButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:id="@+id/courses_button"
                             android:layout_centerVertical="true"
                             android:textColor="#0099CC"
+                            android:textSize="13sp"
                             android:background="@null"
                             android:src="@drawable/plus_100"
                             android:onClick="onCoursesButtonClick"
-                            />
+                            android:layout_weight="1" />
+
                     </LinearLayout>
                     <TextView
                         android:layout_width="wrap_content"
@@ -226,6 +237,7 @@
                         android:text="Choose prefered time for tutoring :     "
                         android:id="@+id/choose_time"
                         android:textColor="#0099CC"
+                        android:textSize="13sp"
                         android:layout_margin="3dp"
                         android:layout_below="@+id/choose_course"/>
                     <LinearLayout
@@ -236,12 +248,14 @@
                         android:id="@+id/Sunday"
                         android:layout_below="@+id/choose_time"
                         android:orientation="horizontal"
+                        android:textSize="13sp"
                         android:layout_margin="5dp">
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Sunday"
                             android:id="@+id/Sunday_checkbox"
+                            android:textSize="13sp"
                             android:onClick="onDayClicked"
 
                             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -251,7 +265,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=" Between "
-
+                            android:textSize="13sp"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="#0099CC"
                             />
@@ -269,11 +283,13 @@
                             android:text=" And "
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="#0099CC"
+                            android:textSize="13sp"
                             />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12:00"
+                            android:textSize="13sp"
                             android:id="@+id/Sunday_end_time"
                             style="@android:style/Widget.Holo.Spinner"
                             android:onClick="showTimePickerDialog"
@@ -291,6 +307,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Monday"
+                            android:textSize="13sp"
                             android:id="@+id/Monday_checkbox"
                             android:onClick="onDayClicked"
                             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -300,7 +317,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=" Between "
-
+                            android:textSize="13sp"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="#0099CC"
                             />
@@ -308,6 +325,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12:00"
+                            android:textSize="13sp"
                             android:onClick="showTimePickerDialog"
                             android:id="@+id/Monday_start_time"
                             style="@android:style/Widget.Holo.Spinner"
@@ -318,11 +336,13 @@
                             android:text=" And "
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="#0099CC"
+                            android:textSize="13sp"
                             />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12:00"
+                            android:textSize="13sp"
                             android:id="@+id/Monday_end_time"
                             style="@android:style/Widget.Holo.Spinner"
                             android:onClick="showTimePickerDialog"
@@ -340,6 +360,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Tuesday"
+                            android:textSize="13sp"
                             android:onClick="onDayClicked"
 
                             android:id="@+id/Tuesday_checkbox"
@@ -349,6 +370,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="13sp"
                             android:text=" Between "
 
                             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -358,6 +380,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12:00"
+                            android:textSize="13sp"
                             android:onClick="showTimePickerDialog"
                             android:id="@+id/Tuesday_start_time"
                             style="@android:style/Widget.Holo.Spinner"
@@ -366,6 +389,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=" And "
+                            android:textSize="13sp"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="#0099CC"
                             />
@@ -373,6 +397,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12:00"
+                            android:textSize="13sp"
                             android:id="@+id/Tuesday_end_time"
                             style="@android:style/Widget.Holo.Spinner"
                             android:onClick="showTimePickerDialog"
@@ -388,6 +413,7 @@
                         android:layout_margin="5dp">
                         <CheckBox
                             android:layout_width="wrap_content"
+                            android:textSize="13sp"
                             android:layout_height="wrap_content"
                             android:text="Wednesday"
                             android:id="@+id/Wednesday_checkbox"
@@ -400,7 +426,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=" Between "
-
+                            android:textSize="13sp"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="#0099CC"
                             />
@@ -408,6 +434,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12:00"
+                            android:textSize="13sp"
                             android:onClick="showTimePickerDialog"
                             android:id="@+id/Wednesday_start_time"
                             style="@android:style/Widget.Holo.Spinner"
@@ -416,6 +443,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=" And "
+                            android:textSize="13sp"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="#0099CC"
                             />
@@ -424,6 +452,7 @@
                             android:layout_height="wrap_content"
                             android:text="12:00"
                             android:id="@+id/Wednesday_end_time"
+                            android:textSize="13sp"
                             style="@android:style/Widget.Holo.Spinner"
                             android:onClick="showTimePickerDialog"
                             android:textAppearance="?android:attr/textAppearanceMedium"/>
@@ -439,6 +468,7 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="13sp"
                             android:text="Thursday"
                             android:id="@+id/Thursday_checkbox"
                             android:onClick="onDayClicked"
@@ -450,7 +480,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=" Between "
-
+                            android:textSize="13sp"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="#0099CC"
                             />
@@ -459,6 +489,7 @@
                             android:layout_height="wrap_content"
                             android:text="12:00"
                             android:onClick="showTimePickerDialog"
+                            android:textSize="13sp"
                             android:id="@+id/Thursday_start_time"
                             style="@android:style/Widget.Holo.Spinner"
                             android:textAppearance="?android:attr/textAppearanceMedium"/>
@@ -466,6 +497,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=" And "
+                            android:textSize="13sp"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="#0099CC"
                             />
@@ -474,6 +506,7 @@
                             android:layout_height="wrap_content"
                             android:text="12:00"
                             android:id="@+id/Thursday_end_time"
+                            android:textSize="13sp"
                             style="@android:style/Widget.Holo.Spinner"
                             android:onClick="showTimePickerDialog"
                             android:textAppearance="?android:attr/textAppearanceMedium"/>
@@ -490,6 +523,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Friday"
+                            android:textSize="13sp"
                             android:id="@+id/Friday_checkbox"
                             android:onClick="onDayClicked"
 
@@ -500,7 +534,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=" Between "
-
+                            android:textSize="13sp"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="#0099CC"
                             />
@@ -508,6 +542,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12:00"
+                            android:textSize="13sp"
                             android:onClick="showTimePickerDialog"
                             android:id="@+id/Friday_start_time"
                             style="@android:style/Widget.Holo.Spinner"
@@ -515,6 +550,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="13sp"
                             android:text=" And "
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="#0099CC"
@@ -524,6 +560,7 @@
                             android:layout_height="wrap_content"
                             android:text="12:00"
                             android:id="@+id/Friday_end_time"
+                            android:textSize="13sp"
                             style="@android:style/Widget.Holo.Spinner"
                             android:onClick="showTimePickerDialog"
                             android:textAppearance="?android:attr/textAppearanceMedium"/>
@@ -542,7 +579,7 @@
                             android:text="Saturday"
                             android:id="@+id/Saturday_checkbox"
                             android:onClick="onDayClicked"
-
+                            android:textSize="13sp"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="#0099CC"
                             />
@@ -550,7 +587,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=" Between "
-
+                            android:textSize="13sp"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="#0099CC"
                             />
@@ -558,6 +595,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12:00"
+                            android:textSize="13sp"
                             android:onClick="showTimePickerDialog"
                             android:id="@+id/Saturday_start_time"
                             style="@android:style/Widget.Holo.Spinner"
@@ -566,6 +604,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=" And "
+                            android:textSize="13sp"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="#0099CC"
                             />
@@ -573,6 +612,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12:00"
+                            android:textSize="13sp"
                             android:id="@+id/Saturday_end_time"
                             style="@android:style/Widget.Holo.Spinner"
                             android:onClick="showTimePickerDialog"
@@ -589,6 +629,7 @@
             android:id="@+id/submit"
             android:src="@drawable/right_100"
             android:background="#fff"
+            android:textSize="13sp"
             android:layout_gravity="right"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
