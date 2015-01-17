@@ -480,11 +480,20 @@ public class MainActivity extends FragmentActivity implements communicator,Profi
     }
 
     private List<Model> getModel(String[] Courses, String[] names) {
+        Tutor t = (Tutor) ParseUser.getCurrentUser().get("Tutor");
+        List<Course> mycourses = t.getAllCourses();
+        Set<Integer> CoursesNumber = new HashSet<Integer>();
+        for(Course c : mycourses){
+            CoursesNumber.add(c.getCourseId());
+        }
         List<Model> list = new ArrayList<Model>();
         int i = 0;
         for (String course : Courses) {
-
             list.add(new Model(Integer.parseInt(course),names[i]));
+            if(CoursesNumber.contains(Integer.parseInt(course))){
+                Log.w("alaa","has Course"+Integer.parseInt(course));
+                list.get(i).setSelected(true);
+            }
             i++;
         }
         return list;
