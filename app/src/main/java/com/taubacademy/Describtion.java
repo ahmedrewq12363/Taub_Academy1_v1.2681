@@ -1,8 +1,8 @@
 package com.taubacademy;
 
-import android.support.v4.app.Fragment;
-import android.graphics.Color;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,11 +38,10 @@ public class
     }
 
     public void SortBy(String sortParam) {
-        if(listView.getAdapter() == null)
-        {
+        if (listView.getAdapter() == null) {
             return;
         }
-        ArrayList<Tutor> tutors = ((tutorsAdapter)listView.getAdapter()).getTutors();
+        ArrayList<Tutor> tutors = ((tutorsAdapter) listView.getAdapter()).getTutors();
         if (sortParam == "Salary") {
             Collections.sort(tutors, new Comparator<Tutor>() {
                 @Override
@@ -58,7 +57,7 @@ public class
                 }
             });
         }
-        listView.setAdapter(new tutorsAdapter(getActivity().getBaseContext(),tutors));
+        listView.setAdapter(new tutorsAdapter(getActivity().getBaseContext(), tutors));
     }
 
     @Override
@@ -71,15 +70,22 @@ public class
     }
 
     public void changeData(String course) throws ParseException {
-        ArrayList<Tutor> tutors =  Course.getTutorsOfCourse(Integer.parseInt(course));
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("loading");
+        progressDialog.show();
+        ArrayList<Tutor> tutors = Course.getTutorsOfCourse(Integer.parseInt(course));
         if (tutors.size() == 0) {
-            listView.setAdapter(new tutorsAdapter(getActivity().getBaseContext(),new ArrayList<Tutor>()));
-            text1.setText("No Teachers Available For This Course");
-            text1.setTextColor(Color.parseColor("#0099CC"));
+            listView.setAdapter(new tutorsAdapter(getActivity().getBaseContext(), new ArrayList<Tutor>()));
+            text1.setText("No Teachers Available");
+            progressDialog.dismiss();
             return;
         }
+        progressDialog.dismiss();
+        for(Tutor t : tutors)
+        {
+            t.fetchInBackground();
+        }
         text1.setText("Available Teachers For : " + course);
-        text1.setTextColor(Color.parseColor("#0099CC"));
         listView.setAdapter(new tutorsAdapter(getActivity().getBaseContext(), (tutors)));
     }
 
@@ -87,7 +93,7 @@ public class
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
         c.ChangeFrag(
-                ((tutorsAdapter)listView.getAdapter()).getTutorAtIndex(i));
+                ((tutorsAdapter) listView.getAdapter()).getTutorAtIndex(i));
 
     }
 

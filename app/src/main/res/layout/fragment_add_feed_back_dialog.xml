@@ -1,27 +1,26 @@
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/AddFeedBackDialog"
     android:layout_width="match_parent"
-    android:layout_height="100dp" >
+    android:layout_height="100dp">
 
     <EditText
         android:id="@+id/AddFeedBackDialogText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Add your feedback"
-        android:padding="10dp"
-        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerVertical="true"
+        android:hint="Add your feedback"
+        android:padding="10dp" />
+
     <ImageButton
+        android:id="@+id/imageButtonDialog"
         android:layout_width="40dp"
         android:layout_height="80dp"
-        android:src = "@drawable/paper_plane_32"
-        android:background="#00000000"
-        android:id="@+id/imageButton"
-        android:layout_marginTop="0dp"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/AddFeedBackDialogText"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginTop="0dp"
+        android:background="#00000000"
+        android:src="@drawable/right_100" />
 
 </RelativeLayout>

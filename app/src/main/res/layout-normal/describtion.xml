@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/describtions">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="21dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Sort Teachers By"
+        android:textColor="#0099CC"
+        android:textSize="16sp"
+        android:id="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:text="Salary Per Hour"
+        android:id="@+id/radioButton2"
+        android:textColor="#0099CC"
+        android:textSize="13sp"
+        android:layout_toEndOf="@+id/textView"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/radioButton"
+        android:onClick="SortBySalary"
+        android:layout_alignParentStart="true" />
+
+
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="700dp"
+        android:id="@+id/listView2"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+
+        android:layout_alignParentBottom="true"
+        android:divider="#0099CC"
+        android:dividerHeight="2px"
+        android:layout_below="@+id/textView21" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:text="Rank"
+        android:id="@+id/radioButton"
+        android:textSize="13sp"
+        android:textColor="#0099CC"
+        android:layout_toEndOf="@+id/textView"
+        android:checked="false"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textView"
+        android:onClick="SortByRank"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Please Choose A Course"
+        android:id="@+id/textView21"
+        android:background="#0099CC"
+        android:textSize="16sp"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/radioButton2"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

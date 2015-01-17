@@ -1,74 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/describtions"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/describtions">
+    android:orientation="vertical">
 
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Sort Teachers By"
-        android:textColor="#0099CC"
-        android:id="@+id/textView"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:gravity="center"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:gravity="center"
+        android:text="Sort Teachers By"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#0099CC" />
 
 
     <RadioButton
+        android:id="@+id/radioButton2"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:text="Salary Per Hour"
-        android:id="@+id/radioButton2"
-        android:textColor="#0099CC"
-        android:layout_toEndOf="@+id/textView"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/radioButton"
+        android:layout_toEndOf="@+id/textView"
         android:onClick="SortBySalary"
-        android:layout_alignParentStart="true" />
-
-
+        android:text="Salary Per Hour"
+        android:textColor="#0099CC" />
 
 
     <ListView
+        android:id="@+id/listView2"
         android:layout_width="match_parent"
         android:layout_height="700dp"
-        android:id="@+id/listView2"
-        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="false"
 
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/textView21"
         android:divider="#0099CC"
-        android:dividerHeight="2px"
-        android:layout_below="@+id/textView21" />
+        android:dividerHeight="2px" />
 
     <RadioButton
+        android:id="@+id/radioButton"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:text="Rank"
-        android:id="@+id/radioButton"
-        android:textColor="#0099CC"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView"
         android:layout_toEndOf="@+id/textView"
         android:checked="false"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/textView"
         android:onClick="SortByRank"
-        android:layout_alignParentStart="true" />
+        android:text="Rank"
+        android:textColor="#0099CC" />
 
     <TextView
+        android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Please Choose A Course"
-        android:id="@+id/textView21"
-        android:background="@drawable/images"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:gravity="center"
-        android:textColor="#0099CC"
         android:layout_below="@+id/radioButton2"
-        android:layout_alignParentEnd="true" />
+        android:background="#0099CC"
+        android:gravity="center"
+        android:text="Please Choose A Course"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/whit" />
 
 </RelativeLayout>

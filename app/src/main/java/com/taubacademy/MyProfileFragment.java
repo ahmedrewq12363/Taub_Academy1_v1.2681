@@ -10,7 +10,7 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -38,6 +38,10 @@ public class MyProfileFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private Tutor t;
+
+    public MyProfileFragment() {
+    }
 
     /**
      * Use this factory method to create a new instance of
@@ -56,9 +60,6 @@ public class MyProfileFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-    private Tutor t;
-    public MyProfileFragment() {
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,11 @@ public class MyProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_profile, container, false);
-
+        Tutor t = (Tutor) ParseUser.getCurrentUser().get("Tutor");
+        ((EditText) view.findViewById(R.id.name_edit)).setText(t.getName());
+        ((EditText) view.findViewById(R.id.email_edit)).setText(t.getEmail());
+        ((EditText) view.findViewById(R.id.phone_edit)).setText(t.getPhone());
+        ((EditText)view.findViewById(R.id.salaryEditText)).setText(t.getSalary().toString());
         return view;
     }
 
@@ -79,6 +84,11 @@ public class MyProfileFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    public void showTimePickerDialog(View v) {
+        DialogFragment newFragment = new TimePickerFragment((TextView) v);
+        newFragment.show(getFragmentManager(), "timePicker");
     }
     /**
      * This interface must be implemented by activities that contain this
@@ -94,12 +104,6 @@ public class MyProfileFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
-    public void showTimePickerDialog(View v) {
-        DialogFragment newFragment = new TimePickerFragment((TextView) v);
-        newFragment.show(getFragmentManager(), "timePicker");
-    }
-
-
 
     public static class TimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {

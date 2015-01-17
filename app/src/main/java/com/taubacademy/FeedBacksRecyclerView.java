@@ -11,20 +11,27 @@ import android.widget.TextView;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.util.List;
 
 public class FeedBacksRecyclerView extends Fragment {
     private Tutor tutor;
+
+    public FeedBacksRecyclerView(Tutor tutor) {
+        // Required empty public constructor
+        this.tutor = tutor;
+    }
+
     public static FeedBacksRecyclerView newInstance(Tutor tutor) {
         FeedBacksRecyclerView fragment = new FeedBacksRecyclerView(tutor);
 
         return fragment;
     }
 
-    public FeedBacksRecyclerView(Tutor tutor) {
-        // Required empty public constructor
-        this.tutor = tutor;
+    public void Refresh() {
+        RecyclerView recList = (RecyclerView) getView().findViewById(R.id.cardList);
+        recList.setAdapter(new FeedBackAdapter(tutor.getFeedbacks()));
     }
 
     @Override
@@ -37,17 +44,22 @@ public class FeedBacksRecyclerView extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =  inflater.inflate(R.layout.fragment_feed_backs_recycler_view, container, false);
+        View v = inflater.inflate(R.layout.fragment_feed_backs_recycler_view, container, false);
         RecyclerView recList = (RecyclerView) v.findViewById(R.id.cardList);
         FloatingActionButton fap = (FloatingActionButton) v.findViewById(R.id.fab);
         fap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AddFeedBackDialog dialog = new AddFeedBackDialog(tutor);
-                dialog.show(getFragmentManager(),"Feedback");
+                dialog.show(getFragmentManager(), "Feedback");
             }
         });
         fap.attachToRecyclerView(recList);
+        if ((ParseUser.getCurrentUser().get("Tutor") != null) && ParseUser.getCurrentUser().get("Tutor").equals(tutor)) {
+            fap.setVisibility(View.GONE);
+        } else {
+            fap.setVisibility(View.VISIBLE);
+        }
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity().getBaseContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -55,6 +67,7 @@ public class FeedBacksRecyclerView extends Fragment {
         recList.setAdapter(new FeedBackAdapter(tutor.getFeedbacks()));
         return v;
     }
+
     public class FeedBackAdapter extends RecyclerView.Adapter<FeedBackAdapter.AvailableOnFragmentHolder> {
         private List<Pair> availble;
 
@@ -91,6 +104,7 @@ public class FeedBacksRecyclerView extends Fragment {
         class AvailableOnFragmentHolder extends RecyclerView.ViewHolder {
             protected TextView Feedback;
             protected TextView By;
+
             public AvailableOnFragmentHolder(View v) {
                 super(v);
                 Feedback = (TextView) v.findViewById(R.id.Feedback);

@@ -1,8 +1,16 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <!-- Search, should appear as action button -->
-    <item android:id="@+id/Login_button"
+    <item
+        android:id="@+id/Login_button"
         android:icon="@drawable/user_100_blue"
-        android:title="button_login"
-        android:showAsAction="ifRoom"
-        />
+        android:focusableInTouchMode="false"
+        android:showAsAction="always"
+        android:title="button_login" />
+    <item
+        android:id="@+id/HomeButton"
+        android:icon="@drawable/home_filled_64"
+        android:focusableInTouchMode="true"
+        android:showAsAction="always"
+        android:title="button_login" />
 </menu>

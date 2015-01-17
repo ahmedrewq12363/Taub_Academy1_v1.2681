@@ -1,0 +1,601 @@
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="#fff"
+        android:layout_height="wrap_content"
+        android:id="@+id/MyProfileFragment">
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_above="@+id/submit"
+            android:weightSum="3"
+            >
+
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/personal_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardCornerRadius="10dp"
+                android:background="#D1C4E9"
+
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="5dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Personal Details"
+                        android:id="@+id/personal_details"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:textColor="#0099CC"
+                        android:layout_margin="3dp"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Name : "
+                            android:id="@+id/name"
+                            android:textColor="#0099CC"
+                            android:layout_margin="3dp"
+                            android:layout_below="@+id/personal_details"/>
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Name"
+                            android:inputType="textPersonName"
+                            android:id="@+id/name_edit"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Phone-Number : "
+                            android:id="@+id/phonenumber"
+
+                            android:textColor="#0099CC"
+                            android:layout_margin="3dp"
+                            android:layout_below="@+id/name"/>
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Phone"
+                            android:inputType="phone"
+                            android:id="@+id/phone_edit"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Email : "
+                            android:id="@+id/email"
+
+                            android:textColor="#0099CC"
+                            android:layout_margin="3dp"
+                            android:layout_below="@+id/phonenumber"/>
+
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Email"
+                            android:inputType="textEmailSubject"
+
+                            android:id="@+id/email_edit"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="33dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Salary : "
+                            android:id="@+id/salaryId"
+
+                            android:textColor="#0099CC"
+                            android:layout_margin="3dp"
+                            android:layout_below="@+id/phonenumber"/>
+
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Salary"
+                            android:inputType="number"
+
+                            android:id="@+id/salaryEditText"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/be_teacher_card"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/personal_card"
+                card_view:cardCornerRadius="10dp"
+
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="5dp"
+                    android:id="@+id/linearDays"
+                    android:padding="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Be a Tutor  "
+                        android:textColor="#0099CC"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/be_tutor"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Choose a course for tutoring :     "
+                            android:id="@+id/choose_course"
+                            android:textColor="#0099CC"
+                            android:layout_margin="3dp"
+                            android:layout_below="@+id/be_tutor"/>
+
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/courses_button"
+                            android:layout_centerVertical="true"
+                            android:textColor="#0099CC"
+                            android:background="@null"
+                            android:src="@drawable/plus_100"
+                            android:onClick="onCoursesButtonClick"
+                            />
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Choose prefered time for tutoring :     "
+                        android:id="@+id/choose_time"
+                        android:textColor="#0099CC"
+                        android:layout_margin="3dp"
+                        android:layout_below="@+id/choose_course"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+
+                        android:layout_weight="1"
+                        android:id="@+id/Sunday"
+                        android:layout_below="@+id/choose_time"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sunday"
+                            android:id="@+id/Sunday_checkbox"
+                            android:onClick="onDayClicked"
+
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Between "
+
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12:00"
+                            android:onClick="showTimePickerDialog"
+                            android:id="@+id/Sunday_start_time"
+                            style="@android:style/Widget.Holo.Spinner"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" And "
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12:00"
+                            android:id="@+id/Sunday_end_time"
+                            style="@android:style/Widget.Holo.Spinner"
+                            android:onClick="showTimePickerDialog"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:id="@+id/Monday"
+                        android:layout_below="@+id/choose_time"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Monday"
+                            android:id="@+id/Monday_checkbox"
+                            android:onClick="onDayClicked"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Between "
+
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12:00"
+                            android:onClick="showTimePickerDialog"
+                            android:id="@+id/Monday_start_time"
+                            style="@android:style/Widget.Holo.Spinner"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" And "
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12:00"
+                            android:id="@+id/Monday_end_time"
+                            style="@android:style/Widget.Holo.Spinner"
+                            android:onClick="showTimePickerDialog"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:id="@+id/Tuesday"
+                        android:layout_below="@+id/choose_time"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tuesday"
+                            android:onClick="onDayClicked"
+
+                            android:id="@+id/Tuesday_checkbox"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Between "
+
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12:00"
+                            android:onClick="showTimePickerDialog"
+                            android:id="@+id/Tuesday_start_time"
+                            style="@android:style/Widget.Holo.Spinner"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" And "
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12:00"
+                            android:id="@+id/Tuesday_end_time"
+                            style="@android:style/Widget.Holo.Spinner"
+                            android:onClick="showTimePickerDialog"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:id="@+id/Wednesday"
+                        android:layout_below="@+id/choose_time"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wednesday"
+                            android:id="@+id/Wednesday_checkbox"
+                            android:onClick="onDayClicked"
+
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Between "
+
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12:00"
+                            android:onClick="showTimePickerDialog"
+                            android:id="@+id/Wednesday_start_time"
+                            style="@android:style/Widget.Holo.Spinner"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" And "
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12:00"
+                            android:id="@+id/Wednesday_end_time"
+                            style="@android:style/Widget.Holo.Spinner"
+                            android:onClick="showTimePickerDialog"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:id="@+id/Thursday"
+                        android:layout_below="@+id/choose_time"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thursday"
+                            android:id="@+id/Thursday_checkbox"
+                            android:onClick="onDayClicked"
+
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Between "
+
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12:00"
+                            android:onClick="showTimePickerDialog"
+                            android:id="@+id/Thursday_start_time"
+                            style="@android:style/Widget.Holo.Spinner"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" And "
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12:00"
+                            android:id="@+id/Thursday_end_time"
+                            style="@android:style/Widget.Holo.Spinner"
+                            android:onClick="showTimePickerDialog"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:id="@+id/Friday"
+                        android:layout_below="@+id/choose_time"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Friday"
+                            android:id="@+id/Friday_checkbox"
+                            android:onClick="onDayClicked"
+
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Between "
+
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12:00"
+                            android:onClick="showTimePickerDialog"
+                            android:id="@+id/Friday_start_time"
+                            style="@android:style/Widget.Holo.Spinner"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" And "
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12:00"
+                            android:id="@+id/Friday_end_time"
+                            style="@android:style/Widget.Holo.Spinner"
+                            android:onClick="showTimePickerDialog"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:id="@+id/Saturday"
+                        android:layout_below="@+id/choose_time"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Saturday"
+                            android:id="@+id/Saturday_checkbox"
+                            android:onClick="onDayClicked"
+
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Between "
+
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12:00"
+                            android:onClick="showTimePickerDialog"
+                            android:id="@+id/Saturday_start_time"
+                            style="@android:style/Widget.Holo.Spinner"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" And "
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#0099CC"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12:00"
+                            android:id="@+id/Saturday_end_time"
+                            style="@android:style/Widget.Holo.Spinner"
+                            android:onClick="showTimePickerDialog"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/submit"
+            android:src="@drawable/right_100"
+            android:background="#fff"
+            android:layout_gravity="right"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="16dp"
+            android:onClick="onSubmitButtonClick"/>
+
+    </LinearLayout>
+</ScrollView>
+
+

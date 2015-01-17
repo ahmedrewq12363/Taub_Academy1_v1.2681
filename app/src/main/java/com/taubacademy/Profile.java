@@ -1,14 +1,19 @@
 package com.taubacademy;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -18,7 +23,11 @@ import com.parse.ParseImageView;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class Profile extends android.support.v4.app.Fragment {
+    public ViewPager viewPager;
     Tutor tutor;
     private View profile;
     private PagerSlidingTabStrip pagerSlidingTabStrip;
@@ -26,6 +35,7 @@ public class Profile extends android.support.v4.app.Fragment {
     public Profile() {
         super();
     }
+
 
     public Profile(Tutor tutor) {
         this.tutor = tutor;
@@ -44,42 +54,18 @@ public class Profile extends android.support.v4.app.Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ViewPager viewPager = (ViewPager) profile.findViewById(R.id.pager);
-        pagerSlidingTabStrip = (PagerSlidingTabStrip) profile.findViewById(R.id.Tabs);
-        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+        viewPager = (ViewPager) profile.findViewById(R.id.pager);
+        Thread th = new Thread() {
             @Override
-            public int getCount() {
-                return 3;
+            public void run() {
+                pagerSlidingTabStrip = (PagerSlidingTabStrip) profile.findViewById(R.id.Tabs);
+                viewPager.setAdapter(new AdapterFeedBack(getChildFragmentManager(), tutor));
+                pagerSlidingTabStrip.setViewPager(viewPager);
             }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                switch (position) {
-                    case 0:
-                        return "Available On";
-                    case 1:
-                        return "Feedbacks";
-                    default:
-                        return "Relevant Courses";
-                }
-            }
-
-            @Override
-            public Fragment getItem(int position) {
-                switch (position) {
-                    case 0:
-                        return AvailableOnFagment.newInstance(tutor);
-                    case 1:
-                        return FeedBacksRecyclerView.newInstance(tutor);
-                    default:
-                        return TaughtByCourses.newInstance(tutor
-                        );
-                }
-            }
-
-        });
-        pagerSlidingTabStrip.setViewPager(viewPager);
+        };
+        th.run();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,17 +76,45 @@ public class Profile extends android.support.v4.app.Fragment {
         ParseFile imageFile = tutor.getPhotoFile();
         if (imageFile != null) {
             Picasso.with(getActivity().getBaseContext()).load(imageFile.getUrl()).into(imagePro);
+        } else {
+            URL url = null;
+            try {
+                url =  new URL("https://graph.facebook.com/" + tutor.get("UserId") + "/picture?type=large");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            Picasso.with(getActivity().getBaseContext()).load(url.toString()).into(imagePro);
         }
         Name.setText(tutor.getName());
         Integer salary = tutor.getSalary() == null ? 0 : tutor.getSalary();
         ((TextView) profile.findViewById(R.id.textView2)).setText(salary.toString());
         ImageButton edit = (ImageButton) profile.findViewById(R.id.imageButtonEdit);
         ImageButton logOut = (ImageButton) profile.findViewById(R.id.imageButtonLogOut);
+        ImageView mail = (ImageView) profile.findViewById(R.id.EmailImage);
+        ImageView phone = (ImageView) profile.findViewById(R.id.PhoneImage);
+        RatingBar bar = (RatingBar) profile.findViewById(R.id.ratingBar);
+        bar.setRating(tutor.getRating());
+        bar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(final RatingBar ratingBar, float v, boolean b) {
+                new Runnable() {
+
+                    @Override
+                    public void run() {
+                        tutor.setRating((Tutor) ParseUser.getCurrentUser().get("Tutor"), ((Float) ratingBar.getRating()).intValue());
+                        ratingBar.setRating(tutor.getRating());
+                        tutor.saveInBackground();
+                    }
+                }.run();
+
+
+            }
+        });
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction Transaction = getFragmentManager().beginTransaction();
-                Transaction.add(R.id.ProfileFrag, new MyProfileFragment(),null);
+                Transaction.add(R.id.ProfileFrag, new MyProfileFragment(), null);
                 Transaction.addToBackStack(null);
                 Transaction.commit();
             }
@@ -110,18 +124,34 @@ public class Profile extends android.support.v4.app.Fragment {
             public void onClick(View view) {
                 ParseUser.logOut();
                 FragmentTransaction Transaction = getFragmentManager().beginTransaction();
-                Transaction.replace(R.id.CoursesFrag, ((MainActivity)getActivity()).CourFragment, "Courses");
-                Transaction.replace(R.id.DescFrag, ((MainActivity)getActivity()).DescFragment, "Describtions");
-                Transaction.commit();
+                Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
+                Configuration config = getResources().getConfiguration();
+                if ((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) ==
+                        Configuration.SCREENLAYOUT_SIZE_NORMAL) {
+                    Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
+                    Transaction.replace(R.id.ProfileFrag, ((MainActivity) getActivity()).DescFragment, "Describtions");
+                    Transaction.replace(R.id.ProfileFrag, ((MainActivity) getActivity()).CourFragment, "Courses");
+                    Transaction.addToBackStack(null);
+                    Transaction.commit();
+                } else {
+                    Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
+                    Transaction.replace(R.id.CoursesFrag, ((MainActivity) getActivity()).CourFragment, "Courses");
+                    Transaction.replace(R.id.DescFrag, ((MainActivity) getActivity()).DescFragment, "Describtions");
+                    Transaction.commit();
+                }
+                MenuItem item = ((MainActivity) getActivity()).menu.findItem(R.id.Login_button);
+                item.setIcon(R.drawable.login_64);
+
             }
         });
-        if((ParseUser.getCurrentUser().get("Tutor") != null) && ParseUser.getCurrentUser().get("Tutor").equals(tutor))
-        {
-           logOut.setVisibility(View.VISIBLE);
+        if ((ParseUser.getCurrentUser().get("Tutor") != null) && ParseUser.getCurrentUser().get("Tutor").equals(tutor)) {
+            mail.setVisibility(View.INVISIBLE);
+            phone.setVisibility(View.INVISIBLE);
+            logOut.setVisibility(View.VISIBLE);
             edit.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
+            mail.setVisibility(View.VISIBLE);
+            phone.setVisibility(View.VISIBLE);
             logOut.setVisibility(View.GONE);
             edit.setVisibility(View.GONE);
         }
@@ -136,5 +166,49 @@ public class Profile extends android.support.v4.app.Fragment {
 
 }
 
+class AdapterFeedBack extends FragmentPagerAdapter {
+    public Fragment[] fragment = new Fragment[3];
+    public Tutor tutor;
+
+    public AdapterFeedBack(FragmentManager manager, Tutor tutor) {
+        super(manager);
+        this.tutor = tutor;
+        fragment[2] = TaughtByCourses.newInstance(tutor
+        );
+    }
+
+    @Override
+    public int getCount() {
+        return 3;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
+            case 0:
+                return "Available On";
+            case 1:
+                return "Feedbacks";
+            default:
+                return "Relevant Courses";
+        }
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+        switch (position) {
+            case 0:
+                fragment[position] = AvailableOnFagment.newInstance(tutor);
+                return fragment[position];
+            case 1:
+                fragment[position] = FeedBacksRecyclerView.newInstance(tutor);
+                return fragment[position];
+            default:
+
+                return fragment[position];
+        }
+    }
+
+};
 
 
