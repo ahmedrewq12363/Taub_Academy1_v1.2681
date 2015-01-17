@@ -52,7 +52,7 @@ import java.util.List;
 import java.util.Set;
 
 
-public class MainActivity extends FragmentActivity implements communicator,Profile.ClickListner {
+public class MainActivity extends FragmentActivity implements communicator, Profile.ClickListner {
     public Set<Course> CoursesSelected;
     public Describtion DescFragment = new Describtion();
     public CoursesList CourFragment = new CoursesList();
@@ -92,7 +92,7 @@ public class MainActivity extends FragmentActivity implements communicator,Profi
     @Override
     protected void onResume() {
         super.onResume();
-        if ((ParseUser.getCurrentUser() == null || (!ParseFacebookUtils.isLinked(ParseUser.getCurrentUser())))&&this.menu!=null) {
+        if ((ParseUser.getCurrentUser() == null || (!ParseFacebookUtils.isLinked(ParseUser.getCurrentUser()))) && this.menu != null) {
             MenuItem Login = menu.findItem(R.id.Login_button);
             Login.setIcon(R.drawable.login_64);
         }
@@ -121,21 +121,29 @@ public class MainActivity extends FragmentActivity implements communicator,Profi
                 return true;
             case R.id.HomeButton:
                 FragmentTransaction Transaction = manager.beginTransaction();
-                Transaction.setCustomAnimations(android.R.anim.slide_in_left, R.anim.animated_fragment2,R.anim.animated_fragment, R.anim.animated_fragment2);
+                if (manager.getBackStackEntryAt(0).getName() != null &&
+                        (manager.getBackStackEntryAt(0).getName().equals("Describtions And Courses")
+                        || manager.getBackStackEntryAt(0).getName().equals("Courses"))) {
+                    return true;
+                }
+                Transaction.setCustomAnimations(android.R.anim.slide_in_left, R.anim.animated_fragment2, R.anim.animated_fragment, R.anim.animated_fragment2);
                 Configuration config = getResources().getConfiguration();
-                manager.popBackStackImmediate();
+                int count = manager.getBackStackEntryCount();
+                for (int i = 0; i < count; ++i) {
+                    manager.popBackStack();
+                }
                 if ((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) ==
                         Configuration.SCREENLAYOUT_SIZE_NORMAL) {
                     Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
                     Transaction.replace(R.id.ProfileFrag, DescFragment, "Describtions");
                     Transaction.replace(R.id.ProfileFrag, CourFragment, "Courses");
-                    Transaction.addToBackStack(null);
+                    Transaction.addToBackStack("Courses");
                     Transaction.commit();
                 } else {
                     Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
                     Transaction.replace(R.id.CoursesFrag, CourFragment, "Courses");
-                    Transaction.replace(R.id.DescFrag, DescFragment,  "Describtions");
-                    Transaction.addToBackStack(null);
+                    Transaction.replace(R.id.DescFrag, DescFragment, "Describtions");
+                    Transaction.addToBackStack("Describtions And Courses");
                     Transaction.commit();
                 }
                 break;
@@ -258,7 +266,7 @@ public class MainActivity extends FragmentActivity implements communicator,Profi
         Transaction.replace(R.id.ProfileFrag, profile, "PRofile");
         Transaction.addToBackStack(null);
         Transaction.commit();
-       progressDialog.dismiss();
+        progressDialog.dismiss();
     }
 
     public void SortByRank(View view) {
@@ -452,8 +460,8 @@ public class MainActivity extends FragmentActivity implements communicator,Profi
                 if (m.isSelected()) {
                     Log.w("alaa", "course number " + m.getName() + " course name " + m.getNumber());
                     coures_number.add(m.getNumber());
+                }
             }
-        }
         ParseQuery query = ParseQuery.getQuery("Course");
         query.whereContainedIn("CourseId", coures_number);
         query.findInBackground(new FindCallback() {
@@ -483,15 +491,15 @@ public class MainActivity extends FragmentActivity implements communicator,Profi
         Tutor t = (Tutor) ParseUser.getCurrentUser().get("Tutor");
         List<Course> mycourses = t.getAllCourses();
         Set<Integer> CoursesNumber = new HashSet<Integer>();
-        for(Course c : mycourses){
+        for (Course c : mycourses) {
             CoursesNumber.add(c.getCourseId());
         }
         List<Model> list = new ArrayList<Model>();
         int i = 0;
         for (String course : Courses) {
-            list.add(new Model(Integer.parseInt(course),names[i]));
-            if(CoursesNumber.contains(Integer.parseInt(course))){
-                Log.w("alaa","has Course"+Integer.parseInt(course));
+            list.add(new Model(Integer.parseInt(course), names[i]));
+            if (CoursesNumber.contains(Integer.parseInt(course))) {
+                Log.w("alaa", "has Course" + Integer.parseInt(course));
                 list.get(i).setSelected(true);
             }
             i++;
