@@ -484,6 +484,7 @@ public class MainActivity extends FragmentActivity implements communicator,Profi
         List<Course> mycourses = t.getAllCourses();
         Set<Integer> CoursesNumber = new HashSet<Integer>();
         for(Course c : mycourses){
+            Log.w("alaa","c = "+c.getName());
             CoursesNumber.add(c.getCourseId());
         }
         List<Model> list = new ArrayList<Model>();
@@ -695,7 +696,7 @@ public class MainActivity extends FragmentActivity implements communicator,Profi
             ArrayList<String> query_result_numbers = new ArrayList<String>();
             int k = 0;
             for (int i = 0; i < numbers.length; ++i) {
-                if (numbers[i].toLowerCase().contains(query.toLowerCase()) || numbers[i].toLowerCase().contains(query.toLowerCase())) {
+                if (numbers[i].toLowerCase().startsWith(query.toLowerCase())) {
                     query_result_names.add(k, names[i]);
                     query_result_numbers.add(k, numbers[i]);
                     k++;
