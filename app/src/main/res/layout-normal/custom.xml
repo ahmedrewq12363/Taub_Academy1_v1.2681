@@ -16,6 +16,7 @@ android:onClick="onAddCoursesClicked"
     <SearchView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:inputType="number"
         android:id="@+id/searchView2"
         android:queryHint="search a course"
         android:layout_alignParentTop="true"

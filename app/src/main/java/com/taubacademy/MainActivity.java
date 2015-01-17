@@ -120,16 +120,10 @@ public class MainActivity extends FragmentActivity implements communicator,Profi
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.HomeButton:
-                if(manager.getBackStackEntryAt(0).getName() != null && manager.getBackStackEntryAt(0).getName().equals("Describtions And Courses"))
-                {
-                    return true;
-                }
                 FragmentTransaction Transaction = manager.beginTransaction();
                 Transaction.setCustomAnimations(android.R.anim.slide_in_left, R.anim.animated_fragment2,R.anim.animated_fragment, R.anim.animated_fragment2);
                 Configuration config = getResources().getConfiguration();
-                for(int i = 0; i < manager.getBackStackEntryCount(); ++i) {
-                    manager.popBackStack();
-                }
+                manager.popBackStackImmediate();
                 if ((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) ==
                         Configuration.SCREENLAYOUT_SIZE_NORMAL) {
                     Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
@@ -490,11 +484,6 @@ public class MainActivity extends FragmentActivity implements communicator,Profi
         List<Course> mycourses = t.getAllCourses();
         Set<Integer> CoursesNumber = new HashSet<Integer>();
         for(Course c : mycourses){
-            try {
-                c.fetchIfNeeded();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
             CoursesNumber.add(c.getCourseId());
         }
         List<Model> list = new ArrayList<Model>();
