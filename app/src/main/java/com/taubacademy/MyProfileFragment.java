@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -17,6 +19,8 @@ import android.widget.TimePicker;
 import com.parse.ParseUser;
 
 import java.util.Calendar;
+import java.util.List;
+import java.util.StringTokenizer;
 
 
 /**
@@ -76,6 +80,92 @@ public class MyProfileFragment extends Fragment {
         ((EditText) view.findViewById(R.id.email_edit)).setText(t.getEmail());
         ((EditText) view.findViewById(R.id.phone_edit)).setText(t.getPhone());
         ((EditText)view.findViewById(R.id.salaryEditText)).setText(t.getSalary().toString());
+        List<String> avalibale= t.getAvailableTime();
+        for(String str: avalibale) {
+            StringTokenizer tokens = new StringTokenizer(str, " ");
+            String day = tokens.nextToken();
+            StringTokenizer times = new StringTokenizer(tokens.nextToken(),"-");
+            String start=times.nextToken();
+            String end = times.nextToken();
+            TextView view_start;
+            TextView view_end;
+            CheckBox check;
+            int day_n = 0;
+            if(day.equals("Sunday")) day_n=1;
+            if(day.equals("Monday")) day_n=2;
+            if(day.equals("Tuesday")) day_n=3;
+            if(day.equals("Wednesday")) day_n=4;
+            if(day.equals("Thursday")) day_n=5;
+            if(day.equals("Friday")) day_n=6;
+            if(day.equals("Saturday")) day_n=7;
+            switch (day_n){
+                case 1:
+                    view_start = (TextView) view.findViewById(R.id.Sunday_start_time);
+                    view_end = (TextView) view.findViewById(R.id.Sunday_end_time);
+                    check = (CheckBox)view.findViewById(R.id.Sunday_checkbox);
+                    check.setChecked(true);
+                    view_start.setText(start);
+                    view_end.setText(end);
+                    Log.w("alaa", "Sunday " + view_start.getText() + "-" + view_end.getText());
+                    break;
+                case 2:
+                    view_start = (TextView) view.findViewById(R.id.Monday_start_time);
+                    view_end = (TextView) view.findViewById(R.id.Monday_end_time);
+                    check = (CheckBox)view.findViewById(R.id.Monday_checkbox);
+                    check.setChecked(true);
+                    view_start.setText(start);
+                    view_end.setText(end);
+                    Log.w("alaa", "Monday " + view_start.getText() + "-" + view_end.getText());
+                    break;
+                case 3:
+                    view_start = (TextView) view.findViewById(R.id.Tuesday_start_time);
+                    view_end = (TextView) view.findViewById(R.id.Tuesday_end_time);
+                    check = (CheckBox)view.findViewById(R.id.Tuesday_checkbox);
+                    check.setChecked(true);
+                    view_start.setText(start);
+                    view_end.setText(end);
+                    Log.w("alaa", "Sunday " + view_start.getText() + "-" + view_end.getText());
+                    break;
+                case 4:
+                    view_start = (TextView) view.findViewById(R.id.Wednesday_start_time);
+                    view_end = (TextView) view.findViewById(R.id.Wednesday_end_time);
+                    check = (CheckBox)view.findViewById(R.id.Wednesday_checkbox);
+                    check.setChecked(true);
+                    view_start.setText(start);
+                    view_end.setText(end);
+                    Log.w("alaa", "Sunday " + view_start.getText() + "-" + view_end.getText());
+                    break;
+                case 5:
+                    view_start = (TextView) view.findViewById(R.id.Thursday_start_time);
+                    view_end = (TextView) view.findViewById(R.id.Thursday_end_time);
+                    check = (CheckBox)view.findViewById(R.id.Thursday_checkbox);
+                    check.setChecked(true);
+                    view_start.setText(start);
+                    view_end.setText(end);
+                    Log.w("alaa", "Thursday " + view_start.getText() + "-" + view_end.getText());
+                    break;
+                case 6:
+                    view_start = (TextView) view.findViewById(R.id.Friday_start_time);
+                    view_end = (TextView) view.findViewById(R.id.Friday_end_time);
+                    check = (CheckBox)view.findViewById(R.id.Friday_checkbox);
+                    check.setChecked(true);
+                    view_start.setText(start);
+                    view_end.setText(end);
+                    Log.w("alaa", "Friday " + view_start.getText() + "-" + view_end.getText());
+                    break;
+                case 7:
+                    view_start = (TextView) view.findViewById(R.id.Saturday_start_time);
+                    view_end = (TextView) view.findViewById(R.id.Saturday_end_time);
+                    check = (CheckBox)view.findViewById(R.id.Saturday_checkbox);
+                    check.setChecked(true);
+                    view_start.setText(start);
+                    view_end.setText(end);
+                    Log.w("alaa", "Saturday " + view_start.getText() + "-" + view_end.getText());
+                    break;
+
+            }
+
+        }
         return view;
     }
 

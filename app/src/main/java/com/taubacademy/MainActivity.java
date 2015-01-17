@@ -451,7 +451,7 @@ public class MainActivity extends FragmentActivity implements communicator,Profi
             for (Model m : list) {
                 if (m.isSelected()) {
                     Log.w("alaa", "course number " + m.getName() + " course name " + m.getNumber());
-                    coures_number.add(m.getName());
+                    coures_number.add(m.getNumber());
             }
         }
         ParseQuery query = ParseQuery.getQuery("Course");
@@ -484,7 +484,7 @@ public class MainActivity extends FragmentActivity implements communicator,Profi
         int i = 0;
         for (String course : Courses) {
 
-            list.add(new Model(Integer.parseInt(course), names[i]));
+            list.add(new Model(Integer.parseInt(course),names[i]));
             i++;
         }
         return list;
@@ -590,8 +590,8 @@ public class MainActivity extends FragmentActivity implements communicator,Profi
                 });
                 viewH.firstLine.setTextColor(Color.parseColor("#0099CC"));
                 viewH.secondLine.setTextColor(Color.parseColor("#0099CC"));
-                view.setTag(viewH);
                 viewH.box.setTag(list.get(i));
+                view.setTag(viewH);
             } else {
                 ((ViewHolder) view.getTag()).box.setTag(list.get(i));
             }
@@ -613,26 +613,26 @@ public class MainActivity extends FragmentActivity implements communicator,Profi
 
     public class Model {
 
-        private int name;
-        private String number;
+        private int course_number;
+        private String course_name;
         private boolean selected;
 
-        public Model(int name, String number) {
-            this.name = name;
-            this.number = number;
+        public Model(int number, String name) {
+            this.course_number = number;
+            this.course_name = name;
             selected = false;
         }
 
-        public String getNumber() {
-            return number;
+        public int getNumber() {
+            return course_number;
         }
 
-        public int getName() {
-            return name;
+        public String getName() {
+            return course_name;
         }
 
-        public void setName(int name) {
-            this.name = name;
+        public void setCourse_number(int number) {
+            this.course_number = number;
         }
 
         public boolean isSelected() {
@@ -699,7 +699,7 @@ public class MainActivity extends FragmentActivity implements communicator,Profi
                 searched_names[i] = query_result_names.get(i);
                 searched_numbers[i] = query_result_numbers.get(i);
             }
-            lv.setAdapter(new StableArrayAdapter(getBaseContext(), searched_names, searched_numbers, getModel(searched_names, searched_numbers)));
+            lv.setAdapter(new StableArrayAdapter(getBaseContext(), searched_names, searched_numbers, getModel(searched_numbers, searched_names)));
 
         }
 
