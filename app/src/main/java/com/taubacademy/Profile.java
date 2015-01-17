@@ -1,5 +1,6 @@
 package com.taubacademy;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,7 +9,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -31,6 +31,16 @@ public class Profile extends android.support.v4.app.Fragment {
     Tutor tutor;
     private View profile;
     private PagerSlidingTabStrip pagerSlidingTabStrip;
+    public interface  ClickListner{
+        public void logOut();
+    }
+    ClickListner clickListner;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        clickListner=(ClickListner)activity;
+    }
 
     public Profile() {
         super();
@@ -122,25 +132,31 @@ public class Profile extends android.support.v4.app.Fragment {
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+            if(clickListner!=null){
+                clickListner.logOut();
+            }
+
                 ParseUser.logOut();
                 FragmentTransaction Transaction = getFragmentManager().beginTransaction();
                 Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
                 Configuration config = getResources().getConfiguration();
+                getFragmentManager().popBackStackImmediate();
                 if ((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) ==
                         Configuration.SCREENLAYOUT_SIZE_NORMAL) {
                     Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
-                    Transaction.replace(R.id.ProfileFrag, ((MainActivity) getActivity()).DescFragment, "Describtions");
-                    Transaction.replace(R.id.ProfileFrag, ((MainActivity) getActivity()).CourFragment, "Courses");
+                    Transaction.replace(R.id.ProfileFrag,  new Describtion(), "Describtions");
+                    Transaction.replace(R.id.ProfileFrag, new CoursesList(), "Courses");
                     Transaction.addToBackStack(null);
                     Transaction.commit();
                 } else {
                     Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
-                    Transaction.replace(R.id.CoursesFrag, ((MainActivity) getActivity()).CourFragment, "Courses");
-                    Transaction.replace(R.id.DescFrag, ((MainActivity) getActivity()).DescFragment, "Describtions");
+                    Transaction.replace(R.id.CoursesFrag, new CoursesList(), "Courses");
+                    Transaction.replace(R.id.DescFrag, new Describtion(), "Describtions");
+                    Transaction.addToBackStack(null);
                     Transaction.commit();
                 }
-                MenuItem item = ((MainActivity) getActivity()).menu.findItem(R.id.Login_button);
-                item.setIcon(R.drawable.login_64);
+
 
             }
         });

@@ -52,7 +52,7 @@ import java.util.List;
 import java.util.Set;
 
 
-public class MainActivity extends FragmentActivity implements communicator {
+public class MainActivity extends FragmentActivity implements communicator,Profile.ClickListner {
     public Set<Course> CoursesSelected;
     public Describtion DescFragment = new Describtion();
     public CoursesList CourFragment = new CoursesList();
@@ -90,6 +90,15 @@ public class MainActivity extends FragmentActivity implements communicator {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if ((ParseUser.getCurrentUser() == null || (!ParseFacebookUtils.isLinked(ParseUser.getCurrentUser())))&&this.menu!=null) {
+            MenuItem Login = menu.findItem(R.id.Login_button);
+            Login.setIcon(R.drawable.login_64);
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         // Inflate the menu items for use in the action bar
@@ -112,8 +121,9 @@ public class MainActivity extends FragmentActivity implements communicator {
                 return true;
             case R.id.HomeButton:
                 FragmentTransaction Transaction = manager.beginTransaction();
-                Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
+                Transaction.setCustomAnimations(android.R.anim.slide_in_left, R.anim.animated_fragment2,R.anim.animated_fragment, R.anim.animated_fragment2);
                 Configuration config = getResources().getConfiguration();
+                manager.popBackStackImmediate();
                 if ((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) ==
                         Configuration.SCREENLAYOUT_SIZE_NORMAL) {
                     Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
@@ -125,7 +135,7 @@ public class MainActivity extends FragmentActivity implements communicator {
                     Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
                     Transaction.replace(R.id.CoursesFrag, CourFragment, "Courses");
                     Transaction.replace(R.id.DescFrag, DescFragment,  "Describtions");
-                    Transaction.addToBackStack("Courses");
+                    Transaction.addToBackStack(null);
                     Transaction.commit();
                 }
                 break;
@@ -242,12 +252,13 @@ public class MainActivity extends FragmentActivity implements communicator {
         progressDialog.setMessage("loading");
         progressDialog.show();
         profile = new Profile(tutor);
+        manager.popBackStackImmediate();
         FragmentTransaction Transaction = manager.beginTransaction();
         Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
-        Transaction.replace(R.id.ProfileFrag, profile, null);
+        Transaction.replace(R.id.ProfileFrag, profile, "PRofile");
         Transaction.addToBackStack(null);
         Transaction.commit();
-        progressDialog.dismiss();
+       progressDialog.dismiss();
     }
 
     public void SortByRank(View view) {
@@ -482,6 +493,14 @@ public class MainActivity extends FragmentActivity implements communicator {
     public void showTimePickerDialog(View v) {
         DialogFragment newFragment = new TimePickerFragment((TextView) v);
         newFragment.show(getSupportFragmentManager(), "timePicker");
+    }
+
+    @Override
+    public void logOut() {
+
+
+        MenuItem item = menu.findItem(R.id.Login_button);
+        item.setIcon(R.drawable.login_64);
     }
 
     public static class TimePickerFragment extends DialogFragment
