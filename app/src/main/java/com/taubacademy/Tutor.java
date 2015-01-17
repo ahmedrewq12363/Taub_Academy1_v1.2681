@@ -227,6 +227,7 @@ public class Tutor extends ParseObject {
     }
 
     public void setAvailableTime(List<String> AvailableTimes) {
-        addAll("AvailableTime", AvailableTimes);
+        put("AvailableTime", AvailableTimes);
+
     }
 }
