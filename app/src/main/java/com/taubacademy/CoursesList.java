@@ -1,10 +1,13 @@
 package com.taubacademy;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 
@@ -85,13 +89,25 @@ public class CoursesList extends Fragment implements AdapterView.OnItemClickList
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         TextView text = (TextView) view.findViewById(R.id.secondLine);
-        try {
-            c.respond(text.getText().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if(!isOnline()){
+            Log.w("alaa", "not connected to internet");
+            Toast.makeText(getActivity(), "Please Check Your Internet Connection !", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Log.w("alaa", " connected to internet");
+            try {
+                c.respond(text.getText().toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
-
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
     class mylistAdapter extends BaseAdapter {
         String[] Courses;
         String[] Names;
