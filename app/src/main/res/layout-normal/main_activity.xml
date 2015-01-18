@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#fff"
+        android:id="@+id/main_continer">
+    <fragment
+        android:id="@+id/courses_frag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:name="com.taubacademy.CoursesList"
+        class="com.taubacademy.CoursesList"
+        android:layout_weight="1"
+        tools:layout="@layout/courses_fragment_layout" />
+    </LinearLayout>
+</LinearLayout>

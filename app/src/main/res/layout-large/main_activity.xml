@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:id="@+id/main_continer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/courses_frag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.taubacademy.CoursesList"
+        android:background="#fff"
+        class="com.taubacademy.CoursesList"
+        android:layout_weight="1"
+        tools:layout="@layout/courses_fragment_layout" />
+
+    <fragment
+        android:id="@+id/descripion_frag"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:name="com.taubacademy.Describtion"
+    android:background="#fff"
+    class="com.taubacademy.Describtion"
+        android:layout_weight="1"
+    tools:layout="@layout/describtion" />
+
+</LinearLayout>
