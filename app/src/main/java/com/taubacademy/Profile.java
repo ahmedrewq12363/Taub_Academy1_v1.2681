@@ -1,9 +1,11 @@
 package com.taubacademy;
 
 import android.app.Activity;
-import android.content.res.Configuration;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
@@ -15,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.parse.ParseException;
@@ -80,10 +83,51 @@ public class Profile extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        try {
+            tutor.fetchIfNeeded();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         profile = inflater.inflate(R.layout.fragment_profile, container, false);
         TextView Name = (TextView) profile.findViewById(R.id.NameOnPRo);
         ParseImageView imagePro = (ParseImageView) profile.findViewById(R.id.imageView);
         ParseFile imageFile = tutor.getPhotoFile();
+        RatingBar ratingBar= (RatingBar) profile.findViewById(R.id.ratingBar);
+        ratingBar.setRating(tutor.getRating());
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(final RatingBar ratingBar, float v, boolean b) {
+                new AsyncTask<Void, Void, Boolean>() {
+                    ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                    @Override
+                    protected void onPreExecute() {
+                        super.onPreExecute();
+                        progressDialog.setMessage("setting your rating on "+tutor.getName());
+                        progressDialog.show();
+                    }
+
+                    @Override
+                    protected Boolean doInBackground(Void... voids) {
+                        Boolean b = tutor.setRating((Tutor) ParseUser.getCurrentUser().get("Tutor"), ((Float) ratingBar.getRating()).intValue());
+
+                        tutor.saveInBackground();
+                        return b;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Boolean profile) {
+                        super.onPostExecute(profile);
+                        if(profile == false)
+                        {
+                            Toast.makeText(getActivity().getBaseContext(),"you can't rate yourself",Toast.LENGTH_SHORT).show();
+                        }
+                        ratingBar.setRating(tutor.getRating());
+                        progressDialog.dismiss();
+                    }
+                }.execute();
+
+            }
+        });
         if (imageFile != null) {
             Picasso.with(getActivity().getBaseContext()).load(imageFile.getUrl()).into(imagePro);
         } else {
@@ -102,29 +146,12 @@ public class Profile extends android.support.v4.app.Fragment {
         ImageButton logOut = (ImageButton) profile.findViewById(R.id.imageButtonLogOut);
         ImageView mail = (ImageView) profile.findViewById(R.id.EmailImage);
         ImageView phone = (ImageView) profile.findViewById(R.id.PhoneImage);
-        RatingBar bar = (RatingBar) profile.findViewById(R.id.ratingBar);
-        bar.setRating(tutor.getRating());
-        bar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(final RatingBar ratingBar, float v, boolean b) {
-                new Runnable() {
 
-                    @Override
-                    public void run() {
-                        tutor.setRating((Tutor) ParseUser.getCurrentUser().get("Tutor"), ((Float) ratingBar.getRating()).intValue());
-                        ratingBar.setRating(tutor.getRating());
-                        tutor.saveInBackground();
-                    }
-                }.run();
-
-
-            }
-        });
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction Transaction = getFragmentManager().beginTransaction();
-                Transaction.add(R.id.ProfileFrag, new MyProfileFragment(), null);
+                FragmentTransaction Transaction =((FragmentActivity)getActivity()).getSupportFragmentManager().beginTransaction();
+                Transaction.replace(R.id.main_continer, new MyProfileFragment(), null);
                 Transaction.addToBackStack(null);
                 Transaction.commit();
             }
@@ -136,28 +163,7 @@ public class Profile extends android.support.v4.app.Fragment {
             if(clickListner!=null){
                 clickListner.logOut();
             }
-
                 ParseUser.logOut();
-                FragmentTransaction Transaction = getFragmentManager().beginTransaction();
-                Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
-                Configuration config = getResources().getConfiguration();
-                getFragmentManager().popBackStackImmediate();
-                if ((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) ==
-                        Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-                    Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
-                    Transaction.replace(R.id.ProfileFrag,  new Describtion(), "Describtions");
-                    Transaction.replace(R.id.ProfileFrag, new CoursesList(), "Courses");
-                    Transaction.addToBackStack(null);
-                    Transaction.commit();
-                } else {
-                    Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
-                    Transaction.replace(R.id.CoursesFrag, new CoursesList(), "Courses");
-                    Transaction.replace(R.id.DescFrag, new Describtion(), "Describtions");
-                    Transaction.addToBackStack(null);
-                    Transaction.commit();
-                }
-
-
             }
         });
         if ((ParseUser.getCurrentUser().get("Tutor") != null) && ParseUser.getCurrentUser().get("Tutor").equals(tutor)) {

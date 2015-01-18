@@ -1,5 +1,8 @@
 package com.taubacademy;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import com.facebook.Request;
@@ -23,6 +26,16 @@ public class Tutor extends ParseObject {
     public Tutor() {
     }
 
+    @Override
+    public boolean equals(Object o) {
+
+        if(!(o instanceof Tutor))
+        {
+            return false;
+        }
+        return ((Tutor)o).getObjectId().equals(getObjectId());
+    }
+
     public static void updateAlTutorials() {
         ParseQuery query = ParseQuery.getQuery("Tutor");
         List<Tutor> tutors = null;
@@ -42,48 +55,72 @@ public class Tutor extends ParseObject {
         }
     }
 
-    static public void createNewTutor() {
-        final Tutor t = new Tutor();
-        t.setEmail("N\\A");
-        t.setPhone("N\\A");
-        t.setName("N\\A");
-        t.setRating(0);
-        t.setSalary(0);
-        t.setAuthor(ParseUser.getCurrentUser());
+    static public void createNewTutor(final MainActivity activity) {
+        new AsyncTask<Void,Void,Boolean>()
+        {
+            ProgressDialog progressDialog = new ProgressDialog(activity);
 
-        try {
-            t.save();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        ParseUser.getCurrentUser().put("Tutor", t);
-        Request request = Request.newMeRequest(ParseFacebookUtils.getSession(), new Request.GraphUserCallback() {
             @Override
-            public void onCompleted(GraphUser user, Response response) {
-                if (user != null) {
-                    final GraphUser currentUser = user;
-                    try {
-                        // Populate the JSON object
-                        try {
-                            t.setName(user.getFirstName() + " " + user.getLastName());
-                        } catch (Exception e) {
-                            // TODO: handle exception
-                        }
-                        if (user.getProperty("email") != null) {
-                            t.setEmail((String) user.getProperty("email"));
-                        }
-                        t.put("UserId", currentUser.getId());
-                        t.saveInBackground();
-
-                    } catch (Exception e) {
-                        Log.e("Facebook parsing data", "Error parsing returned user data.");
-                    }
-
-                } else if (response.getError() != null) {
-                }
+            protected void onPreExecute() {
+                super.onPreExecute();
+                progressDialog.setMessage("Creating your account please wait");
+                progressDialog.show();
             }
-        });
-        request.executeAndWait();
+
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                final Tutor t = new Tutor();
+                t.setPhone("N\\A");
+                t.setRating(0);
+                t.setSalary(0);
+                t.setAuthor(ParseUser.getCurrentUser());
+                try {
+                    t.save();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                ParseUser.getCurrentUser().put("Tutor", t);
+                Request request = Request.newMeRequest(ParseFacebookUtils.getSession(), new Request.GraphUserCallback() {
+                    @Override
+                    public void onCompleted(GraphUser user, Response response) {
+                        if (user != null) {
+                            final GraphUser currentUser = user;
+                            try {
+                                // Populate the JSON object
+                                try {
+                                    t.setName(user.getFirstName() + " " + user.getLastName());
+                                } catch (Exception e) {
+                                    // TODO: handle exception
+                                }
+                                if (user.getProperty("email") != null) {
+                                    t.setEmail((String) user.getProperty("email"));
+                                }
+                                t.put("UserId", currentUser.getId());
+                                t.saveInBackground();
+
+                            } catch (Exception e) {
+                                Log.e("Facebook parsing data", "Error parsing returned user data.");
+                            }
+
+                        } else if (response.getError() != null) {
+                        }
+                    }
+                });
+                request.executeAndWait();
+                return true;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aVoid) {
+                super.onPostExecute(aVoid);
+                FragmentTransaction Transaction = activity.getSupportFragmentManager().beginTransaction();
+                Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
+                Transaction.replace(R.id.main_continer, new MyProfileFragment(), null);
+                Transaction.addToBackStack(null);
+                Transaction.commit();
+                progressDialog.dismiss();
+            }
+        }.execute();
     }
 
     public String getName() {
@@ -179,6 +216,9 @@ public class Tutor extends ParseObject {
     }
 
     public Boolean setRating(Tutor t, Integer Rating) {
+        if(t==null){
+            return  false;
+        }
         if (t.equals(this)) {
             return false;
         }
@@ -188,13 +228,6 @@ public class Tutor extends ParseObject {
             getAllRatings = new ArrayList<PairRatings>();
         }
         OverallRating *= getAllRatings.size() == 0 ? 1 : getAllRatings.size();
-        PairRatings pair = null;
-        ParseQuery q = ParseQuery.getQuery("PairRatings");
-        try {
-            pair = (PairRatings) q.whereEqualTo("first", t).find().get(0);
-        } catch (Exception e) {
-
-        }
 
         for (PairRatings p : getAllRatings) {
             try {
@@ -203,11 +236,11 @@ public class Tutor extends ParseObject {
                 e.printStackTrace();
             }
             if (p.getFirst().equals(t)) {
-                return false;
+                OverallRating -= Integer.parseInt(p.getSecond());
+                getAllRatings.remove(p);
             }
         }
-
-        pair = new PairRatings(t, Rating.toString());
+        PairRatings pair = new PairRatings(t, Rating.toString());
         pair.update();
         getAllRatings.add(pair);
         OverallRating += Rating;

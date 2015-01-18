@@ -18,6 +18,7 @@ import android.widget.TimePicker;
 
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -80,7 +81,7 @@ public class MyProfileFragment extends Fragment {
         ((EditText) view.findViewById(R.id.email_edit)).setText(t.getEmail());
         ((EditText) view.findViewById(R.id.phone_edit)).setText(t.getPhone());
         ((EditText)view.findViewById(R.id.salaryEditText)).setText(t.getSalary().toString());
-        List<String> avalibale= t.getAvailableTime();
+        List<String> avalibale= t.getAvailableTime() == null ? new ArrayList<String>() : t.getAvailableTime();
         for(String str: avalibale) {
             StringTokenizer tokens = new StringTokenizer(str, " ");
             String day = tokens.nextToken();

@@ -6,12 +6,15 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -54,14 +57,15 @@ import java.util.Set;
 
 public class MainActivity extends FragmentActivity implements communicator, Profile.ClickListner {
     public Set<Course> CoursesSelected;
-    public Describtion DescFragment = new Describtion();
-    public CoursesList CourFragment = new CoursesList();
+    public Describtion DescFragment;
+    public CoursesList CourFragment;
     public ListView lv;
     public AlertDialog.Builder alertDialog;
     public AlertDialog AddCourseDialog;
     public List<Model> list;
     public int[] days_arr;
     public Menu menu;
+    boolean isTwoView;
     FragmentManager manager = getSupportFragmentManager();
     Profile profile;
     AdapterView.OnItemClickListener onLoginClick = new AdapterView.OnItemClickListener() {
@@ -87,6 +91,13 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     @Override
@@ -121,41 +132,74 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
                 return true;
             case R.id.HomeButton:
                 FragmentTransaction Transaction = manager.beginTransaction();
-                if (manager.getBackStackEntryAt(0).getName() != null &&
-                        (manager.getBackStackEntryAt(0).getName().equals("Describtions And Courses")
-                        || manager.getBackStackEntryAt(0).getName().equals("Courses"))) {
+                if (getSupportFragmentManager().getFragments() == null) {
+                    return true;
+                } else if (getSupportFragmentManager().getFragments().size() == 0) {
                     return true;
                 }
-                Transaction.setCustomAnimations(android.R.anim.slide_in_left, R.anim.animated_fragment2, R.anim.animated_fragment, R.anim.animated_fragment2);
-                Configuration config = getResources().getConfiguration();
+
                 int count = manager.getBackStackEntryCount();
                 for (int i = 0; i < count; ++i) {
                     manager.popBackStack();
                 }
-                if ((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) ==
-                        Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-                    Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
-                    Transaction.replace(R.id.ProfileFrag, DescFragment, "Describtions");
-                    Transaction.replace(R.id.ProfileFrag, CourFragment, "Courses");
-                    Transaction.addToBackStack("Courses");
-                    Transaction.commit();
-                } else {
-                    Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
-                    Transaction.replace(R.id.CoursesFrag, CourFragment, "Courses");
-                    Transaction.replace(R.id.DescFrag, DescFragment, "Describtions");
-                    Transaction.addToBackStack("Describtions And Courses");
-                    Transaction.commit();
-                }
                 break;
             case R.id.Login_button:
+                if (!isOnline()) {
+                    Log.w("alaa", "not connected to internet");
+                    Toast.makeText(this, "Please Check Your Internet Connection !", Toast.LENGTH_LONG).show();
+                    return true;
+                }
                 if (ParseUser.getCurrentUser() != null && ParseFacebookUtils.isLinked(ParseUser.getCurrentUser())) {
-                    profile = new Profile((Tutor) ParseUser.getCurrentUser().get("Tutor"));
-                    Transaction = manager.beginTransaction();
-                    Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
+                    new AsyncTask<Void, Void, Profile>() {
+                        ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
 
-                    Transaction.replace(R.id.ProfileFrag, profile, null);
-                    Transaction.addToBackStack(null);
-                    Transaction.commit();
+                        @Override
+                        protected void onPreExecute() {
+                            Tutor t = ((Tutor)ParseUser.getCurrentUser().get("Tutor"));
+                            try {
+                                t.fetch();
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            super.onPreExecute();
+                            progressDialog.setMessage("loading " +t.getName() + " Page please wait...");
+                            progressDialog.show();
+                        }
+
+                        @Override
+                        protected Profile doInBackground(Void... voids) {
+                            MainActivity.this.profile =  new Profile((Tutor) ParseUser.getCurrentUser().get("Tutor"));
+                            Profile myProfile = null;
+                            FragmentTransaction Transaction = manager.beginTransaction();
+                            Fragment fragment = MainActivity.this.getSupportFragmentManager().findFragmentById(R.id.main_continer);
+                            if (!(fragment instanceof Profile)) {
+                                Transaction = manager.beginTransaction();
+                                Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
+
+                                Transaction.replace(R.id.main_continer, profile, "Profile");
+                                Transaction.addToBackStack(null);
+                                Transaction.commit();
+                            } else {
+                                myProfile = (Profile) fragment;
+                                if (!myProfile.tutor.equals(profile.tutor)) {
+                                    Transaction = manager.beginTransaction();
+                                    Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
+                                    Transaction.replace(R.id.main_continer, profile, "Profile");
+                                    Transaction.addToBackStack(null);
+                                    Transaction.commit();
+                                }
+                            }
+                            return MainActivity.this.profile;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Profile profile) {
+                            super.onPostExecute(profile);
+
+                            progressDialog.dismiss();
+                        }
+                    }.execute();
+
                     return true;
                 }
                 List<String> permissions = Arrays.asList("public_profile", "email", "user_mobile_phone");
@@ -165,32 +209,9 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
                         if (user == null) {
                             Toast.makeText(getBaseContext(), "There is Error in The LogIn", Toast.LENGTH_LONG);
                         } else if (user.isNew()) {
-                            Tutor.createNewTutor();
-                            FragmentTransaction Transaction = manager.beginTransaction();
-                            Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
-                            Transaction.replace(R.id.ProfileFrag, new MyProfileFragment(), null);
-                            Transaction.addToBackStack(null);
-                            Transaction.commit();
+                            Tutor.createNewTutor(MainActivity.this);
                             menuItem.setIcon(R.drawable.user_100_blue);
                         } else {
-
-                            FragmentTransaction Transaction = manager.beginTransaction();
-                            Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
-                            Configuration config = getResources().getConfiguration();
-                            if ((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) ==
-                                    Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-                                Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
-                                Transaction.replace(R.id.ProfileFrag, DescFragment, "Describtions");
-                                Transaction.replace(R.id.ProfileFrag, CourFragment, "Courses");
-                                Transaction.addToBackStack(null);
-                                Transaction.commit();
-                            } else {
-                                Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
-                                Transaction.replace(R.id.CoursesFrag, CourFragment, "Courses");
-                                Transaction.replace(R.id.DescFrag, DescFragment, "Describtions");
-                                Transaction.addToBackStack(null);
-                                Transaction.commit();
-                            }
                             menuItem.setIcon(R.drawable.user_100_blue);
                         }
                     }
@@ -203,70 +224,79 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
 
     @Override
     public void onBackPressed() {
-        int counter = manager.getBackStackEntryCount();
-        if (counter == 1) {
-            this.finish();
-        }
-        manager.popBackStack();
+        super.onBackPressed();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_activity);
         ParseUser.getCurrentUser().fetchInBackground();
 
-        Configuration config = getResources().getConfiguration();
-        if ((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) ==
-                Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-            FragmentTransaction Transaction = manager.beginTransaction();
-            setContentView(R.layout.activity_my);
-            Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
-            Transaction.add(R.id.ProfileFrag, DescFragment, "Describtions");
-            Transaction.add(R.id.ProfileFrag, CourFragment, "Courses");
-            Transaction.addToBackStack("Courses");
-            Transaction.commit();
-        } else {
-            FragmentTransaction Transaction = manager.beginTransaction();
-            Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
-            setContentView(R.layout.activity_my);
-            Transaction.add(R.id.CoursesFrag, CourFragment, "Courses");
-            Transaction.add(R.id.DescFrag, DescFragment, "Describtions");
-            Transaction.addToBackStack("Describtions And Courses");
-            Transaction.commit();
-        }
+        DescFragment = (Describtion) getSupportFragmentManager().findFragmentById(R.id.descripion_frag);
 
+        CourFragment = (CoursesList) getSupportFragmentManager().findFragmentById(R.id.courses_frag);
+        if (DescFragment == null) {
+            isTwoView = false;
+        } else isTwoView = true;
         CoursesSelected = new HashSet<Course>();
         days_arr = new int[7];
     }
 
     @Override
     public void respond(String course) throws ParseException {
-        Configuration config = getResources().getConfiguration();
-        if ((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) ==
-                Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-            FragmentTransaction Transaction = manager.beginTransaction();
-            Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
-
-            Transaction.replace(R.id.ProfileFrag, DescFragment, "Describtions");
-            Transaction.addToBackStack("Describtions");
-            Transaction.commit();
+        if (!isTwoView) {
+            DescFragment = new Describtion();
+            Bundle bundle = new Bundle();
+            bundle.putString("COURSE", course);
+            DescFragment.setArguments(bundle);
+            //getSupportFragmentManager().popBackStackImmediate();
+            getSupportFragmentManager().
+                    beginTransaction().
+                    replace(R.id.main_continer, DescFragment)
+                    .setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2, R.anim.animated_fragment, R.anim.animated_fragment2)
+                    .addToBackStack(null).commit();
         }
-        DescFragment.changeData(course);
+        if (DescFragment != null && isTwoView)
+            DescFragment.changeData(course);
     }
 
     @Override
-    public void ChangeFrag(Tutor tutor) {
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("loading");
-        progressDialog.show();
-        profile = new Profile(tutor);
-        manager.popBackStackImmediate();
-        FragmentTransaction Transaction = manager.beginTransaction();
-        Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
-        Transaction.replace(R.id.ProfileFrag, profile, "PRofile");
-        Transaction.addToBackStack(null);
-        Transaction.commit();
-        progressDialog.dismiss();
+    public void ChangeFrag(final Tutor tutor) {
+        new AsyncTask<Void, Void, Profile>() {
+            ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                progressDialog.setMessage("loading " +tutor.getName() + " Page please wait...");
+                progressDialog.show();
+            }
+
+            @Override
+            protected Profile doInBackground(Void... voids) {
+                try {
+                    tutor.fetch();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                MainActivity.this.profile = new Profile(tutor);
+                FragmentTransaction Transaction = manager.beginTransaction();
+                Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2, R.anim.animated_fragment, R.anim.animated_fragment2);
+                Transaction.replace(R.id.main_continer, profile, "Profile");
+                Transaction.addToBackStack(null);
+                Transaction.commit();
+                return MainActivity.this.profile;
+            }
+
+            @Override
+            protected void onPostExecute(Profile profile) {
+                super.onPostExecute(profile);
+                progressDialog.dismiss();
+            }
+        }.execute();
+
+
     }
 
     public void SortByRank(View view) {
@@ -480,16 +510,39 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
                 }
             }
         });
-        FragmentTransaction Transaction = manager.beginTransaction();
-        Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
+        new AsyncTask<Void, Void, Profile>() {
+            ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
 
-        Transaction.replace(R.id.ProfileFrag, profile, null);
-        Transaction.commit();
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                progressDialog.setMessage("loading " +t.getName() + " Page please wait...");
+                progressDialog.show();
+            }
+
+            @Override
+            protected Profile doInBackground(Void... voids) {
+                MainActivity.this.profile = new Profile(t);
+                return MainActivity.this.profile;
+            }
+
+            @Override
+            protected void onPostExecute(Profile profile) {
+                super.onPostExecute(profile);
+                manager.popBackStackImmediate();
+                FragmentTransaction Transaction = manager.beginTransaction();
+                Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
+                Transaction.replace(R.id.main_continer, profile, "Profile");
+                Transaction.commit();
+                progressDialog.dismiss();
+            }
+        }.execute();
+
     }
 
     private List<Model> getModel(String[] Courses, String[] names) {
         Tutor t = (Tutor) ParseUser.getCurrentUser().get("Tutor");
-        List<Course> mycourses = t.getAllCourses();
+        List<Course> mycourses = t.getAllCourses() == null ? new ArrayList<Course>() : t.getAllCourses();
         Set<Integer> CoursesNumber = new HashSet<Integer>();
         for (Course c : mycourses) {
             CoursesNumber.add(c.getCourseId());
@@ -518,6 +571,10 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
 
         MenuItem item = menu.findItem(R.id.Login_button);
         item.setIcon(R.drawable.login_64);
+        int count = manager.getBackStackEntryCount();
+        for (int i = 0; i < count; ++i) {
+            manager.popBackStack();
+        }
     }
 
     public static class TimePickerFragment extends DialogFragment

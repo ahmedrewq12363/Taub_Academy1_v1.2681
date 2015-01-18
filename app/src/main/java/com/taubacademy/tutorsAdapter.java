@@ -10,8 +10,11 @@ import android.widget.TextView;
 
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
+import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -59,6 +62,14 @@ public class tutorsAdapter extends BaseAdapter {
         if (imageFile != null) {
             todoImage.setParseFile(imageFile);
             todoImage.loadInBackground();
+        }else{
+            URL url = null;
+            try {
+                url =  new URL("https://graph.facebook.com/" + tutors.get(i).get("UserId") + "/picture?type=large");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            Picasso.with(contextWeakReference.get()).load(url.toString()).into(todoImage);
         }
         holder.firstLine.setText(tutors.get(i).getName());
         holder.secondLine.setText("Rank : " + tutors.get(i).getRating().toString() + "/5");

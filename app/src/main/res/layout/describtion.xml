@@ -3,6 +3,7 @@
     android:id="@+id/describtions"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:orientation="vertical">
 
 
@@ -15,6 +16,7 @@
         android:layout_alignParentTop="true"
         android:gravity="center"
         android:text="Sort Teachers By"
+        android:background="#fff"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#0099CC" />
 
@@ -28,6 +30,7 @@
         android:layout_below="@+id/radioButton"
         android:layout_toEndOf="@+id/textView"
         android:onClick="SortBySalary"
+        android:background="#fff"
         android:text="Salary Per Hour"
         android:textColor="#0099CC" />
 
@@ -38,7 +41,7 @@
         android:layout_height="700dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="false"
-
+        android:background="#fff"
         android:layout_alignParentStart="false"
         android:layout_below="@+id/textView21"
         android:divider="#0099CC"
@@ -53,6 +56,7 @@
         android:layout_below="@+id/textView"
         android:layout_toEndOf="@+id/textView"
         android:checked="false"
+        android:background="#fff"
         android:onClick="SortByRank"
         android:text="Rank"
         android:textColor="#0099CC" />
@@ -68,6 +72,6 @@
         android:gravity="center"
         android:text="Please Choose A Course"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/whit" />
+        android:textColor="#fff" />
 
 </RelativeLayout>
