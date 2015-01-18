@@ -2,6 +2,7 @@ package com.taubacademy;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ public class
     ListView listView;
     TextView text1;
     View root;
+    Activity activity;
     com.taubacademy.communicator communicator;
     String course;
     @Override
@@ -44,6 +46,7 @@ public class
         super.onCreate(savedInstanceState);
         if(getArguments()!=null)
         course=getArguments().getString("COURSE");
+        activity = getActivity();
     }
 
     @Override
@@ -109,8 +112,6 @@ public class
                } catch (ParseException e) {
                    e.printStackTrace();
                }
-
-
                for(Tutor t : tutors)
                {
                    t.fetchInBackground();
@@ -123,12 +124,12 @@ public class
            protected void onPostExecute(ArrayList<Tutor> tutors) {
                super.onPostExecute(tutors);
                if (tutors.size() == 0) {
-                   listView.setAdapter(new tutorsAdapter(getActivity().getBaseContext(), new ArrayList<Tutor>()));
+                   listView.setAdapter(new tutorsAdapter(activity.getBaseContext(), new ArrayList<Tutor>()));
                    text1.setText("No Teachers Available");
 
                }
                text1.setText("Available Teachers For : " + course);
-               listView.setAdapter(new tutorsAdapter(getActivity().getBaseContext(), (tutors)));
+               listView.setAdapter(new tutorsAdapter(activity.getBaseContext(), (tutors)));
                progressDialog.dismiss();
            }
        }.execute();
