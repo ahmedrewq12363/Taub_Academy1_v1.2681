@@ -522,13 +522,18 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
 
             @Override
             protected Profile doInBackground(Void... voids) {
-                MainActivity.this.profile = new Profile(t);
+                try {
+                    MainActivity.this.profile.tutor.fetch();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 return MainActivity.this.profile;
             }
 
             @Override
             protected void onPostExecute(Profile profile) {
                 super.onPostExecute(profile);
+                MainActivity.this.profile.Refresh();
                 manager.popBackStackImmediate();
                 FragmentTransaction Transaction = manager.beginTransaction();
                 Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
