@@ -195,7 +195,6 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
                         @Override
                         protected void onPostExecute(Profile profile) {
                             super.onPostExecute(profile);
-
                             progressDialog.dismiss();
                         }
                     }.execute();
@@ -250,7 +249,6 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
             Bundle bundle = new Bundle();
             bundle.putString("COURSE", course);
             DescFragment.setArguments(bundle);
-            //getSupportFragmentManager().popBackStackImmediate();
             getSupportFragmentManager().
                     beginTransaction().
                     replace(R.id.main_continer, DescFragment)
@@ -281,11 +279,6 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
                     e.printStackTrace();
                 }
                 MainActivity.this.profile = new Profile(tutor);
-                FragmentTransaction Transaction = manager.beginTransaction();
-                Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2, R.anim.animated_fragment, R.anim.animated_fragment2);
-                Transaction.replace(R.id.main_continer, profile, "Profile");
-                Transaction.addToBackStack(null);
-                Transaction.commit();
                 return MainActivity.this.profile;
             }
 
@@ -293,6 +286,11 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
             protected void onPostExecute(Profile profile) {
                 super.onPostExecute(profile);
                 progressDialog.dismiss();
+                FragmentTransaction Transaction = manager.beginTransaction();
+                Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2, R.anim.animated_fragment, R.anim.animated_fragment2);
+                Transaction.replace(R.id.main_continer, profile, "Profile");
+                Transaction.addToBackStack(null);
+                Transaction.commit();
             }
         }.execute();
 
@@ -516,6 +514,19 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
         query.findInBackground(new FindCallback() {
             @Override
             public void done(List list, ParseException e) {
+                List<Course> oldCoursesList = t.getAllCourses() == null ? new ArrayList<Course>(): t.getAllCourses();
+                ArrayList<Tutor> tutors = new ArrayList<Tutor>();
+                tutors.add(t);
+                for(Course c : oldCoursesList)
+                {
+                    try {
+                        c.fetchIfNeeded();
+                    } catch (ParseException e1) {
+                        e1.printStackTrace();
+                    }
+                    c.removeAll("tutors", tutors);
+                    c.saveInBackground();
+                }
                 List<Course> courses = (List<Course>) list;
                 for (Course course : courses) {
                     course.addTutorToList(t);
@@ -530,17 +541,18 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
             }
         });
         new AsyncTask<Void, Void, Profile>() {
-            ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                progressDialog.setMessage("loading " +t.getName() + " Page please wait...");
-                progressDialog.show();
             }
 
             @Override
             protected Profile doInBackground(Void... voids) {
+                if(MainActivity.this.profile == null)
+                {
+                    profile = new Profile(((Tutor)ParseUser.getCurrentUser().get("Tutor")));
+                }
                 try {
                     MainActivity.this.profile.tutor.fetch();
                 } catch (ParseException e) {
@@ -556,9 +568,13 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
                 manager.popBackStackImmediate();
                 FragmentTransaction Transaction = manager.beginTransaction();
                 Transaction.setCustomAnimations(R.anim.animated_fragment, R.anim.animated_fragment2);
+
                 Transaction.replace(R.id.main_continer, profile, "Profile");
+                if(manager.getBackStackEntryCount() ==0)
+                {
+                    Transaction.addToBackStack("Profile");
+                }
                 Transaction.commit();
-                progressDialog.dismiss();
             }
         }.execute();
 

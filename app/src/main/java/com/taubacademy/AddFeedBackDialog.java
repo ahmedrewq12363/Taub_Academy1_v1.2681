@@ -42,7 +42,9 @@ public class AddFeedBackDialog extends DialogFragment {
                     }
                     tutor.setFeedback(t, FeedBack);
                     AdapterFeedBack pager = ((AdapterFeedBack) ((FragmentPagerAdapter) ((Profile) getParentFragment()).viewPager.getAdapter()));
-                    ((FeedBacksRecyclerView) pager.fragment[1]).Refresh();
+                    if(((FeedBacksRecyclerView) pager.fragment[1]) != null){
+                        ((FeedBacksRecyclerView) pager.fragment[1]).Refresh();
+                    }
                     getDialog().dismiss();
                 } else {
                     Toast.makeText(getActivity().getBaseContext(), "Please LogIn First", Toast.LENGTH_SHORT).show();

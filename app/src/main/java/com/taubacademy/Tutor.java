@@ -228,7 +228,7 @@ public class Tutor extends ParseObject {
             getAllRatings = new ArrayList<PairRatings>();
         }
         OverallRating *= getAllRatings.size() == 0 ? 1 : getAllRatings.size();
-
+        Boolean flag = false;
         for (PairRatings p : getAllRatings) {
             try {
                 p.fetchIfNeeded();
@@ -237,12 +237,25 @@ public class Tutor extends ParseObject {
             }
             if (p.getFirst().equals(t)) {
                 OverallRating -= Integer.parseInt(p.getSecond());
-                getAllRatings.remove(p);
+                if(OverallRating <0)
+                {
+                    OverallRating = 0;
+                }
+                p.setSecond(Rating.toString());
+                try {
+                    p.save();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                flag = true;
+                break;
             }
         }
-        PairRatings pair = new PairRatings(t, Rating.toString());
-        pair.update();
-        getAllRatings.add(pair);
+        if(flag == false) {
+            PairRatings pair = new PairRatings(t, Rating.toString());
+            pair.update();
+            getAllRatings.add(pair);
+        }
         OverallRating += Rating;
         OverallRating /= getAllRatings.size();
         setRating(OverallRating);

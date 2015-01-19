@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
 import com.parse.ParseUser;
@@ -60,7 +62,10 @@ public class Profile extends android.support.v4.app.Fragment {
     }
     public void Refresh()
     {
-
+        if(profile == null)
+        {
+            return;
+        }
         TextView Name = (TextView) profile.findViewById(R.id.NameOnPRo);
         ParseImageView imagePro = (ParseImageView) profile.findViewById(R.id.imageView);
         ParseFile imageFile = tutor.getPhotoFile();
@@ -106,10 +111,10 @@ public class Profile extends android.support.v4.app.Fragment {
             URL url = null;
             try {
                 url =  new URL("https://graph.facebook.com/" + tutor.get("UserId") + "/picture?type=large");
+                Picasso.with(getActivity().getBaseContext()).load(url.toString()).into(imagePro);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            Picasso.with(getActivity().getBaseContext()).load(url.toString()).into(imagePro);
         }
         Name.setText(tutor.getName());
         Integer salary = tutor.getSalary() == null ? 0 : tutor.getSalary();
@@ -165,21 +170,43 @@ public class Profile extends android.support.v4.app.Fragment {
         ParseFile imageFile = tutor.getPhotoFile();
         RatingBar ratingBar= (RatingBar) profile.findViewById(R.id.ratingBar);
         ratingBar.setRating(tutor.getRating());
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+        ratingBar.setOnTouchListener(new RatingBar.OnTouchListener() {
+
+             boolean flag = false;
             @Override
-            public void onRatingChanged(final RatingBar ratingBar, float v, boolean b) {
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(flag == true){
+                    flag=false;
+                    return true;
+                }
+                flag = true;
+                final RatingBar ratingBar = (RatingBar) view;
+                float touchPositionX = motionEvent.getX();
+                float width = ratingBar.getWidth();
+                float starsf = (touchPositionX / width) * 5.0f;
+                final int ratingStars = ((int) starsf + 1 ) > 5  ? 5 : ((int) starsf + 1 );
+
+
+
                 new AsyncTask<Void, Void, Boolean>() {
                     ProgressDialog progressDialog = new ProgressDialog(getActivity());
+
                     @Override
                     protected void onPreExecute() {
                         super.onPreExecute();
-                        progressDialog.setMessage("setting your rating on "+tutor.getName());
+                        ratingBar.setClickable(false);
+                        progressDialog.setMessage("setting your rating on " + tutor.getName());
                         progressDialog.show();
                     }
 
                     @Override
                     protected Boolean doInBackground(Void... voids) {
-                        Boolean b = tutor.setRating((Tutor) ParseUser.getCurrentUser().get("Tutor"), ((Float) ratingBar.getRating()).intValue());
+                        if (ParseUser.getCurrentUser().get("Tutor") == null
+                                || !ParseFacebookUtils.isLinked(ParseUser.getCurrentUser()))
+                        {
+                            return false;
+                        }
+                        Boolean b = tutor.setRating((Tutor) ParseUser.getCurrentUser().get("Tutor"), ratingStars);
 
                         tutor.saveInBackground();
                         return b;
@@ -188,15 +215,22 @@ public class Profile extends android.support.v4.app.Fragment {
                     @Override
                     protected void onPostExecute(Boolean profile) {
                         super.onPostExecute(profile);
-                        if(profile == false)
+                        if (ParseUser.getCurrentUser().get("Tutor") == null
+                                || !ParseFacebookUtils.isLinked(ParseUser.getCurrentUser()))
                         {
-                            Toast.makeText(getActivity().getBaseContext(),"you can't rate yourself",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getBaseContext(), "please login first", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                            return ;
+                        }
+                        if (profile == false) {
+                            Toast.makeText(getActivity().getBaseContext(), "you can't rate yourself", Toast.LENGTH_SHORT).show();
                         }
                         ratingBar.setRating(tutor.getRating());
+                        ratingBar.setClickable(true);
                         progressDialog.dismiss();
                     }
                 }.execute();
-
+                return true;
             }
         });
         if (imageFile != null) {

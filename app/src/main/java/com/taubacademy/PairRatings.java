@@ -70,5 +70,6 @@ public class PairRatings extends ParseObject{
 
     public void setSecond(String second) {
         this.second = second;
+        put("second",second);
     }
 }
