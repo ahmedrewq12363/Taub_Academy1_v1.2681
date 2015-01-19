@@ -71,40 +71,6 @@ public class Profile extends android.support.v4.app.Fragment {
         ParseFile imageFile = tutor.getPhotoFile();
         RatingBar ratingBar= (RatingBar) profile.findViewById(R.id.ratingBar);
         ratingBar.setRating(tutor.getRating());
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(final RatingBar ratingBar, float v, boolean b) {
-                new AsyncTask<Void, Void, Boolean>() {
-                    ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                    @Override
-                    protected void onPreExecute() {
-                        super.onPreExecute();
-                        progressDialog.setMessage("setting your rating on "+tutor.getName());
-                        progressDialog.show();
-                    }
-
-                    @Override
-                    protected Boolean doInBackground(Void... voids) {
-                        Boolean b = tutor.setRating((Tutor) ParseUser.getCurrentUser().get("Tutor"), ((Float) ratingBar.getRating()).intValue());
-
-                        tutor.saveInBackground();
-                        return b;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Boolean profile) {
-                        super.onPostExecute(profile);
-                        if(profile == false)
-                        {
-                            Toast.makeText(getActivity().getBaseContext(),"you can't rate yourself",Toast.LENGTH_SHORT).show();
-                        }
-                        ratingBar.setRating(tutor.getRating());
-                        progressDialog.dismiss();
-                    }
-                }.execute();
-
-            }
-        });
         if (imageFile != null) {
             Picasso.with(getActivity().getBaseContext()).load(imageFile.getUrl()).into(imagePro);
         } else {
