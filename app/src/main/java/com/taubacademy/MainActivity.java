@@ -429,52 +429,71 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
         ArrayList<String> Avalibale = new ArrayList<String>();
         TextView view_start;
         TextView view_end;
+        CheckBox box;
         for (int i = 0; i < 7; i++) {
-            if (days_arr[i] == 1) {
-                switch (i) {
-                    case 0:
+            switch (i) {
+                case 0:
+                    box = (CheckBox) findViewById(R.id.Sunday_checkbox);
+                    if(box.isChecked()) {
                         view_start = (TextView) findViewById(R.id.Sunday_start_time);
                         view_end = (TextView) findViewById(R.id.Sunday_end_time);
                         Avalibale.add("Sunday " + view_start.getText() + "-" + view_end.getText());
-                        break;
-                    case 1:
+                    }
+                    break;
+                case 1:
+                    box = (CheckBox) findViewById(R.id.Monday_checkbox);
+                    if(box.isChecked()) {
                         view_start = (TextView) findViewById(R.id.Monday_start_time);
                         view_end = (TextView) findViewById(R.id.Monday_end_time);
                         Avalibale.add("Monday " + view_start.getText() + "-" + view_end.getText());
                         Log.w("alaa", "Monday " + view_start.getText() + "-" + view_end.getText());
-                        break;
-                    case 2:
+                    }
+                    break;
+                case 2:
+                    box = (CheckBox) findViewById(R.id.Tuesday_checkbox);
+                    if(box.isChecked()) {
                         view_start = (TextView) findViewById(R.id.Tuesday_start_time);
                         view_end = (TextView) findViewById(R.id.Tuesday_end_time);
                         Avalibale.add("Tuesday " + view_start.getText() + "-" + view_end.getText());
                         Log.w("alaa", "Sunday " + view_start.getText() + "-" + view_end.getText());
-                        break;
-                    case 3:
+                    }
+                    break;
+                case 3:
+                    box = (CheckBox) findViewById(R.id.Wednesday_checkbox);
+                    if(box.isChecked()) {
                         view_start = (TextView) findViewById(R.id.Wednesday_start_time);
                         view_end = (TextView) findViewById(R.id.Wednesday_end_time);
                         Avalibale.add("Wednesday " + view_start.getText() + "-" + view_end.getText());
                         Log.w("alaa", "Sunday " + view_start.getText() + "-" + view_end.getText());
-                        break;
-                    case 4:
+                    }
+                    break;
+                case 4:
+                    box = (CheckBox) findViewById(R.id.Thursday_checkbox);
+                    if(box.isChecked()) {
                         view_start = (TextView) findViewById(R.id.Thursday_start_time);
                         view_end = (TextView) findViewById(R.id.Thursday_end_time);
                         Avalibale.add("Thursday " + view_start.getText() + "-" + view_end.getText());
                         Log.w("alaa", "Thursday " + view_start.getText() + "-" + view_end.getText());
-                        break;
-                    case 5:
+                    }
+                    break;
+                case 5:
+                    box = (CheckBox) findViewById(R.id.Friday_checkbox);
+                    if(box.isChecked()) {
                         view_start = (TextView) findViewById(R.id.Friday_start_time);
                         view_end = (TextView) findViewById(R.id.Friday_end_time);
                         Avalibale.add("Friday " + view_start.getText() + "-" + view_end.getText());
                         Log.w("alaa", "Friday " + view_start.getText() + "-" + view_end.getText());
-                        break;
-                    case 6:
+                    }
+                    break;
+                case 6:
+                    box = (CheckBox) findViewById(R.id.Saturday_checkbox);
+                    if(box.isChecked()) {
                         view_start = (TextView) findViewById(R.id.Saturday_start_time);
                         view_end = (TextView) findViewById(R.id.Saturday_end_time);
                         Avalibale.add("Saturday " + view_start.getText() + "-" + view_end.getText());
                         Log.w("alaa", "Saturday " + view_start.getText() + "-" + view_end.getText());
-                        break;
-                }
-
+                    }
+                    break;
             }
         }
         t.setAvailableTime(Avalibale);
