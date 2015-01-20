@@ -585,13 +585,18 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
     private Map<Integer,Model> getModel(String[] Courses, String[] names) {
         Tutor t = (Tutor) ParseUser.getCurrentUser().get("Tutor");
         try {
-            t.fetch();
+            t.fetchIfNeeded();
         } catch (ParseException e) {
             e.printStackTrace();
         }
         List<Course> mycourses = t.getAllCourses() == null ? new ArrayList<Course>() : t.getAllCourses();
         Set<Integer> CoursesNumber = new HashSet<Integer>();
         for (Course c : mycourses) {
+            try {
+                c.fetchIfNeeded();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             CoursesNumber.add(c.getCourseId());
         }
         Map<Integer,Model> list = new HashMap<Integer, Model>();
