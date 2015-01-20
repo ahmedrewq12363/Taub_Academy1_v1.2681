@@ -126,6 +126,8 @@ public class
                if (tutors.size() == 0) {
                    listView.setAdapter(new tutorsAdapter(activity.getBaseContext(), new ArrayList<Tutor>()));
                    text1.setText("No Teachers Available");
+                   progressDialog.dismiss();
+                   return;
 
                }
                text1.setText("Available Teachers For : " + course);
