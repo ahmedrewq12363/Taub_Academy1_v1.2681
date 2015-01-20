@@ -50,8 +50,10 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -62,7 +64,7 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
     public ListView lv;
     public AlertDialog.Builder alertDialog;
     public AlertDialog AddCourseDialog;
-    public List<Model> list;
+    public Map<Integer,Model> list;
     public int[] days_arr;
     public Menu menu;
     boolean isTwoView;
@@ -353,7 +355,7 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
         numbers = res.getStringArray(R.array.CoursesNumber);
         names = res.getStringArray(R.array.CoursesNames);
         list = getModel(numbers, names);
-        lv.setAdapter(new StableArrayAdapter(getBaseContext(), names, numbers, getModel(numbers, names)));
+        lv.setAdapter(new StableArrayAdapter(getBaseContext(), names, numbers));
         AddCourseDialog = alertDialog.create();
         AddCourseDialog.show();
     }
@@ -503,10 +505,10 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
         t.saveInBackground();
         ArrayList<Integer> coures_number = new ArrayList<Integer>();
         if (list != null)
-            for (Model m : list) {
-                if (m.isSelected()) {
-                    Log.w("alaa", "course number " + m.getName() + " course name " + m.getNumber());
-                    coures_number.add(m.getNumber());
+            for (Map.Entry<Integer,Model> entry : list.entrySet()) {
+                if (entry.getValue().isSelected()) {
+                    Log.w("alaa", "course number " + entry.getValue().getName() + " course name " + entry.getValue().getNumber());
+                    coures_number.add(entry.getValue().getNumber());
                 }
             }
         ParseQuery query = ParseQuery.getQuery("Course");
@@ -580,20 +582,25 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
 
     }
 
-    private List<Model> getModel(String[] Courses, String[] names) {
+    private Map<Integer,Model> getModel(String[] Courses, String[] names) {
         Tutor t = (Tutor) ParseUser.getCurrentUser().get("Tutor");
+        try {
+            t.fetch();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         List<Course> mycourses = t.getAllCourses() == null ? new ArrayList<Course>() : t.getAllCourses();
         Set<Integer> CoursesNumber = new HashSet<Integer>();
         for (Course c : mycourses) {
             CoursesNumber.add(c.getCourseId());
         }
-        List<Model> list = new ArrayList<Model>();
+        Map<Integer,Model> list = new HashMap<Integer, Model>();
         int i = 0;
         for (String course : Courses) {
-            list.add(new Model(Integer.parseInt(course), names[i]));
+            list.put(Integer.parseInt(course),new Model(Integer.parseInt(course), names[i]));
             if (CoursesNumber.contains(Integer.parseInt(course))) {
                 Log.w("alaa", "has Course" + Integer.parseInt(course));
-                list.get(i).setSelected(true);
+                list.get(Integer.parseInt(course)).setSelected(true);
             }
             i++;
         }
@@ -653,7 +660,7 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
         WeakReference<Context> contextWeakReference;
 
 
-        StableArrayAdapter(Context c, String[] courses_names, String[] courses_nums, List<Model> list) {
+        StableArrayAdapter(Context c, String[] courses_names, String[] courses_nums) {
             contextWeakReference = new WeakReference<Context>(c);
             Courses = courses_nums;
             Names = courses_names;
@@ -704,16 +711,16 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
                 });
                 viewH.firstLine.setTextColor(Color.parseColor("#0099CC"));
                 viewH.secondLine.setTextColor(Color.parseColor("#0099CC"));
-                viewH.box.setTag(list.get(i));
+                viewH.box.setTag(list.get(Integer.parseInt(Courses[i%(Courses.length)])));
                 view.setTag(viewH);
             } else {
-                ((ViewHolder) view.getTag()).box.setTag(list.get(i));
+                ((ViewHolder) view.getTag()).box.setTag(list.get(Integer.parseInt(Courses[i%(Courses.length)])));
             }
 
             ViewHolder viewH = (ViewHolder) view.getTag();
             viewH.firstLine.setText(Names[i % Names.length]);
             viewH.secondLine.setText(Courses[i % (Courses.length)]);
-            viewH.box.setChecked(list.get(i).isSelected());
+            viewH.box.setChecked(list.get(Integer.parseInt(Courses[i % (Courses.length)])).isSelected());
             return view;
         }
 
@@ -793,7 +800,7 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
             numbers = res.getStringArray(R.array.CoursesNumber);
             names = res.getStringArray(R.array.CoursesNames);
             if (query == "" || query == null) {
-                lv.setAdapter(new StableArrayAdapter(getBaseContext(), names, numbers, getModel(numbers, names)));
+                lv.setAdapter(new StableArrayAdapter(getBaseContext(), names, numbers));
                 return;
             }
             ArrayList<String> query_result_names = new ArrayList<String>();
@@ -813,7 +820,7 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
                 searched_names[i] = query_result_names.get(i);
                 searched_numbers[i] = query_result_numbers.get(i);
             }
-            lv.setAdapter(new StableArrayAdapter(getBaseContext(), searched_names, searched_numbers, getModel(searched_numbers, searched_names)));
+            lv.setAdapter(new StableArrayAdapter(getBaseContext(), searched_names, searched_numbers));
 
         }
 
@@ -823,7 +830,7 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
             Resources res = getResources();
             numbers = res.getStringArray(R.array.CoursesNumber);
             names = res.getStringArray(R.array.CoursesNames);
-            lv.setAdapter(new StableArrayAdapter(getBaseContext(), names, numbers, getModel(numbers, names)));
+            lv.setAdapter(new StableArrayAdapter(getBaseContext(), names, numbers));
         }
     }
 
