@@ -16,12 +16,13 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @ParseClassName("Tutor")
-public class Tutor extends ParseObject {
+public class Tutor extends ParseObject implements Serializable {
 
     public Tutor() {
     }

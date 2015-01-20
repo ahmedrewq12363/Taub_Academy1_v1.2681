@@ -14,12 +14,22 @@ import java.util.List;
 public class AvailableOnFagment extends Fragment {
 
     public static AvailableOnFagment newInstance(Tutor tutor) {
-        AvailableOnFagment fragment = new AvailableOnFagment(tutor);
+        AvailableOnFagment fragment = new AvailableOnFagment();
+        fragment.setTutor(tutor);
         return fragment;
     }
-    private Tutor tutor;
-    public AvailableOnFagment(Tutor tutor) {
+
+    public Tutor getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(Tutor tutor) {
         this.tutor = tutor;
+    }
+
+    private Tutor tutor;
+    public AvailableOnFagment() {
+
         //((RecyclerView))
     }
 

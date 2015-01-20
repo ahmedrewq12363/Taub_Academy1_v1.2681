@@ -16,12 +16,13 @@ import java.util.List;
 public class TaughtByCourses extends Fragment {
     Tutor tutor;
     public static TaughtByCourses newInstance(Tutor tutor) {
-        TaughtByCourses fragment = new TaughtByCourses(tutor);
+        TaughtByCourses fragment = new TaughtByCourses();
+        fragment.tutor=tutor;
         return fragment;
     }
 
-    public TaughtByCourses(Tutor tutor) {
-        this.tutor = tutor;
+    public TaughtByCourses() {
+
     }
 
     @Override

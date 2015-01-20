@@ -48,11 +48,15 @@ public class Profile extends android.support.v4.app.Fragment {
     }
 
     public Profile() {
-        super();
+
     }
 
 
-    public Profile(Tutor tutor) {
+    public Tutor getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(Tutor tutor) {
         this.tutor = tutor;
         try {
             this.tutor.fetchIfNeeded();
@@ -60,6 +64,8 @@ public class Profile extends android.support.v4.app.Fragment {
             e.printStackTrace();
         }
     }
+
+
     public void Refresh()
     {
         if(profile == null)
@@ -104,6 +110,7 @@ public class Profile extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override

@@ -16,9 +16,16 @@ import com.parse.ParseUser;
 public class AddFeedBackDialog extends DialogFragment {
     private Tutor tutor;
 
-    public AddFeedBackDialog(Tutor tutor) {
-        super();
+    public Tutor getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(Tutor tutor) {
         this.tutor = tutor;
+    }
+
+    public AddFeedBackDialog() {
+
     }
 
     @Override

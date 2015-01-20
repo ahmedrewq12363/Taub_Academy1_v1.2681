@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -77,6 +78,11 @@ public class MyProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_profile, container, false);
         Tutor t = (Tutor) ParseUser.getCurrentUser().get("Tutor");
+        try {
+            t.fetchIfNeeded();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         ((EditText) view.findViewById(R.id.name_edit)).setText(t.getName());
         ((EditText) view.findViewById(R.id.email_edit)).setText(t.getEmail());
         ((EditText) view.findViewById(R.id.phone_edit)).setText(t.getPhone());
@@ -178,7 +184,8 @@ public class MyProfileFragment extends Fragment {
     }
 
     public void showTimePickerDialog(View v) {
-        DialogFragment newFragment = new TimePickerFragment((TextView) v);
+        DialogFragment newFragment = new TimePickerFragment();
+        ((TimePickerFragment)newFragment).v=(TextView) v;
         newFragment.show(getFragmentManager(), "timePicker");
     }
     /**
@@ -199,12 +206,9 @@ public class MyProfileFragment extends Fragment {
     public static class TimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
         TextView v;
-        public TimePickerFragment()
-        {
 
-        }
-        public TimePickerFragment(TextView view){
-            v=view;
+        public TimePickerFragment(){
+
         }
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {

@@ -170,7 +170,8 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
 
                         @Override
                         protected Profile doInBackground(Void... voids) {
-                            MainActivity.this.profile =  new Profile((Tutor) ParseUser.getCurrentUser().get("Tutor"));
+                            MainActivity.this.profile =  new Profile();
+                            profile.setTutor((Tutor) ParseUser.getCurrentUser().get("Tutor"));
                             Profile myProfile = null;
                             FragmentTransaction Transaction = manager.beginTransaction();
                             Fragment fragment = MainActivity.this.getSupportFragmentManager().findFragmentById(R.id.main_continer);
@@ -280,7 +281,8 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                MainActivity.this.profile = new Profile(tutor);
+                MainActivity.this.profile = new Profile();
+               profile.setTutor(tutor);
                 return MainActivity.this.profile;
             }
 
@@ -553,7 +555,8 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
             protected Profile doInBackground(Void... voids) {
                 if(MainActivity.this.profile == null)
                 {
-                    profile = new Profile(((Tutor)ParseUser.getCurrentUser().get("Tutor")));
+                    profile = new Profile();
+                    profile.setTutor(((Tutor)ParseUser.getCurrentUser().get("Tutor")));
                 }
                 try {
                     MainActivity.this.profile.tutor.fetch();
@@ -613,7 +616,8 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
     }
 
     public void showTimePickerDialog(View v) {
-        DialogFragment newFragment = new TimePickerFragment((TextView) v);
+        TimePickerFragment newFragment = new TimePickerFragment();
+        newFragment.v= (TextView) v;
         newFragment.show(getSupportFragmentManager(), "timePicker");
     }
 
@@ -631,14 +635,19 @@ public class MainActivity extends FragmentActivity implements communicator, Prof
 
     public static class TimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
+        public TextView getV() {
+            return v;
+        }
+
+        public void setV(TextView v) {
+            this.v = v;
+        }
+
         TextView v;
+
 
         public TimePickerFragment() {
 
-        }
-
-        public TimePickerFragment(TextView view) {
-            v = view;
         }
 
         @Override

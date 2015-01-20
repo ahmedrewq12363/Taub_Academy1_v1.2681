@@ -16,16 +16,24 @@ import com.parse.ParseUser;
 import java.util.List;
 
 public class FeedBacksRecyclerView extends Fragment {
-    private Tutor tutor;
+    public Tutor getTutor() {
+        return tutor;
+    }
 
-    public FeedBacksRecyclerView(Tutor tutor) {
-        // Required empty public constructor
+    public void setTutor(Tutor tutor) {
         this.tutor = tutor;
     }
 
-    public static FeedBacksRecyclerView newInstance(Tutor tutor) {
-        FeedBacksRecyclerView fragment = new FeedBacksRecyclerView(tutor);
+    private Tutor tutor;
 
+    public FeedBacksRecyclerView() {
+        // Required empty public constructor
+
+    }
+
+    public static FeedBacksRecyclerView newInstance(Tutor tutor) {
+        FeedBacksRecyclerView fragment = new FeedBacksRecyclerView();
+        fragment.setTutor(tutor);
         return fragment;
     }
 
@@ -50,7 +58,8 @@ public class FeedBacksRecyclerView extends Fragment {
         fap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddFeedBackDialog dialog = new AddFeedBackDialog(tutor);
+                AddFeedBackDialog dialog = new AddFeedBackDialog();
+                dialog.setTutor(tutor);
                 dialog.show(getFragmentManager(), "Feedback");
             }
         });
